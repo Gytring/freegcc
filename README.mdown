@@ -1,0 +1,3 @@
+My github pages add hexo blog
+
+site:https://freegcc.hiyhub.io

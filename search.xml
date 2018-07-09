@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[六国论]]></title>
-    <url>%2F2018%2F07%2F07%2F%E5%85%AD%E5%9B%BD%E8%AE%BA%2F</url>
-    <content type="text"><![CDATA[​ *秦人不暇自哀而后人哀之，后人哀之而不鉴之，亦使后人复哀后人也. 1ls -l ​]]></content>
-      <categories>
-        <category>历史</category>
-      </categories>
-      <tags>
-        <tag>历史散文</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F07%2F05%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[登陆shell和非登陆shell的区别以及配置文件加载顺序]]></title>
+    <url>%2F2018%2F07%2F09%2F%E7%99%BB%E9%99%86shell%E5%92%8C%E9%9D%9E%E7%99%BB%E9%99%86shell%E7%9A%84%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su - USERNAME、su -l USERNAME的方式登陆； 非登陆shell则指不需要用户名和密码即可使用shell，比如在图形界面下打开终端窗口，运行的shell脚本，su USERNAME。 交互式shell就是shell在等待你的输入，键入回车后立马执行你提交的命令。这种模式被称作交互式是因为shell与用户进行交互。这种模式也是大多数用户非常熟悉的：登录、执行一些命令、退出，当你退出后，shell自然就终止了，还有一种情况就是执行shell脚本时需要用户进行输入。 非交互式shell基本就是执行不需要输入任何信息shell脚本，shell和用户之间交互，而是读取存放在文件中的命令,并且执行它们。当它读到文件的结尾EOF，shell也就终止了 以bash为例，说一说shell的配置文件 全局配置文件： ​ /etc/profile /etc/profile.d/*.sh /etc/bashrc 用户个人配置文件： ​ ~/.bash_profile ~/.bashrc profile类的文件主要用于： 设定环境变量 、运行命令或脚本 bashrc类的文件则主要同于设定本地变量、定义命令别名 当用户使用登陆shell时，shell会按以下的顺序去加载配置文件： ​ /etc/profile –&gt; /etc/profile.d/*sh –&gt; ~/.bash_profile –&gt; ~/.bashrc –&gt; /etc/bashrc 当用户使用非登陆shell时，shell的配置文件加载顺序变为： ​ ~/.bashrc –&gt; /etc/bashrc –&gt; /etc/profile.d/*.sh]]></content>
   </entry>
 </search>

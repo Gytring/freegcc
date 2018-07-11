@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[关于echo和重定向]]></title>
+    <url>%2F2018%2F07%2F11%2F%E2%80%9D%E5%85%B3%E4%BA%8Eecho%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%2F</url>
+    <content type="text"><![CDATA[众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。 比如向普通文件test文件中写入信息，可以 1echo "The first message write" &gt; test 或者追加写入 1echo "The second message" &gt;&gt; test 下面，如果将test权限设置为只有root用户才有权进行写操作 12sudo chown root.root testsudo chmod 644 test 我们使用sudo并配合echo命令再次向修改权限之后的test文件中写入信息： 1sudo echo "The third message write" &gt;&gt; test 此时，会提示出错信息 1-bash: test: Permission denied bash拒绝这么做，原因是权限不够。这是因为重定向符号“&gt;”和”&gt;&gt;”也是bash命令。当我们使用sudo只是让echo命令具有了root权限，但并没有让”&gt;”和”&gt;&gt;”命令也酷游root权限，所以bash会认为这两个命令没有向test文件写入信息的权限。 为了解决这个问题，通常有两这方式。第一种是利用”sh -c”命令，它可以让bash将一个字符串作为完整的命令来执行，这样就可以将sudo的影响范围拓展到整条命令，具体方法如下： 1sudo sh -c 'echo "The fourth message write" &gt;&gt; test' 另一种方法利用管道和tee命令，该命令可以从标准输入中读入信息并将其写入标准输出或文件中，具体用法如下： 1echo "The fifth message write" | sudo test -a test 注意，tee命令的’-a’选项的作用等同于”&gt;&gt;”命令”&gt;&gt;”,如果去除该选项，那么tee命令的作用等同于”&gt;”命令。 本人最初是在linux上清理内存是遇到这个问题的，附上清理内存的命令 1sudo bash -c "echo 3 &gt; /proc/sys/vm/drop_caches" 最后附上一个vim技巧，当你编辑一个read only文件时，可以在vim中使用如下命令保存对文件的更改： 1:w !sudo tee %]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[登陆shell和非登陆shell的区别以及配置文件加载顺序]]></title>
     <url>%2F2018%2F07%2F09%2F%E7%99%BB%E9%99%86shell%E5%92%8C%E9%9D%9E%E7%99%BB%E9%99%86shell%E7%9A%84%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F%2F</url>
     <content type="text"><![CDATA[在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su - USERNAME、su -l USERNAME的方式登陆； 非登陆shell则指不需要用户名和密码即可使用shell，比如在图形界面下打开终端窗口，运行的shell脚本，su USERNAME。 交互式shell就是shell在等待你的输入，键入回车后立马执行你提交的命令。这种模式被称作交互式是因为shell与用户进行交互。这种模式也是大多数用户非常熟悉的：登录、执行一些命令、退出，当你退出后，shell自然就终止了，还有一种情况就是执行shell脚本时需要用户进行输入。 非交互式shell基本就是执行不需要输入任何信息shell脚本，shell和用户之间交互，而是读取存放在文件中的命令,并且执行它们。当它读到文件的结尾EOF，shell也就终止了 以bash为例，说一说shell的配置文件 全局配置文件： ​ /etc/profile /etc/profile.d/*.sh /etc/bashrc 用户个人配置文件： ​ ~/.bash_profile ~/.bashrc profile类的文件主要用于： 设定环境变量 、运行命令或脚本 bashrc类的文件则主要同于设定本地变量、定义命令别名 当用户使用登陆shell时，shell会按以下的顺序去加载配置文件： ​ /etc/profile –&gt; /etc/profile.d/*sh –&gt; ~/.bash_profile –&gt; ~/.bashrc –&gt; /etc/bashrc 当用户使用非登陆shell时，shell的配置文件加载顺序变为： ​ ~/.bashrc –&gt; /etc/bashrc –&gt; /etc/profile.d/*.sh]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
   </entry>
 </search>

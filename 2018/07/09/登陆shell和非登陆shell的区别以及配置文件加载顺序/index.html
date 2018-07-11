@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆； 非登陆shell则指不需要用户名和密码即可使用shell，比如在图形界面下打开终端窗口，运行的shell脚">
+<meta name="description" content="&amp;emsp;&amp;emsp;在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 &amp;emsp;&amp;emsp;登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆； &amp;emsp;&amp;emsp;非登陆shell则指不需要用户名和">
 <meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="登陆shell和非登陆shell的区别以及配置文件加载顺序">
 <meta property="og:url" content="https:gytring.xyz/2018/07/09/登陆shell和非登陆shell的区别以及配置文件加载顺序/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆； 非登陆shell则指不需要用户名和密码即可使用shell，比如在图形界面下打开终端窗口，运行的shell脚">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 &amp;emsp;&amp;emsp;登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆； &amp;emsp;&amp;emsp;非登陆shell则指不需要用户名和">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-11T04:58:56.735Z">
+<meta property="og:updated_time" content="2018-07-11T06:08:47.325Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="登陆shell和非登陆shell的区别以及配置文件加载顺序">
-<meta name="twitter:description" content="在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆； 非登陆shell则指不需要用户名和密码即可使用shell，比如在图形界面下打开终端窗口，运行的shell脚">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在Linux根据用户使用shell的情况可以分为登陆shell和非登陆shell，还有交互式shell和非交互式shell。 &amp;emsp;&amp;emsp;登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆； &amp;emsp;&amp;emsp;非登陆shell则指不需要用户名和">
 
 
 
@@ -421,11 +421,11 @@
       
 
       
-        <p>在Linux根据用户使用shell的情况可以分为<strong>登陆shell</strong>和<strong>非登陆shell</strong>，还有<strong>交互式shell</strong>和<strong>非交互式shell</strong>。</p>
-<p>登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆；</p>
-<p>非登陆shell则指不需要用户名和密码即可使用shell，比如在图形界面下打开终端窗口，运行的shell脚本，su USERNAME。</p>
-<p>交互式shell就是shell在等待你的输入，键入回车后立马执行你提交的命令。这种模式被称作交互式是因为shell与用户进行交互。这种模式也是大多数用户非常熟悉的：登录、执行一些命令、退出，当你退出后，shell自然就终止了，还有一种情况就是执行shell脚本时需要用户进行输入。</p>
-<p>非交互式shell基本就是执行不需要输入任何信息shell脚本，shell和用户之间交互，而是读取存放在文件中的命令,并且执行它们。当它读到文件的结尾EOF，shell也就终止了 </p>
+        <p>&emsp;&emsp;在Linux根据用户使用shell的情况可以分为<strong>登陆shell</strong>和<strong>非登陆shell</strong>，还有<strong>交互式shell</strong>和<strong>非交互式shell</strong>。</p>
+<p>&emsp;&emsp;登陆shell是指用户使用shell时需要输入用户名和密码登陆，比如从某终端登陆，或者通过su  -  USERNAME、su  -l  USERNAME的方式登陆；</p>
+<p>&emsp;&emsp;非登陆shell则指不需要用户名和密码即可使用shell，比如在图形界面下打开终端窗口，运行的shell脚本，su USERNAME。</p>
+<p>&emsp;&emsp;交互式shell就是shell在等待你的输入，键入回车后立马执行你提交的命令。这种模式被称作交互式是因为shell与用户进行交互。这种模式也是大多数用户非常熟悉的：登录、执行一些命令、退出，当你退出后，shell自然就终止了，还有一种情况就是执行shell脚本时需要用户进行输入。</p>
+<p>&emsp;&emsp;非交互式shell基本就是执行不需要输入任何信息shell脚本，shell和用户之间交互，而是读取存放在文件中的命令,并且执行它们。当它读到文件的结尾EOF，shell也就终止了 </p>
 <p>以bash为例，说一说shell的配置文件</p>
 <p><strong>全局配置文件</strong>：</p>
 <p>​     /etc/profile    /etc/profile.d/*.sh    /etc/bashrc </p>
@@ -574,7 +574,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -585,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -596,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。 比如向普通文件test文件中写入信息，可以 1echo &quot;The first message write&quot; &amp;gt; test 或者追加写入 1echo &quot;The second messa">
+<meta name="description" content="&amp;emsp;&amp;emsp;众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。 &amp;emsp;&amp;emsp;比如向普通文件test文件中写入信息，可以 1echo &quot;The first message write&quot; &amp;gt; test &amp;emsp;">
 <meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于echo和重定向">
 <meta property="og:url" content="https:gytring.xyz/2018/07/11/”关于echo和重定向/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。 比如向普通文件test文件中写入信息，可以 1echo &quot;The first message write&quot; &amp;gt; test 或者追加写入 1echo &quot;The second messa">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。 &amp;emsp;&amp;emsp;比如向普通文件test文件中写入信息，可以 1echo &quot;The first message write&quot; &amp;gt; test &amp;emsp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-11T04:58:54.866Z">
+<meta property="og:updated_time" content="2018-07-11T06:05:01.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于echo和重定向">
-<meta name="twitter:description" content="众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。 比如向普通文件test文件中写入信息，可以 1echo &quot;The first message write&quot; &amp;gt; test 或者追加写入 1echo &quot;The second messa">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。 &amp;emsp;&amp;emsp;比如向普通文件test文件中写入信息，可以 1echo &quot;The first message write&quot; &amp;gt; test &amp;emsp;">
 
 
 
@@ -421,26 +421,26 @@
       
 
       
-        <p>众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。</p>
-<p>比如向普通文件test文件中写入信息，可以</p>
+        <p>&emsp;&emsp;众所周知，在Linux使用echo并配合命令重定向是实现向文件中写入信息的快捷方式；本文介绍如何将echo命令与sudo命令配合使用，实现向只有系统管理员才有权限操作的文件中写入信息（本文以普通用户身份为例）。</p>
+<p>&emsp;&emsp;比如向普通文件test文件中写入信息，可以</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"The first message write"</span> &gt; <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<p>或者追加写入</p>
+<p>&emsp;&emsp;或者追加写入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"The second message"</span> &gt;&gt; <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<p>下面，如果将test权限设置为只有root用户才有权进行写操作</p>
+<p>&emsp;&emsp;下面，如果将test权限设置为只有root用户才有权进行写操作</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown root.root <span class="built_in">test</span></span><br><span class="line">sudo chmod 644 <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<p>我们使用sudo并配合echo命令再次向修改权限之后的test文件中写入信息：</p>
+<p>&emsp;&emsp;我们使用sudo并配合echo命令再次向修改权限之后的test文件中写入信息：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">echo</span> <span class="string">"The third message write"</span> &gt;&gt; <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<p>此时，会提示出错信息</p>
+<p>&emsp;&emsp;此时，会提示出错信息</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-bash: <span class="built_in">test</span>: Permission denied</span><br></pre></td></tr></table></figure>
-<p>bash拒绝这么做，原因是权限不够。这是因为重定向符号“&gt;”和”&gt;&gt;”也是bash命令。当我们使用sudo只是让echo命令具有了root权限，但并没有让”&gt;”和”&gt;&gt;”命令也酷游root权限，所以bash会认为这两个命令没有向test文件写入信息的权限。</p>
-<p>为了解决这个问题，通常有两这方式。第一种是利用”sh -c”命令，它可以让bash将一个字符串作为完整的命令来执行，这样就可以将sudo的影响范围拓展到整条命令，具体方法如下：</p>
+<p>&emsp;&emsp;bash拒绝这么做，原因是权限不够。这是因为重定向符号“&gt;”和”&gt;&gt;”也是bash命令。当我们使用sudo只是让echo命令具有了root权限，但并没有让”&gt;”和”&gt;&gt;”命令也酷游root权限，所以bash会认为这两个命令没有向test文件写入信息的权限。</p>
+<p>&emsp;&emsp;为了解决这个问题，通常有两这方式。第一种是利用”sh -c”命令，它可以让bash将一个字符串作为完整的命令来执行，这样就可以将sudo的影响范围拓展到整条命令，具体方法如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">'echo "The fourth message write" &gt;&gt; test'</span></span><br></pre></td></tr></table></figure>
-<p>另一种方法利用管道和tee命令，该命令可以从标准输入中读入信息并将其写入标准输出或文件中，具体用法如下：</p>
+<p>&emsp;&emsp;另一种方法利用管道和tee命令，该命令可以从标准输入中读入信息并将其写入标准输出或文件中，具体用法如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"The fifth message write"</span> | sudo <span class="built_in">test</span> -a <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<p>注意，tee命令的’-a’选项的作用等同于”&gt;&gt;”命令”&gt;&gt;”,如果去除该选项，那么tee命令的作用等同于”&gt;”命令。</p>
-<p>本人最初是在linux上清理内存是遇到这个问题的，附上清理内存的命令</p>
+<p>&emsp;&emsp;注意，tee命令的’-a’选项的作用等同于”&gt;&gt;”命令”&gt;&gt;”,如果去除该选项，那么tee命令的作用等同于”&gt;”命令。</p>
+<p>&emsp;&emsp;本人最初是在linux上清理内存是遇到这个问题的，附上清理内存的命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bash -c <span class="string">"echo 3 &gt; /proc/sys/vm/drop_caches"</span></span><br></pre></td></tr></table></figure>
-<p>最后附上一个vim技巧，当你编辑一个read only文件时，可以在vim中使用如下命令保存对文件的更改：</p>
+<p>&emsp;&emsp;最后附上一个vim技巧，当你编辑一个read only文件时，可以在vim中使用如下命令保存对文件的更改：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:w !sudo tee %</span><br></pre></td></tr></table></figure>
 
       
@@ -583,7 +583,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +594,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -605,7 +605,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

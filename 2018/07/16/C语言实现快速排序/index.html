@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="快速排序，C," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="天不生我李淳罡，万古剑道如长夜">
-<meta name="keywords" content="江湖">
+<meta name="description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。  &amp;emsp;&amp;emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部">
+<meta name="keywords" content="快速排序，C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C语言实现快速排序">
 <meta property="og:url" content="https:gytring.xyz/2018/07/16/C语言实现快速排序/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。  &amp;emsp;&amp;emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-16T06:39:58.503Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftbpn7krwug207s05ytay.jpg">
+<meta property="og:updated_time" content="2018-07-16T07:11:05.646Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C语言实现快速排序">
-<meta name="twitter:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。  &amp;emsp;&amp;emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftbpn7krwug207s05ytay.jpg">
 
 
 
@@ -341,6 +343,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -373,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1,501
                 </span>
               
 
@@ -399,7 +423,25 @@
       
 
       
-        
+        <p>&emsp;&emsp;<strong>快速排序</strong>又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。 </p>
+<p>&emsp;&emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此让整个数列变成有序序列。 </p>
+<p><img src="https://ws1.sinaimg.cn/large/813ac4f7gy1ftbpn7krwug207s05ytay.jpg" alt=""></p>
+<p>&emsp;&emsp; 快速排序是找出一个元素（理论上可以随便找一个）作为基准(pivot),然后对数组进行分区操作,使基准左边元素的值都不大于基准值,基准右边的元素值 都不小于基准值，如此作为基准的元素调整到排序后的正确位置。递归快速排序，将其他n-1个元素也调整到排序后的正确位置。最后每个元素都是在排序后的正 确位置，排序完成。所以快速排序算法的核心算法是分区操作，即如何调整基准的位置以及调整返回基准的最终位置以便分治递归。 </p>
+<p>&emsp;&emsp; 举一个例子： </p>
+<p>&emsp;&emsp; 2 2 4 9 3 6 7 1 5 首先用2当作基准，使用i j两个指针分别从两边进行扫描，把比2小的元素和比2大的元素分开。首先比较2和5，5比2大，j左移 </p>
+<p>&emsp;&emsp;2 2 4 9 3 6 7 1 5 比较2和1，1小于2，所以把1放在2的位置 </p>
+<p>&emsp;&emsp;2 1 4 9 3 6 7 1 5 比较2和4，4大于2，因此将4移动到后面</p>
+<p>&emsp;&emsp;2 1 4 9 3 6 7 4 5 比较2和7，2和6，2和3，2和9，全部大于2，满足条件，因此不变 </p>
+<p>&emsp;&emsp;经过第一轮的快速排序，元素变为下面的样子: </p>
+<p>&emsp;&emsp; [1] 2 [4 9 3 6 7 5] </p>
+<p>&emsp;&emsp;之后，在把2左边的元素进行快排，由于只有一个元素，因此快排结束。右边进行快排，递归进行，最终生成最后的结果。 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//交换两个数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">t_swap</span><span class="params">(<span class="keyword">int</span> *m, <span class="keyword">int</span> *n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	temp = *n;</span><br><span class="line">	*n = *m;</span><br><span class="line">	*m = temp;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印数组</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display_array</span><span class="params">(<span class="keyword">int</span> <span class="built_in">array</span>[], <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\t"</span>, <span class="built_in">array</span>[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//以随机数的方式生成数组，不能生成负数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">b_array</span><span class="params">(<span class="keyword">int</span> <span class="built_in">array</span>[], <span class="keyword">int</span> len, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//时间种子</span></span><br><span class="line">	srand((<span class="keyword">int</span>)time(<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//随机数rand()对m取余，生成0~m间的随机数，并赋值给数组元素</span></span><br><span class="line">		<span class="built_in">array</span>[i] = (<span class="keyword">int</span>)(rand() % m);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//快排函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(<span class="keyword">int</span> <span class="built_in">array</span>[], <span class="keyword">int</span> len, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">if</span>(left &lt; right)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// 将array[left]作为基准数，从array[left+1]开始与基准数比较,i为左标记</span></span><br><span class="line">		i = left + <span class="number">1</span>;</span><br><span class="line">		<span class="comment">// array[right]是数组的最后一位，j为有标记</span></span><br><span class="line">		j = right;</span><br><span class="line">		<span class="keyword">while</span>(i &lt; j)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// 如果比较的数组元素大于基准数，则交换位置</span></span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">array</span>[i] &gt; <span class="built_in">array</span>[left])</span><br><span class="line">			&#123;</span><br><span class="line">				 <span class="comment">// 交换两个数</span></span><br><span class="line">				t_swap(&amp;<span class="built_in">array</span>[i], &amp;<span class="built_in">array</span>[j]);</span><br><span class="line">				<span class="comment">// 右标记左移一位</span></span><br><span class="line">				j--;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">// 左标记右移一位，继续与基准数比较</span></span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/* 跳出while循环后，i = j</span></span><br><span class="line"><span class="comment">         * 此时数组被分割成两个部分  --&gt;  array[left+1] ~ array[i-1] &lt; array[left]</span></span><br><span class="line"><span class="comment">         *                           --&gt;  array[i+1] ~ array[right] &gt; array[left]</span></span><br><span class="line"><span class="comment">         * 此时将数组array分成两个部分，把array[i]与array[left]进行比较，决定array[i]的位置</span></span><br><span class="line"><span class="comment">         * 最后将array[i]与array[left]交换，进行两个分割部分的排序！以此类推，直到最后i = j不满足条件就退出</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">		 <span class="comment">// 此处必须取等“&gt;=”，否则数组元素值相同时，会出现错误</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">array</span>[i] &gt;= <span class="built_in">array</span>[left])</span><br><span class="line">		&#123;</span><br><span class="line">			i--;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 交换array[i]与array[begin]  </span></span><br><span class="line">		t_swap(&amp;<span class="built_in">array</span>[i], &amp;<span class="built_in">array</span>[left]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//两边分别递归调用快排函数，递归结束的标志是left&gt;=right</span></span><br><span class="line">		quicksort(<span class="built_in">array</span>, len, left, i);</span><br><span class="line">		quicksort(<span class="built_in">array</span>, len, j, right);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入数组的长度："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入你期望数组元素的最大值："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;m);</span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">array</span>[n];</span><br><span class="line"></span><br><span class="line">	b_array(<span class="built_in">array</span>, n, m);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"排序前的数组：\n"</span>);</span><br><span class="line">	display_array(<span class="built_in">array</span>, n);</span><br><span class="line"></span><br><span class="line">	quicksort(<span class="built_in">array</span>, n, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"排序后的数组：\n"</span>);</span><br><span class="line">	display_array(<span class="built_in">array</span>, n);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>分析：</strong></p>
+<p>&emsp;&emsp; 快速排序的时间主要耗费在划分操作上，对长度为k的区间进行划分，共需k-1次关键字的比较。 </p>
+<p>&emsp;&emsp;最坏情况是每次划分选取的基准都是当前无序区中关键字最小(或最大)的记录，划分的结果是基准左边的子区间为空(或右边的子区间为空)，而划分所得的另一个非空的子区间中记录数目，仅仅比划分前的无序区中记录个数减少一个。时间复杂度为O(n*n) </p>
+<p>&emsp;&emsp; 在最好情况下，每次划分所取的基准都是当前无序区的”中值”记录，划分的结果是基准的左、右两个无序子区间的长度大致相等。总的关键字比较次数：O(nlgn) </p>
+<p>&emsp;&emsp;尽管快速排序的最坏时间为O(n2)，但就平均性能而言，它是基于关键字比较的内部排序算法中速度最快者，快速排序亦因此而得名。它的平均时间复杂度为O(nlgn) </p>
+
       
     </div>
     
@@ -440,6 +482,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/快速排序，C/" rel="tag"><i class="fa fa-tag"></i> 快速排序，C</a>
+          
+        </div>
       
 
       
@@ -541,7 +589,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -552,7 +600,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

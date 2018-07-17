@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="C,Linux," />
 
 
 
@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="天不生我李淳罡，万古剑道如长夜">
-<meta name="keywords" content="江湖">
-<meta property="og:type" content="website">
-<meta property="og:title" content="剑来">
-<meta property="og:url" content="https:gytring.xyz/tags/Network，SSR/index.html">
+<meta name="description" content="&amp;emsp;&amp;emsp;ls命令可以说是Unix类系统上参数选项最多的命令之一，此篇实现ls -l的简单功能。 &amp;emsp;&amp;emsp;ls -l 显示一个文件很容易实现，但如果需要 ls -l 一个目录的所有文件就组要费一点脑筋；本篇实现的是 ls 查看一个目录的所有文件的详细信息，至于显示单个文件只需改动一番即可。 &amp;emsp;&amp;emsp;具体的思路是先chdir()到指定的目录，然后打开此目">
+<meta name="keywords" content="C,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ls命令的简单实现">
+<meta property="og:url" content="https:gytring.xyz/2018/07/17/lls命令的简单实现/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;ls命令可以说是Unix类系统上参数选项最多的命令之一，此篇实现ls -l的简单功能。 &amp;emsp;&amp;emsp;ls -l 显示一个文件很容易实现，但如果需要 ls -l 一个目录的所有文件就组要费一点脑筋；本篇实现的是 ls 查看一个目录的所有文件的详细信息，至于显示单个文件只需改动一番即可。 &amp;emsp;&amp;emsp;具体的思路是先chdir()到指定的目录，然后打开此目">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftczviefoij20jy0ez75l.jpg">
+<meta property="og:updated_time" content="2018-07-17T09:38:53.071Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="剑来">
-<meta name="twitter:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta name="twitter:title" content="ls命令的简单实现">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;ls命令可以说是Unix类系统上参数选项最多的命令之一，此篇实现ls -l的简单功能。 &amp;emsp;&amp;emsp;ls -l 显示一个文件很容易实现，但如果需要 ls -l 一个目录的所有文件就组要费一点脑筋；本篇实现的是 ls 查看一个目录的所有文件的详细信息，至于显示单个文件只需改动一番即可。 &amp;emsp;&amp;emsp;具体的思路是先chdir()到指定的目录，然后打开此目">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftczviefoij20jy0ez75l.jpg">
 
 
 
@@ -119,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https:gytring.xyz/tags/Network，SSR/"/>
+  <link rel="canonical" href="https:gytring.xyz/2018/07/17/lls命令的简单实现/"/>
 
 
 
 
 
-  <title>标签: Network，SSR | 剑来</title>
+  <title>ls命令的简单实现 | 剑来</title>
   
 
 
@@ -144,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/Gytring"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 	
@@ -286,54 +289,235 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Network，SSR<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/07/17/lls命令的简单实现/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="free">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="剑来">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/11/ShadowsocksR一键安装脚本/" itemprop="url">
-              
-                <span itemprop="name">ShadowsocksR一键安装脚本（转）</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">ls命令的简单实现</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-11T13:50:29+08:00"
-              content="2018-07-11" >
-          07-11
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T17:09:50+08:00">
+                2018-07-17
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/17/lls命令的简单实现/" class="leancloud_visitors" data-flag-title="ls命令的简单实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  811
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+	
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;ls命令可以说是Unix类系统上参数选项最多的命令之一，此篇实现ls -l的简单功能。</p>
+<p>&emsp;&emsp;ls -l 显示一个文件很容易实现，但如果需要 ls -l 一个目录的所有文件就组要费一点脑筋；本篇实现的是 ls 查看一个目录的所有文件的详细信息，至于显示单个文件只需改动一番即可。</p>
+<p>&emsp;&emsp;具体的思路是先chdir()到指定的目录，然后打开此目录，使用一个DIR 类型的指针(DIR *)来获取知道目录的信息，再用while循环配合readdir()函数来依次读取目录内的文件，返回一个struct dirent结构体；从该结构体中获取文件的路径名并以此作为lstat()函数的参数，将文件的信息保存到struct stat类型的结构中，从该结构体中提取所需要的信息即可。</p>
+<p>&emsp;&emsp;从struct stat结构体中获取文件的信息并输出只是一些简单的判断、逻辑操作，具体看代码，至于颜色可以通过不同的文件类型配合printf()函数输出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;time.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;dirent.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;pwd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;grp.h&gt;</span></span><br><span class="line"></span><br><span class="line">//由uid转换为用户名</span><br><span class="line">char *uid_to_name(uid_t uid)</span><br><span class="line">&#123;</span><br><span class="line">	struct passwd *passwd;</span><br><span class="line">	passwd = getpwuid(uid);</span><br><span class="line">	<span class="built_in">return</span> passwd-&gt;pw_name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//由gid转换为用户组名</span><br><span class="line">char *gid_to_name(gid_t gid)</span><br><span class="line">&#123;</span><br><span class="line">	struct group *group;</span><br><span class="line">	group = getgrgid(gid);</span><br><span class="line">	<span class="built_in">return</span> group-&gt;gr_name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//获取文件类型及权限</span><br><span class="line">void get_type(int mode, char *str)</span><br><span class="line">&#123;</span><br><span class="line">	strcpy(str, <span class="string">"----------"</span>);</span><br><span class="line">	//获取文件类型</span><br><span class="line">	<span class="keyword">if</span>(S_ISDIR(mode))</span><br><span class="line">		str[0] = <span class="string">'d'</span>;</span><br><span class="line">	<span class="keyword">if</span>(S_ISCHR(mode))</span><br><span class="line">		str[0] = <span class="string">'c'</span>;</span><br><span class="line">	<span class="keyword">if</span>(S_ISBLK(mode))</span><br><span class="line">		str[0] = <span class="string">'b'</span>;</span><br><span class="line">	<span class="keyword">if</span>(S_ISFIFO(mode))</span><br><span class="line">		str[0] = <span class="string">'p'</span>;</span><br><span class="line">	<span class="keyword">if</span>(S_ISLNK(mode))</span><br><span class="line">		str[0] = <span class="string">'l'</span>;</span><br><span class="line">	<span class="keyword">if</span>(S_ISSOCK(mode))</span><br><span class="line">		str[0] = <span class="string">'s'</span>;</span><br><span class="line"></span><br><span class="line">	//获取文件权限</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_IRUSR)	</span><br><span class="line">		str[1] = <span class="string">'r'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_IWUSR)</span><br><span class="line">		str[2] = <span class="string">'w'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_ISUID)</span><br><span class="line">		str[3] = <span class="string">'s'</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(mode &amp; S_IXUSR)</span><br><span class="line">		str[3] = <span class="string">'x'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_IRGRP)</span><br><span class="line">		str[4] = <span class="string">'r'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_IWGRP)</span><br><span class="line">		str[5] = <span class="string">'w'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_ISGID)</span><br><span class="line">		str[6] = <span class="string">'s'</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(mode &amp; S_IXGRP)</span><br><span class="line">		str[6] = <span class="string">'x'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_IROTH)</span><br><span class="line">		str[7] = <span class="string">'r'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_IWOTH)</span><br><span class="line">		str[8] = <span class="string">'w'</span>;</span><br><span class="line">	<span class="keyword">if</span>(mode &amp; S_ISVTX)</span><br><span class="line">		str[9] = <span class="string">'t'</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(mode &amp; S_IXOTH)</span><br><span class="line">		str[9] = <span class="string">'x'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//获取一个目录的所有文件信息</span><br><span class="line">void get_files( const char *str)</span><br><span class="line">&#123;</span><br><span class="line">	DIR *dp;</span><br><span class="line">	struct dirent *dirp;</span><br><span class="line">	struct <span class="built_in">stat</span> stat_buf;</span><br><span class="line">	int flag;</span><br><span class="line">	char str_mode[11];</span><br><span class="line"></span><br><span class="line">	<span class="built_in">chdir</span>(str);</span><br><span class="line">	dp = opendir(str);</span><br><span class="line">	<span class="keyword">if</span>(dp == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"open"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>((dirp = readdir(dp)) != NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		flag = lstat(dirp-&gt;d_name, &amp;stat_buf);</span><br><span class="line">		<span class="keyword">if</span>(flag &lt; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			perror(<span class="string">"lstat"</span>);</span><br><span class="line">			<span class="built_in">exit</span>(1);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		//除去.和..</span><br><span class="line">		<span class="keyword">if</span>(S_ISDIR(stat_buf.st_mode))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(strcmp(dirp-&gt;d_name, <span class="string">"."</span>) == 0 || strcmp(dirp-&gt;d_name, <span class="string">".."</span>) == 0)</span><br><span class="line">				<span class="built_in">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		get_type(stat_buf.st_mode, str_mode);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s"</span>, str_mode);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%4d "</span>,(int)stat_buf.st_nlink);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%-8s%-8s"</span>, uid_to_name(stat_buf.st_uid), gid_to_name(stat_buf.st_gid));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%8ld "</span>, stat_buf.st_size);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%.12s "</span>, ctime(&amp;stat_buf.st_mtim));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s\n"</span>, dirp-&gt;d_name);</span><br><span class="line">	&#125;</span><br><span class="line">	closedir(dp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	//实现ls .</span><br><span class="line">	<span class="keyword">if</span>(argc == 1)</span><br><span class="line">	&#123;</span><br><span class="line">		get_files(<span class="string">"."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//实现ls -l</span><br><span class="line">	<span class="keyword">if</span>(argc == 2)</span><br><span class="line">	&#123;</span><br><span class="line">		get_files(argv[1]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(argc &gt; 2)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Usage:./myls -l\n"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果图如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/813ac4f7gy1ftczviefoij20jy0ez75l.jpg" alt=""></p>
 
       
     </div>
+    
+    
+    
+	
+	
+      <div>
+	    
+<div style="text-align:center;color: #ccc;font-size:14px;">
+	------ 本文结束<i class="fa fa-paw"></i> ------</div>
 
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    free
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https:gytring.xyz/2018/07/17/lls命令的简单实现/" title="ls命令的简单实现">https:gytring.xyz/2018/07/17/lls命令的简单实现/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+          
+            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/16/C语言实现快速排序/" rel="next" title="C语言实现快速排序">
+                <i class="fa fa-chevron-left"></i> C语言实现快速排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -341,6 +525,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -381,7 +569,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -403,7 +591,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -646,6 +834,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

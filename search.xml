@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ls命令的简单实现]]></title>
+    <url>%2F2018%2F07%2F17%2Flls%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;ls命令可以说是Unix类系统上参数选项最多的命令之一，此篇实现ls -l的简单功能。 &emsp;&emsp;ls -l 显示一个文件很容易实现，但如果需要 ls -l 一个目录的所有文件就组要费一点脑筋；本篇实现的是 ls 查看一个目录的所有文件的详细信息，至于显示单个文件只需改动一番即可。 &emsp;&emsp;具体的思路是先chdir()到指定的目录，然后打开此目录，使用一个DIR 类型的指针(DIR *)来获取知道目录的信息，再用while循环配合readdir()函数来依次读取目录内的文件，返回一个struct dirent结构体；从该结构体中获取文件的路径名并以此作为lstat()函数的参数，将文件的信息保存到struct stat类型的结构中，从该结构体中提取所需要的信息即可。 &emsp;&emsp;从struct stat结构体中获取文件的信息并输出只是一些简单的判断、逻辑操作，具体看代码，至于颜色可以通过不同的文件类型配合printf()函数输出。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140#include &lt;stdio.h&gt;#include &lt;time.h&gt;#include &lt;string.h&gt;#include &lt;stdlib.h&gt;#include &lt;unistd.h&gt;#include &lt;sys/types.h&gt;#include &lt;sys/fcntl.h&gt;#include &lt;dirent.h&gt;#include &lt;errno.h&gt;#include &lt;sys/stat.h&gt;#include &lt;pwd.h&gt;#include &lt;grp.h&gt;//由uid转换为用户名char *uid_to_name(uid_t uid)&#123; struct passwd *passwd; passwd = getpwuid(uid); return passwd-&gt;pw_name;&#125;//由gid转换为用户组名char *gid_to_name(gid_t gid)&#123; struct group *group; group = getgrgid(gid); return group-&gt;gr_name;&#125;//获取文件类型及权限void get_type(int mode, char *str)&#123; strcpy(str, "----------"); //获取文件类型 if(S_ISDIR(mode)) str[0] = 'd'; if(S_ISCHR(mode)) str[0] = 'c'; if(S_ISBLK(mode)) str[0] = 'b'; if(S_ISFIFO(mode)) str[0] = 'p'; if(S_ISLNK(mode)) str[0] = 'l'; if(S_ISSOCK(mode)) str[0] = 's'; //获取文件权限 if(mode &amp; S_IRUSR) str[1] = 'r'; if(mode &amp; S_IWUSR) str[2] = 'w'; if(mode &amp; S_ISUID) str[3] = 's'; else if(mode &amp; S_IXUSR) str[3] = 'x'; if(mode &amp; S_IRGRP) str[4] = 'r'; if(mode &amp; S_IWGRP) str[5] = 'w'; if(mode &amp; S_ISGID) str[6] = 's'; else if(mode &amp; S_IXGRP) str[6] = 'x'; if(mode &amp; S_IROTH) str[7] = 'r'; if(mode &amp; S_IWOTH) str[8] = 'w'; if(mode &amp; S_ISVTX) str[9] = 't'; else if(mode &amp; S_IXOTH) str[9] = 'x';&#125;//获取一个目录的所有文件信息void get_files( const char *str)&#123; DIR *dp; struct dirent *dirp; struct stat stat_buf; int flag; char str_mode[11]; chdir(str); dp = opendir(str); if(dp == NULL) &#123; perror("open"); exit(1); &#125; while((dirp = readdir(dp)) != NULL) &#123; flag = lstat(dirp-&gt;d_name, &amp;stat_buf); if(flag &lt; 0) &#123; perror("lstat"); exit(1); &#125; //除去.和.. if(S_ISDIR(stat_buf.st_mode)) &#123; if(strcmp(dirp-&gt;d_name, ".") == 0 || strcmp(dirp-&gt;d_name, "..") == 0) continue; &#125; get_type(stat_buf.st_mode, str_mode); printf("%s", str_mode); printf("%4d ",(int)stat_buf.st_nlink); printf("%-8s%-8s", uid_to_name(stat_buf.st_uid), gid_to_name(stat_buf.st_gid)); printf("%8ld ", stat_buf.st_size); printf("%.12s ", ctime(&amp;stat_buf.st_mtim)); printf("%s\n", dirp-&gt;d_name); &#125; closedir(dp);&#125;int main(int argc, char *argv[])&#123; //实现ls . if(argc == 1) &#123; get_files("."); &#125; //实现ls -l if(argc == 2) &#123; get_files(argv[1]); &#125; if(argc &gt; 2) &#123; printf("Usage:./myls -l\n"); exit(1); &#125; return 0;&#125; 效果图如下：]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[C语言实现快速排序]]></title>
     <url>%2F2018%2F07%2F16%2FC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%2F</url>
     <content type="text"><![CDATA[&emsp;&emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。 &emsp;&emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此让整个数列变成有序序列。 &emsp;&emsp; 快速排序是找出一个元素（理论上可以随便找一个）作为基准(pivot),然后对数组进行分区操作,使基准左边元素的值都不大于基准值,基准右边的元素值 都不小于基准值，如此作为基准的元素调整到排序后的正确位置。递归快速排序，将其他n-1个元素也调整到排序后的正确位置。最后每个元素都是在排序后的正 确位置，排序完成。所以快速排序算法的核心算法是分区操作，即如何调整基准的位置以及调整返回基准的最终位置以便分治递归。 &emsp;&emsp; 举一个例子： &emsp;&emsp; 2 2 4 9 3 6 7 1 5 首先用2当作基准，使用i j两个指针分别从两边进行扫描，把比2小的元素和比2大的元素分开。首先比较2和5，5比2大，j左移 &emsp;&emsp;2 2 4 9 3 6 7 1 5 比较2和1，1小于2，所以把1放在2的位置 &emsp;&emsp;2 1 4 9 3 6 7 1 5 比较2和4，4大于2，因此将4移动到后面 &emsp;&emsp;2 1 4 9 3 6 7 4 5 比较2和7，2和6，2和3，2和9，全部大于2，满足条件，因此不变 &emsp;&emsp;经过第一轮的快速排序，元素变为下面的样子: &emsp;&emsp; [1] 2 [4 9 3 6 7 5] &emsp;&emsp;之后，在把2左边的元素进行快排，由于只有一个元素，因此快排结束。右边进行快排，递归进行，最终生成最后的结果。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114#include &lt;stdio.h&gt;#include &lt;time.h&gt;//交换两个数void t_swap(int *m, int *n)&#123; int temp; temp = *n; *n = *m; *m = temp; return ;&#125;//打印数组void display_array(int array[], int len)&#123; int i; for(i = 0; i &lt; len; i++) &#123; printf("%d\t", array[i]); &#125; printf("\n"); return ;&#125;//以随机数的方式生成数组，不能生成负数void b_array(int array[], int len, int m)&#123; //时间种子 srand((int)time(0)); int i; for(i = 0; i &lt; len; i++) &#123; //随机数rand()对m取余，生成0~m间的随机数，并赋值给数组元素 array[i] = (int)(rand() % m); &#125; return ;&#125;//快排函数void quicksort(int array[], int len, int left, int right)&#123; int i, j; if(left &lt; right) &#123; // 将array[left]作为基准数，从array[left+1]开始与基准数比较,i为左标记 i = left + 1; // array[right]是数组的最后一位，j为有标记 j = right; while(i &lt; j) &#123; // 如果比较的数组元素大于基准数，则交换位置 if(array[i] &gt; array[left]) &#123; // 交换两个数 t_swap(&amp;array[i], &amp;array[j]); // 右标记左移一位 j--; &#125; else &#123; // 左标记右移一位，继续与基准数比较 i++; &#125; &#125; /* 跳出while循环后，i = j * 此时数组被分割成两个部分 --&gt; array[left+1] ~ array[i-1] &lt; array[left] * --&gt; array[i+1] ~ array[right] &gt; array[left] * 此时将数组array分成两个部分，把array[i]与array[left]进行比较，决定array[i]的位置 * 最后将array[i]与array[left]交换，进行两个分割部分的排序！以此类推，直到最后i = j不满足条件就退出 */ // 此处必须取等“&gt;=”，否则数组元素值相同时，会出现错误 if(array[i] &gt;= array[left]) &#123; i--; &#125; // 交换array[i]与array[begin] t_swap(&amp;array[i], &amp;array[left]); //两边分别递归调用快排函数，递归结束的标志是left&gt;=right quicksort(array, len, left, i); quicksort(array, len, j, right); &#125; return ;&#125;int main()&#123; int n, m; printf("请输入数组的长度："); scanf("%d", &amp;n); printf("请输入你期望数组元素的最大值："); scanf("%d", &amp;m); int array[n]; b_array(array, n, m); printf("排序前的数组：\n"); display_array(array, n); quicksort(array, n, 0, n - 1); printf("排序后的数组：\n"); display_array(array, n); return 0;&#125; &emsp;&emsp;分析： &emsp;&emsp; 快速排序的时间主要耗费在划分操作上，对长度为k的区间进行划分，共需k-1次关键字的比较。 &emsp;&emsp;最坏情况是每次划分选取的基准都是当前无序区中关键字最小(或最大)的记录，划分的结果是基准左边的子区间为空(或右边的子区间为空)，而划分所得的另一个非空的子区间中记录数目，仅仅比划分前的无序区中记录个数减少一个。时间复杂度为O(n*n) &emsp;&emsp; 在最好情况下，每次划分所取的基准都是当前无序区的”中值”记录，划分的结果是基准的左、右两个无序子区间的长度大致相等。总的关键字比较次数：O(nlgn) &emsp;&emsp;尽管快速排序的最坏时间为O(n2)，但就平均性能而言，它是基于关键字比较的内部排序算法中速度最快者，快速排序亦因此而得名。它的平均时间复杂度为O(nlgn)]]></content>
@@ -8,7 +20,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>快速排序，C</tag>
+        <tag>快速排序</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -20,6 +33,7 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+        <tag>文章</tag>
       </tags>
   </entry>
   <entry>
@@ -349,7 +363,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network，SSR</tag>
+        <tag>Network</tag>
+        <tag>SSR</tag>
       </tags>
   </entry>
   <entry>

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[TCP/IP的有限状态机]]></title>
+    <url>%2F2018%2F07%2F19%2FTCP-IP%E7%9A%84%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;TCP/IP的有限状态机是指客户端和服务器建立起一个TCP连接到断开连接的11种状态之间的转换，包括建立连接的三次握手和断开连接的四次挥手过程。 &emsp;&emsp;TCP状态表 状态 描述 CLOSED 关闭状态，没有连接活动或正在进行 LISTEN 监听状态，服务器正在等待客户端的TCP请求 SYN_SENT 已经发出连接请求，等待确认 ， TCP第一次握手后客户端所处的状态 SYN_RCVD 收到一个连接请求，尚未确认 , TCP第二次握手后服务端所处的状态 ESTABLISHED 连接建立，正常数据传输状态 ，TCP第三次握手后双方的状态 FIN_WAIT_1 （主动关闭）已经发送关闭请求，等待确认 FIN_WAIT_2 （主动关闭）收到对方关闭确认，等待对方关闭请求 CLOSE_WAIT （被动关闭）收到对方关闭请求，已经确认 CLOSING 双方同时尝试关闭，等待对方确认 LAST_ACK （被动关闭）等待最后一个关闭确认，并等待所有分组关闭 TIMED_WAIT 完成双向关闭，等待所有分组断开，等待时间一般为（2MSL） &emsp;&emsp;当一个TCP连接建立的时候，第一个过程就是三次握手 &emsp;&emsp;1.服务端处于LISTEN监听状态，称为被动打开 &emsp;&emsp;2.客户端主动向服务端发起连接请求即客户端发送SYN包（syn=j）到服务器，并且进入SYN_SENT 状态，等待服务器的确认。 &emsp;&emsp;3.服务器端收到来自客户端的SYN包并确认（ack=j+1），同时向客户端发送一个SYN包（syn=k）及SYN+ACk包，服务器进入SYN_RCVD 。 &emsp;&emsp;4.客户端收到服务器发送的SYN+ACK包，并向服务器发送确认包ACK（ack=k+），服务器接收后双方进入ESTABLISHED状态，完成三次握手。 此后可以开始传输数据。 &emsp;&emsp;当一个TCP连接数据传输完毕，需要断开连接的时候就会进入四次挥手阶段，主要是客户端发起断开连接请求 &emsp;&emsp;1.客户端向服务端发送关闭请求FIN包（fin=m），发送后客户端处于FIN_WAIT_1状态，第一次挥手 &emsp;&emsp;2.服务端接受数据包后变为CLOSE_WAIT状态，并向客户端发送确认包ACK（m+1），第二次挥手。 &emsp;&emsp;3.客户端收到来自服务端发送的ACK包后进入FIN_WAIT_2状态，等待服务端发送关闭请求。 &emsp;&emsp;4.服务端向客户端发起关闭请求FIN包（fin=n），并进入LAST_ACK状态，第三次挥手。 &emsp;&emsp;5.客户端收到请求后发送确认请求包ACK（ack=n+1)，然后进入TIME_WAIT状态，第四次挥手。 &emsp;&emsp;6.服务端收到客户端的确认包后变为CLOSED状态，然后又变为LISTEN状态继续监听。 &emsp;&emsp;7.客户端在TIME_WAIT状态等待2MSL时间后变为CLOSED，整个连接关闭。 &emsp;&emsp;TCP状态装换图]]></content>
+      <categories>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>Network</tag>
+        <tag>TCP/IP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[TCP/IP四层模型及OSI七层模型]]></title>
     <url>%2F2018%2F07%2F18%2F%E5%AF%B9%E4%BA%8ETCP-IP%E4%B8%83%E5%B1%82%E7%9A%84%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%2F</url>
     <content type="text"><![CDATA[&emsp;&emsp;OSI七层模型自底向上分别是：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层 &emsp;&emsp;现在基本简化为TCP/IP四层模型：数据链路层（bit）、网络层（数据帧）、传输层（数据包）、应用层（数据段） &emsp;&emsp;很明显的可以看到四层模型简化了七层模型，其对应关系如下： OSI七层模型TCP/IP四层模型网络协议应用层（Application应用层 HTTP、TFTP, FTP, NFS, WAIS、SMTP表示层（Presentation）Telnet, Rlogin, SNMP, Gopher会话层（Session）SMTP, DNS传输层（Transport）传输层TCP, UDP网络层（Network）网络层IP, ICMP, ARP, RARP, AKP, UUCP数据链路层（Data Link）数据链路层FDDI, Ethernet, Arpanet, PDN, SLIP, PPP物理层（Physical）IEEE 802.1A, IEEE 802.2到IEEE 802.11 &emsp;&emsp;每一层对于上一层来讲是透明的，上层只需要使用下层提供的接口，并不关心下层是如何实现的 &emsp;&emsp;OSI七层协议模型(Open System Interconnect 开放系统互连参考模型) 1.物理层：利用传输介质(电缆、双绞线等)为数据链路层提供物理连接，实现比特流(位流)的透明传输。尽可能屏蔽掉具体传输介质与物理设备的差异。使其上面的数据链路层不必考虑网络的具体传输介质是什么。 2.数据链路层 ：受来自物理层的位流形式的数据，并封装成帧，传送到上一层 ；同样，也将来自上一层的数据帧，拆装为位流形式的数据转发到物理层；并且还负责处理接受端发回的确认帧的信息，以便提供可靠的数据传输。 3.网络层： 数据链路层的数据在这一层被转换为数据包，然后通过路径选择、分段组合、顺序、进/出路由等控制，将信息从一个网络设备传送到另一个网络设备。 数据链路层是解决统一网络内节点之间的通信，而网络层主要解决不同子网之间的通信。 4.传输层： 向用户提供可靠的、端到端的差错和流量控制，保证报文的正确传输。向高层屏蔽下层数据通信的具体细节，即向用户透明的传送报文。 提供了面向链接的TCP和面向无连接的UDP传输服务。 5.会话层： 向两个实体的表示层提供建立和使用连接的方法。将不同实体之间的表示层的连接称为会话。因此会话层的任务就是组织和协调两个会话进程之间的通信，并对数据交换进行管理。 用户可以按照半双工、单工和全工的方式建立会话。 6.表示层： 对来自应用层的命令和数据进行解释，对各种语法赋予相应的含义，并按照一定的格式传送给会话层。 处理用户信息的表示问题，如编码、数据格式转换和加密解密等。 7.应用层： 它是计算机用户，以及各种应用程序和网络之间的接口。直接向用户提供服务，完成用户在网络上的期望工作。 在7层模型中，每一层都提供一个特殊的网络功能。从网络功能的角度观察：下面4层（物理层、数据链路层、网络层和传输层）主要提供数据传输和交换功能，即以节点到节点之间的通信为主；第4层作为上下两部分的桥梁，是整个网络体系结构中最关键的部分；而上3层（会话层、表示层和应用层）则以提供用户与应用程序之间的信息和数据处理功能为主。简言之，下4层主要完成通信子网的功能，上3层主要完成资源子网的功能。 &emsp;&emsp;1.物理层： TCP/IP四层模型 1.数据链路层： 包括操作系统中的设备驱动程序、计算机中对应的网络接口卡 。 2.网络层： TCP/IP互联网层协议处理跨越多个网络的机器之间的路由问题，它也管理网络名称和地址，以利于解决路由问题。 实现物理地址到网络地址的转换。 3.传输层： 主要为两台主机上的应用提供端到端的通信（ TCP、UDP）。 &emsp;&emsp;TCP与UDP的区别 &emsp;&emsp;1.基于连接(TCP)和无链接(UDP) &emsp;&emsp;2.对系统资源的要求（TCP较多，UDP较少） &emsp;&emsp;3.UDP程序结构比较简单，TCP比较复杂 &emsp;&emsp;4.流模式与数据模式 &emsp;&emsp;5.TCP保证数据的正确性，UDP可能丢包，TCP保证数据顺序，UDP不保证 4.应用层： 为用户提供所需要的各种服务，例如：FTP、Telnet、DNS、SMTP等 网络层与传输层的区别： 在TCP/TP协议族中， 网络层IP提供的是一种不可靠的服务。它只是尽可能快地把分组从源节点送到目的节点，但不提供任何可靠性的保证。 TCP在不可靠的IP层上，提供了一个可靠的运输层，为了提供这种可靠的服务，TCP采用了超时重传、发送和接受端到端的确认分组等机制。]]></content>
@@ -8,8 +20,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>TCP/UDP</tag>
         <tag>TCP/IP</tag>
+        <tag>TCP/UDP</tag>
       </tags>
   </entry>
   <entry>

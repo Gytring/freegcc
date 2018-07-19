@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/07/19/TCP-IP%E7%9A%84%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA/</loc>
+    <lastmod>2018-07-19T02:16:23.898Z</lastmod>
+    <data>
+        <display>
+        <title>TCP/IP的有限状态机</title>
+        <pubTime>2018-07-19T01:04:43.000Z</pubTime>
+        
+        <tag>Network</tag>
+         
+        <tag>TCP/IP</tag>
+         
+         
+           
+             
+              <breadCrumb title="Network" url="https:gytring.xyz/categories/Network/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/07/18/%E5%AF%B9%E4%BA%8ETCP-IP%E4%B8%83%E5%B1%82%E7%9A%84%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3/</loc>
     <lastmod>2018-07-18T07:14:26.557Z</lastmod>
     <data>
@@ -11,9 +33,9 @@
         <title>TCP/IP四层模型及OSI七层模型</title>
         <pubTime>2018-07-18T01:42:35.000Z</pubTime>
         
-        <tag>TCP/UDP</tag>
-         
         <tag>TCP/IP</tag>
+         
+        <tag>TCP/UDP</tag>
          
          
            

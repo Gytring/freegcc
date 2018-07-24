@@ -4,6 +4,48 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/07/16/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8F%90%E7%A4%BA%E7%AC%A6PS1%E5%8F%8Aoh-my-zsh/</loc>
+    <lastmod>2018-07-24T05:58:33.356Z</lastmod>
+    <data>
+        <display>
+        <title>命令行提示符PS1及oh my zsh</title>
+        <pubTime>2018-07-16T03:21:18.000Z</pubTime>
+        
+        <tag>bash</tag>
+         
+        <tag>zsh</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/07/24/Linux%E7%AC%94%E8%AE%B0-1/</loc>
+    <lastmod>2018-07-24T05:57:46.143Z</lastmod>
+    <data>
+        <display>
+        <title>Linux笔记(1)</title>
+        <pubTime>2018-07-24T05:56:01.000Z</pubTime>
+        
+        <tag>shell</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/07/17/ls%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
     <lastmod>2018-07-23T05:53:19.445Z</lastmod>
     <data>
@@ -172,26 +214,6 @@
            
              
               <breadCrumb title="古诗文" url="https:gytring.xyz/categories/%E5%8F%A4%E8%AF%97%E6%96%87/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https:gytring.xyz/2018/07/16/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8F%90%E7%A4%BA%E7%AC%A6PS1%E5%8F%8Aoh-my-zsh/</loc>
-    <lastmod>2018-07-16T06:16:44.421Z</lastmod>
-    <data>
-        <display>
-        <title>命令行提示符PS1及oh my zsh</title>
-        <pubTime>2018-07-16T03:21:18.000Z</pubTime>
-        
-        <tag>bash，zsh</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
           
         </display>
     </data>

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。 &amp;emsp;&amp;emsp;通常我们在使用rm命令时只能删除文件并不能删除目录，若要删除目录，我们加参数 -f 进行强制删除，常用的还有 -r 递归删除，-rf 是Unix类系统命令行参数最经典的搭配之一。 &amp;emsp;&amp;emsp;首先删除文件很简单，直接将此文件 unlink 即">
+<meta name="description" content="&amp;emsp;&amp;emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。">
 <meta name="keywords" content="C,Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rm命令的简单实现">
 <meta property="og:url" content="https:gytring.xyz/2018/07/23/rm命令的简单实现/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。 &amp;emsp;&amp;emsp;通常我们在使用rm命令时只能删除文件并不能删除目录，若要删除目录，我们加参数 -f 进行强制删除，常用的还有 -r 递归删除，-rf 是Unix类系统命令行参数最经典的搭配之一。 &amp;emsp;&amp;emsp;首先删除文件很简单，直接将此文件 unlink 即">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-23T05:53:00.106Z">
+<meta property="og:updated_time" content="2018-07-26T06:22:45.098Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rm命令的简单实现">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。 &amp;emsp;&amp;emsp;通常我们在使用rm命令时只能删除文件并不能删除目录，若要删除目录，我们加参数 -f 进行强制删除，常用的还有 -r 递归删除，-rf 是Unix类系统命令行参数最经典的搭配之一。 &amp;emsp;&amp;emsp;首先删除文件很简单，直接将此文件 unlink 即">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。">
 
 
 
@@ -421,7 +421,7 @@
       
 
       
-        <p>&emsp;&emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。</p>
+        <p>&emsp;&emsp;毫无疑问，rm命令是Unix类系统上不可缺少的命令之一，文件目录删除全靠它，此篇实现rm的功能。<a id="more"></a> </p>
 <p>&emsp;&emsp;通常我们在使用rm命令时只能删除文件并不能删除目录，若要删除目录，我们加参数 <strong>-f</strong> 进行强制删除，常用的还有 <strong>-r</strong> 递归删除，<strong>-rf</strong> 是Unix类系统命令行参数最经典的搭配之一。</p>
 <p>&emsp;&emsp;首先删除文件很简单，直接将此文件 <strong>unlink</strong> 即可，删除空目录就使用 <strong>rmdir()</strong> 函数，我们使用 <strong>lstat()</strong> 函数将命令行参数的信息保存到结构体 <strong>struct argv_buf</strong> 中，根据函数 <strong>S_ISDIR()</strong> 来传入的参数是目录还是其他文件；此时问题来了，文件或目录不存在怎么办，目录不为空怎么办，有多重目录怎么办。</p>
 <p>&emsp;&emsp;第一个问题很好解决，在删除之前我们先调用函数 <strong>access()</strong> 判断文件或目录是否存在，若不存在直接退出，并打印perror错误信息；</p>
@@ -572,7 +572,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

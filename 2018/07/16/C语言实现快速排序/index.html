@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。  &amp;emsp;&amp;emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部">
+<meta name="description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。">
 <meta name="keywords" content="快速排序,C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C语言实现快速排序">
 <meta property="og:url" content="https:gytring.xyz/2018/07/16/C语言实现快速排序/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。  &amp;emsp;&amp;emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftbpn7krwug207s05ytay.jpg">
-<meta property="og:updated_time" content="2018-07-17T08:53:14.538Z">
+<meta property="og:updated_time" content="2018-07-26T06:21:52.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C语言实现快速排序">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。  &amp;emsp;&amp;emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;快速排序又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftbpn7krwug207s05ytay.jpg">
 
 
@@ -423,7 +423,7 @@
       
 
       
-        <p>&emsp;&emsp;<strong>快速排序</strong>又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。 </p>
+        <p>&emsp;&emsp;<strong>快速排序</strong>又称划分交换排序，最早由东尼·霍尔提出。在平均状况下，排序n个项目要Ο(n log n) 次比较。在最坏状况下则需要O(n²)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他算法更快，因为它的内部循环可以在大部分的架构上很有效率的实现出来。 <a id="more"></a> </p>
 <p>&emsp;&emsp;快排的基本思想是通过一趟将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此让整个数列变成有序序列。 </p>
 <p><img src="https://ws1.sinaimg.cn/large/813ac4f7gy1ftbpn7krwug207s05ytay.jpg" alt=""></p>
 <p>&emsp;&emsp; 快速排序是找出一个元素（理论上可以随便找一个）作为基准(pivot),然后对数组进行分区操作,使基准左边元素的值都不大于基准值,基准右边的元素值 都不小于基准值，如此作为基准的元素调整到排序后的正确位置。递归快速排序，将其他n-1个元素也调整到排序后的正确位置。最后每个元素都是在排序后的正 确位置，排序完成。所以快速排序算法的核心算法是分区操作，即如何调整基准的位置以及调整返回基准的最终位置以便分治递归。 </p>
@@ -584,7 +584,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

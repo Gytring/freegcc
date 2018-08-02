@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/07/30/cp%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2018-08-02T00:48:13.710Z</lastmod>
+    <data>
+        <display>
+        <title>cp命令的简单实现</title>
+        <pubTime>2018-07-30T05:44:06.000Z</pubTime>
+        
+        <tag>C</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="https:gytring.xyz/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/07/17/ls%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2018-07-30T10:19:42.325Z</lastmod>
+    <data>
+        <display>
+        <title>ls命令的简单实现</title>
+        <pubTime>2018-07-17T09:09:50.000Z</pubTime>
+        
+        <tag>C</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="https:gytring.xyz/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/07/26/%E7%99%BB%E9%99%86shell%E5%92%8C%E9%9D%9E%E7%99%BB%E9%99%86shell%E7%9A%84%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F/</loc>
     <lastmod>2018-07-26T06:33:01.683Z</lastmod>
     <data>
@@ -635,9 +679,9 @@
         <title>TCP/IP的有限状态机</title>
         <pubTime>2018-07-19T01:04:43.000Z</pubTime>
         
-        <tag>Network</tag>
-         
         <tag>TCP/IP</tag>
+         
+        <tag>Network</tag>
          
          
            
@@ -678,28 +722,6 @@
         <display>
         <title>rm命令的简单实现</title>
         <pubTime>2018-07-23T03:29:41.000Z</pubTime>
-        
-        <tag>C</tag>
-         
-        <tag>Linux</tag>
-         
-         
-           
-             
-              <breadCrumb title="C/C++" url="https:gytring.xyz/categories/C-C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https:gytring.xyz/2018/07/17/ls%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
-    <lastmod>2018-07-26T06:22:35.107Z</lastmod>
-    <data>
-        <display>
-        <title>ls命令的简单实现</title>
-        <pubTime>2018-07-17T09:09:50.000Z</pubTime>
         
         <tag>C</tag>
          

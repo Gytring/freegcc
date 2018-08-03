@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp; nohup command &amp;amp; : nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。 &amp;emsp;&amp;emsp;type可以用来判断一个命令是否为内置命令 :">
+<meta name="description" content="&amp;emsp;&amp;emsp; nohup command &amp;amp; : nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。">
 <meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux笔记(3)">
 <meta property="og:url" content="https:gytring.xyz/2018/08/03/Linux笔记-3/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="&amp;emsp;&amp;emsp; nohup command &amp;amp; : nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。 &amp;emsp;&amp;emsp;type可以用来判断一个命令是否为内置命令 :">
+<meta property="og:description" content="&amp;emsp;&amp;emsp; nohup command &amp;amp; : nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftwgmlb2uej20ed03o745.jpg">
-<meta property="og:updated_time" content="2018-08-03T06:13:22.520Z">
+<meta property="og:updated_time" content="2018-08-03T07:02:24.588Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux笔记(3)">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp; nohup command &amp;amp; : nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。 &amp;emsp;&amp;emsp;type可以用来判断一个命令是否为内置命令 :">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp; nohup command &amp;amp; : nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1ftwgmlb2uej20ed03o745.jpg">
 
 
@@ -397,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  802
+                  748
                 </span>
               
 
@@ -423,7 +423,7 @@
       
 
       
-        <p>&emsp;&emsp; <strong>nohup command &amp; :</strong> nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。<-- more="" --=""></--></p>
+        <p>&emsp;&emsp; <strong>nohup command &amp; :</strong> nohup(no hang up)不挂断地运行命令。command的标准输出被自动改向到当前目录下的nohup.out文件，起到了log的作用。&amp;意味着放在后台执行，当然也可以用 Ctrl + Z 让一个运行的程序放在后台执行，fg 使其恢复到前台。<a id="more"></a></p>
 <p>&emsp;&emsp;type可以用来判断一个命令是否为内置命令 :</p>
 <p>&emsp;&emsp;内部命令在系统启动时就调入内存，是常驻内存的，所以执行效率高。 </p>
 <p>&emsp;&emsp;外部命令是系统的软件功能，用户需要时才从硬盘中读入内存。 </p>
@@ -539,8 +539,6 @@
 </table>
 <p>&emsp;&emsp;管道分流：tee从标准输入读入数据，并向标准输出和一个文件各发送一份数据。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd | tee output | grep root</span><br></pre></td></tr></table></figure>
-<p>&emsp;&emsp;&emsp;内部命令在系统启动时就调入内存，是常驻内存的，所以执行效率高。 </p>
-<p>&emsp;&emsp;&emsp;外部命令是系统的软件功能，用户需要时才从硬盘中读入内存。 </p>
 
       
     </div>
@@ -607,6 +605,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/03/卫将军骠骑列传-司马迁/" rel="prev" title="卫将军骠骑列传--司马迁">
+                卫将军骠骑列传--司马迁 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -678,7 +680,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

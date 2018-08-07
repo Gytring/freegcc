@@ -4,6 +4,52 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/08/07/KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98LVM%E6%89%A9%E5%AE%B9/</loc>
+    <lastmod>2018-08-07T09:21:34.845Z</lastmod>
+    <data>
+        <display>
+        <title>KVM虚拟机磁盘LVM扩容</title>
+        <pubTime>2018-08-07T01:59:31.000Z</pubTime>
+        
+        <tag>KVM</tag>
+         
+        <tag>LVM</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/07/30/cp%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2018-08-07T09:21:28.863Z</lastmod>
+    <data>
+        <display>
+        <title>cp命令的简单实现</title>
+        <pubTime>2018-07-30T05:44:06.000Z</pubTime>
+        
+        <tag>C</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="https:gytring.xyz/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/08/03/Linux%E7%AC%94%E8%AE%B0-3/</loc>
     <lastmod>2018-08-03T07:02:24.588Z</lastmod>
     <data>
@@ -64,28 +110,6 @@
 
     
   <url>
-    <loc>https:gytring.xyz/2018/07/30/cp%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
-    <lastmod>2018-08-02T09:41:58.888Z</lastmod>
-    <data>
-        <display>
-        <title>cp命令的简单实现</title>
-        <pubTime>2018-07-30T05:44:06.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>C</tag>
-         
-         
-           
-             
-              <breadCrumb title="C/C++" url="https:gytring.xyz/categories/C-C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https:gytring.xyz/2018/07/17/ls%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
     <lastmod>2018-07-30T10:19:42.325Z</lastmod>
     <data>
@@ -93,9 +117,9 @@
         <title>ls命令的简单实现</title>
         <pubTime>2018-07-17T09:09:50.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>C</tag>
+         
+        <tag>Linux</tag>
          
          
            
@@ -783,9 +807,9 @@
         <title>rm命令的简单实现</title>
         <pubTime>2018-07-23T03:29:41.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>C</tag>
+         
+        <tag>Linux</tag>
          
          
            

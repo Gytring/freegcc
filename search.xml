@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux终端使用Shadowsocks和proxychains实现代理科学上网]]></title>
+    <url>%2F2018%2F08%2F09%2FLinux%E7%BB%88%E7%AB%AF%E4%BD%BF%E7%94%A8Shadowsocks%E5%92%8Cproxychains%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%90%86%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;通常在 Windows 或者 Linux 图形界面上有很多方法实现科学上网，但很多时候在 Linux 终端的字符界面也有科学上网的需求，比如安装源在国外的软件，此篇介绍在终端字符界面上实现科学上网。 &emsp;&emsp;首先你需要有能够翻墙的 SSR 服务端，本站介绍过 SSR 服务端安装教程，在此不做赘述。 &emsp;&emsp;首先通过 pip 安装 shadowsocks ，以 CentOS 为例，Ubuntu过程类似： 12sudo yum install python-pipsudo pip install shadowsocks &emsp;&emsp;配置 shadowsocks.json 文件(没有则自行创建)： 1sudo vim /etc/shadowsocks.json 123456789&#123;"server":"6x.6x.6x.6x", //SSR 服务器 IP"server_port":666, //SSR 服务器 端口"local_port":1080,"password":"MyPassWord", //SSR 账号密码"timeout":600,"method":"aes-256-cfb" // 协议&#125;//根据你的 SSR 服务器账号进行设置 &emsp;&emsp;启动 ss 客户端： 1234root@zhenyan:/home/deepcam# sslocal -c /etc/shadowsocks.json -d startINFO: loading config from /etc/shadowsocks.json2018-08-09 10:35:54 INFO loading libcrypto from libcrypto.so.1.0.0started &emsp;&emsp;启动之后，本地会监听一个tcp的1080端口和一个udp的1080端口 123root@zhenyan:/home/deepcam# ss -lntup|grep sslocaltcp UNCONN 0 0 127.0.0.1:1080 *:* users:(("sslocal",13289,5))tcp LISTEN 0 1024 127.0.0.1:1080 *:* users:(("sslocal",13289,4)) &emsp;&emsp;安装配置proxychains实现代理 ： &emsp;&emsp;Ubuntu 可直接使用 apt-get 安装 1sudo apt-get install -y proxychains &emsp;&emsp;CentOS 需要进行源码编译安装 1234git clone https://github.com/rofl0r/proxychains-ngcd proxychains-ng./configuremake &amp;&amp; make install &emsp;&emsp;编辑配置文件 1vim /etc/proxychains.conf &emsp;&emsp;注释最后一行 1#socks4 127.0.0.1 9050 &emsp;&emsp;末尾新增一行 1socks5 127.0.0.1 1080 &emsp;&emsp;proxychains 的使用方式非常简单，直接在应用程序前加上 proxychains4 即可，Ubuntu 上用 apt-get 安装的话直接在应用程序前加上 proxychains &emsp;&emsp;测试梯子 123456789101112root@zhenyan:/home/deepcam# proxychains curl https://google.comProxyChains-3.1 (http://proxychains.sf.net)|DNS-request| google.com|S-chain|-&lt;&gt;-127.0.0.1:1080-&lt;&gt;&lt;&gt;-4.2.2.2:53-&lt;&gt;&lt;&gt;-OK|DNS-response| google.com is 216.58.194.174|S-chain|-&lt;&gt;-127.0.0.1:1080-&lt;&gt;&lt;&gt;-216.58.194.174:443-&lt;&gt;&lt;&gt;-OK&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;&lt;TITLE&gt;301 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;&lt;H1&gt;301 Moved&lt;/H1&gt;The document has moved&lt;A HREF="https://www.google.com/"&gt;here&lt;/A&gt;.&lt;/BODY&gt;&lt;/HTML&gt; 1234567root@zhenyan:/home/deepcam# proxychains curl ip.cnProxyChains-3.1 (http://proxychains.sf.net)|DNS-request| ip.cn|S-chain|-&lt;&gt;-127.0.0.1:1080-&lt;&gt;&lt;&gt;-4.2.2.2:53-&lt;&gt;&lt;&gt;-OK|DNS-response| ip.cn is 104.16.24.88|S-chain|-&lt;&gt;-127.0.0.1:1080-&lt;&gt;&lt;&gt;-104.16.24.88:80-&lt;&gt;&lt;&gt;-OK当前 IP：47.91.229.250 来自：香港特别行政区 阿里云 &emsp;&emsp;可以正常进行代理和翻墙。]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>SSR</tag>
+        <tag>proxychains</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[KVM虚拟机磁盘LVM扩容]]></title>
     <url>%2F2018%2F08%2F07%2FKVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98LVM%E6%89%A9%E5%AE%B9%2F</url>
     <content type="text"><![CDATA[&emsp;&emsp; 在使用 KVM 虚拟机时，可能由于事先需求不明确或者其他原因导致磁盘不够用，此时我们就需要对磁盘进行拓展，本人遇到这个问题时在 CentOS7 上，而且在此kvm中 CentoOS7 分区默认是做了 LVM 的，可先在图形界面上对其增加一块磁盘。 &emsp;&emsp;而且在图形界面删除磁盘的时候，是可以对其进行恢复的，本人碰巧删掉一个启动磁盘后系统无法正常开机，而后添加回去后系统恢复正常。 &emsp;&emsp;添加磁盘后，首先使用 fdisk -l 查看磁盘是否添加上去，若没有看到新增的磁盘，可能需要重启服务器。 &emsp;&emsp;看到新增磁盘后( /dev/sdb )，使用 fdisk /dev/sdb 对其进行分区； &emsp;&emsp;其中 8e 代表文件系统为 LVM，然后我们创建 PV 12[root@localhost ~]# pvcreate /dev/sdb1 Physical volume &quot;/dev/sdb1&quot; successfully created &emsp;&emsp;拓展VG，事先得用 vgdispaly 确定要拓展的 vg 12[root@localhost ~]# vgextend VolGroup /dev/sdb1 Volume group &quot;VolGroup&quot; successfully extend &emsp;&emsp;拓展 LV，事先也需要使用 lvdisplay 确定要拓展得 lv(lv_root原来为50G，这里拓展50G) 123[root@localhost ~]# lvcreate -L 50G -n /dev/VolGroup/lv_root Extending logical volume lv_root to 100.00 GiB Logical volume lv_root successfully resized &emsp;&emsp;注意，此时我们需要重新获取 lv_root 的大小，在 CentOS 7 上多数使用的 xfs，因此需要使用 xfs_growfs ，若 lv_root 使用的是 ext3、ext4 的话则使用 resize2fs， 最后使用 df 查看 12xfs_growfs /dev/VolGroup/lv_rootdf -h &emsp;&emsp;至此已经完成了 kvm 虚拟机磁盘 LVM 扩容。 &emsp;&emsp;顺便说一下 LVM 逻辑卷管理器以及 PE、PV、VG、LV 相关的内容。 &emsp;&emsp;LVM是逻辑盘卷管理（Logical Volume Manager）的简称，它是Linux环境下对磁盘分区进行管理的一种机制，LVM是建立在硬盘和分区之上的一个逻辑层，来提高磁盘分区管理的灵活性。 &emsp;&emsp;LVM是逻辑盘卷管理（Logical Volume Manager）的简称，它是Linux环境下对磁盘分区进行管理的一种机制，LVM是建立在硬盘和分区之上的一个逻辑层，来提高磁盘分区管理的灵活性。 &emsp;&emsp;LVM的工作原理其实很简单，它就是通过将底层的物理硬盘抽象的封装起来，然后以逻辑卷的方式呈现给上层应用。在传统的磁盘管理机制中，我们的上层应用是直接访问文件系统，从而对底层的物理硬盘进行读取，而在LVM中，其通过对底层的硬盘进行封装，当我们对底层的物理硬盘进行操作时，其不再是针对于分区进行操作，而是通过一个叫做逻辑卷的东西来对其进行底层的磁盘管理操作。比如说我增加一个物理硬盘，这个时候上层的服务是感觉不到的，因为呈现给上层服务的是以逻辑卷的方式。 &emsp;&emsp;LVM最大的特点就是可以对磁盘进行动态管理。因为逻辑卷的大小是可以动态调整的，而且不会丢失现有的数据。如果我们新增加了硬盘，其也不会改变现有上层的逻辑卷。作为一个动态磁盘管理机制，逻辑卷技术大大提高了磁盘管理的灵活性。 &emsp;&emsp; 物理卷—–PV（Physical Volume）&emsp;&emsp;物理卷在逻辑卷管理中处于最底层，它可以是实际物理硬盘上的分区，也可以是整个物理硬盘。 &emsp;&emsp; 卷组——–VG（Volumne Group）&emsp;&emsp;卷组建立在物理卷之上，一个卷组中至少要包括一个物理卷，在卷组建立之后可动态添加物理卷到卷组中。一个逻辑卷管理系统工程中可以只有一个卷组，也可以拥有多个卷组。 &emsp;&emsp; 逻辑卷—–LV（Logical Volume）&emsp;&emsp;逻辑卷建立在卷组之上，卷组中的未分配空间可以用于建立新的逻辑卷，逻辑卷建立后可以动态地扩展和缩小空间。系统中的多个逻辑卷要以属于同一个卷组，也可以属于不同的多个卷组。 &emsp;&emsp;物理区域–PE（Physical Extent） &emsp;&emsp;物理区域是物理卷中可用于分配的最小存储单元，物理区域的大小可根据实际情况在建立物理卷时指定。物理区域大小一旦确定将不能更改，同一卷组中的所有物理卷的物理区域大小需要一致。 &emsp;&emsp;逻辑区域―LE（Logical Extent） &emsp;&emsp;逻辑区域是逻辑卷中可用于分配的最小存储单元，逻辑区域的大小取决于逻辑卷所在卷组中的物理区域的大小。 &emsp;&emsp;卷组描述区域—–（Volume Group Descriptor Area） &emsp;&emsp;卷组描述区域存在于每个物理卷中，用于描述物理卷本身、物理卷所属卷组、卷组中的逻辑卷及逻辑卷中物理区域的分配等所有信息，卷组描述区域是在使用pvcreate建立物理卷时建立的。 &emsp;&emsp;关系图如下：]]></content>
@@ -83,7 +96,7 @@
   <entry>
     <title><![CDATA[Linux笔记(2)]]></title>
     <url>%2F2018%2F07%2F24%2FLinux%E7%AC%94%E8%AE%B0-2%2F</url>
-    <content type="text"><![CDATA[&emsp;&emsp;whatis : 用于查询一个命令执行功能，并将查询的结果打印到终端。 &emsp;&emsp;which : 用于查找并显示给命令的绝对路径，环境变量PATH中保存了查找命令时需要遍历的目录。 &emsp;&emsp;whreris : 用了定位指令的二进制程序、源代码和man手册页等相关的路径。 &emsp;&emsp;w : 用于显示已经登陆系统的用户列表，并显示用户正在执行的指令。 &emsp;&emsp;who : 用于显示目前登陆系统的用户信息。 &emsp;&emsp;whoami : 打印当前有效用户名称。 引用和转义： &emsp;&emsp;使用反斜线 \ 引用单个字符(转义了这个字符)，比单引号和双引号强 &emsp;&emsp;使用单引号转义一串字符(弱引用) &emsp;&emsp;使用双引号引用一堆字符，但是保留 $ 、\ 、` (反引号) 的特殊含义(强引用) alias可以显示你设置的别名，也可以 alias ll=’ls -l’ ，这样就建立了 ll 为 ls -l 的别名，可以将其写到 shell 的配置文件中 ，比如/etc/bashrc 、~.bashrc，使用 unalias 取消别名，而且我们可以使用 反斜线( \ ) 来屏蔽别名，一般的Linux都会将 ls 设置成 ‘ls -d .* –color=auto’ 的别名，如果使用 \ls 则会屏蔽这个别名。 &emsp;&emsp;Shell常见的状态码，执行一个命令或运行一个程序结束之后，可以使用 echo $? 来查看退出状态码（0—255） 0 命令成功结束 1 通用未知错误 2 误用shell命令 126 命令不可执行 127 没找到命令 128 无效退出参数 128+x Linux信号X的严重错误 130 命令通过Ctrl+C控制码越界 255 退出码越界 查询公网地址： &emsp;&emsp;UNIX/Linux: &emsp;&emsp;&emsp;&emsp;curl cip.cc&emsp;&emsp;&emsp;&emsp;culr ifconfig.me &emsp;&emsp;Windows:&emsp;&emsp;&emsp;&emsp; &emsp;telnet cip.cc&emsp;&emsp;&emsp;&emsp;ftp cip.cc cat -v -e 显示不可打印的字符和行尾 端口号即对应的服务：/etc/service Client端是随机开放一个大于 1024 的 port 进行链接，只有 root 可以启动小于1024的端口 服务端启动的监听端口所对应的服务是固定的，客户端启动程序时，随机启动一个大于 1024 以上的端口 touch可创建文件或者更改文件的3个时间 123atime 最近访问时间mtime 最近更改时间(只修改件内容的时间)ctime 最近改动文件的时间(指最近改动inode的时间,文件属性） shell隐藏密码 1read -p "Please input your passwd:" -s passwd centos安装完整的manpages(支持posix函数（内核api）) 1yum -y install man-pages Ubuntu安装ssr-qt5,实现科学上网 1234sudo add-apt-repository ppa:hzwhuang/ss-qt5sudo apt-get updatesudo apt-get install shadowsocks-qt5 sudo apt-get -f install lsat: 显示 /var/log/wtmp 文件，显示用户登录历史和系统重启历史 lastb: 显示 /var/log/btmp 文件，显示用户错误的登录尝试 lastlog: 显示每一个用户最近一次成功登录信息 终端类型： &emsp;&emsp;console: 控制台 &emsp;&emsp;pty: 物理终端 &emsp;&emsp;tty#: 虚拟终端 &emsp;&emsp;ttyS#: 串行终端 &emsp;&emsp;pts#: 伪终端 Linux的6种运行级别： &emsp;&emsp;0: halt，关机 &emsp;&emsp;1: single user mode，无需密码，直接以管理员身份登录 &emsp;&emsp;2: multi user mode, no NFS, 不带网络的多用户模式 &emsp;&emsp;3: multi user mode, text mode, 多用户模式，文本界面 &emsp;&emsp;4: reserved 保留 &emsp;&emsp;5: multi user mode, graphic mode 带图形界面的多用户模式 &emsp;&emsp;6: reboot 重启 一般的 Linux 启动流程： &emsp;&emsp;POST –&gt; BIOS(Boot Sequence) –&gt; MBR(bootloader) –&gt; kernel –&gt; initrd –&gt; (ROOTFS) /sbin/init (/etc/inittab)]]></content>
+    <content type="text"><![CDATA[&emsp;&emsp;whatis : 用于查询一个命令执行功能，并将查询的结果打印到终端。 &emsp;&emsp;which : 用于查找并显示给命令的绝对路径，环境变量PATH中保存了查找命令时需要遍历的目录。 &emsp;&emsp;whreris : 用了定位指令的二进制程序、源代码和man手册页等相关的路径。 &emsp;&emsp;w : 用于显示已经登陆系统的用户列表，并显示用户正在执行的指令。 &emsp;&emsp;who : 用于显示目前登陆系统的用户信息。 &emsp;&emsp;whoami : 打印当前有效用户名称。 引用和转义： &emsp;&emsp;使用反斜线 \ 引用单个字符(转义了这个字符)，比单引号和双引号强 &emsp;&emsp;使用单引号转义一串字符(弱引用) &emsp;&emsp;使用双引号引用一堆字符，但是保留 $ 、\ 、` (反引号) 的特殊含义(强引用) alias可以显示你设置的别名，也可以 alias ll=’ls -l’ ，这样就建立了 ll 为 ls -l 的别名，可以将其写到 shell 的配置文件中 ，比如/etc/bashrc 、~.bashrc，使用 unalias 取消别名，而且我们可以使用 反斜线( \ ) 来屏蔽别名，一般的Linux都会将 ls 设置成 ‘ls -d .* –color=auto’ 的别名，如果使用 \ls 则会屏蔽这个别名。 &emsp;&emsp;Shell常见的状态码，执行一个命令或运行一个程序结束之后，可以使用 echo $? 来查看退出状态码（0—255） 0 命令成功结束 1 通用未知错误 2 误用shell命令 126 命令不可执行 127 没找到命令 128 无效退出参数 128+x Linux信号X的严重错误 130 命令通过Ctrl+C控制码越界 255 退出码越界 查询公网地址： &emsp;&emsp;UNIX/Linux: &emsp;&emsp;&emsp;&emsp;curl cip.cc&emsp;&emsp;&emsp;&emsp;culr ifconfig.me &emsp;&emsp;&emsp;&emsp; curl ip.cn &emsp;&emsp;Windows:&emsp;&emsp;&emsp;&emsp; &emsp;telnet cip.cc&emsp;&emsp;&emsp;&emsp;ftp cip.cc cat -v -e 显示不可打印的字符和行尾 端口号即对应的服务：/etc/service Client端是随机开放一个大于 1024 的 port 进行链接，只有 root 可以启动小于1024的端口 服务端启动的监听端口所对应的服务是固定的，客户端启动程序时，随机启动一个大于 1024 以上的端口 touch可创建文件或者更改文件的3个时间 123atime 最近访问时间mtime 最近更改时间(只修改件内容的时间)ctime 最近改动文件的时间(指最近改动inode的时间,文件属性） shell隐藏密码 1read -p "Please input your passwd:" -s passwd centos安装完整的manpages(支持posix函数（内核api）) 1yum -y install man-pages Ubuntu安装ssr-qt5,实现科学上网 1234sudo add-apt-repository ppa:hzwhuang/ss-qt5sudo apt-get updatesudo apt-get install shadowsocks-qt5 sudo apt-get -f install lsat: 显示 /var/log/wtmp 文件，显示用户登录历史和系统重启历史 lastb: 显示 /var/log/btmp 文件，显示用户错误的登录尝试 lastlog: 显示每一个用户最近一次成功登录信息 终端类型： &emsp;&emsp;console: 控制台 &emsp;&emsp;pty: 物理终端 &emsp;&emsp;tty#: 虚拟终端 &emsp;&emsp;ttyS#: 串行终端 &emsp;&emsp;pts#: 伪终端 Linux的6种运行级别： &emsp;&emsp;0: halt，关机 &emsp;&emsp;1: single user mode，无需密码，直接以管理员身份登录 &emsp;&emsp;2: multi user mode, no NFS, 不带网络的多用户模式 &emsp;&emsp;3: multi user mode, text mode, 多用户模式，文本界面 &emsp;&emsp;4: reserved 保留 &emsp;&emsp;5: multi user mode, graphic mode 带图形界面的多用户模式 &emsp;&emsp;6: reboot 重启 一般的 Linux 启动流程： &emsp;&emsp;POST –&gt; BIOS(Boot Sequence) –&gt; MBR(bootloader) –&gt; kernel –&gt; initrd –&gt; (ROOTFS) /sbin/init (/etc/inittab)]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -122,8 +135,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>TCP/IP</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
@@ -135,7 +148,6 @@
       </categories>
       <tags>
         <tag>TCP/IP</tag>
-        <tag>TCP/UDP</tag>
       </tags>
   </entry>
   <entry>
@@ -502,8 +514,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>SSR</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>

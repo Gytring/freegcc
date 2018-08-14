@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="天不生我李淳罡，万古剑道如长夜">
+<meta name="description" content="&amp;emsp;&amp;emsp;Pacman 是一个软件包管理器,，作为 ArchLinux 发行版的一部分，是 Arch Linux 的鲜明特色。">
 <meta name="keywords" content="Linux,PACMAN,Arch Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux包管理器之PACMAN">
 <meta property="og:url" content="https:gytring.xyz/2018/08/13/Linux包管理器之PACMAN/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Pacman 是一个软件包管理器,，作为 ArchLinux 发行版的一部分，是 Arch Linux 的鲜明特色。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-13T10:04:04.125Z">
+<meta property="og:updated_time" content="2018-08-14T07:27:10.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux包管理器之PACMAN">
-<meta name="twitter:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Pacman 是一个软件包管理器,，作为 ArchLinux 发行版的一部分，是 Arch Linux 的鲜明特色。">
 
 
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  503
                 </span>
               
 
@@ -421,7 +421,16 @@
       
 
       
-        
+        <p>&emsp;&emsp;Pacman 是一个软件包管理器,，作为 ArchLinux 发行版的一部分，是 Arch Linux 的鲜明特色。<a id="more"></a>它将一个简单的二进制包格式和易用的构建系统结合了起来。不管软件包是来自官方的 Arch 库还是用户自己创建，Pacman 都能方便的管理。 </p>
+<p>&emsp;&emsp;Pacman 通过和主服务器同步软件包列表来进行系统更新，这使得注重安全的系统管理员的维护工作成为轻而易举的事情。这种服务器/客户端模式可以使用一条命令就下载/安装软件包，同时安装必需的依赖包。 </p>
+<p>&emsp;&emsp;常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pacman -S   ：安装</span><br><span class="line">pacman -Ss  ：查询</span><br><span class="line">pacman -R   ：删除</span><br><span class="line">pacman -Rs  ：删除包和其依赖</span><br><span class="line">pacman -Qs  ：查询已安装包</span><br><span class="line">pacman -Qi  ：显示查找的包的信息</span><br><span class="line">pacman -Ql  ：显示包的文件安装位置</span><br><span class="line">pacman -Sw  ：下载包但不安装</span><br><span class="line">pacman -U  /path/ ： 安装本地的包</span><br><span class="line">pacman -Scc ： 清除缓存</span><br><span class="line">pacman -Syu ：对整个系统更新</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<code>yaourt-Yet AnOther User Repository Tool</code> 是arch linux方便使用的关键部件之一 ，但没有被整合到系统安装中的工具。建议在装完系统重启之后，更新完pacman和基本系统之后，就安装这个工具。 </p>
+<p>&emsp;&emsp;最简单安装 Yaourt 的方式是添加 Yaourt 源至到 <code>/etc/pacman.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line"><span class="comment">#The Chinese Arch Linux communities packages.</span></span><br><span class="line">SigLevel = Optional TrustedOnly</span><br><span class="line">Server   = http://repo.archlinuxcn.org/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Syu yaourt		<span class="comment">#同步安装</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp; yaourt 常用命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">yaourt -S package_name 	 – 从AUR安装软件包</span><br><span class="line">yaourt -Ss password	   	 – 使用关键字搜索软件包</span><br><span class="line">yaourt -Syu –aur 	   	 – 从AUR升级本地软件数据库并安装更新</span><br><span class="line">yaourt -Si package_name  – 列出软件包信息</span><br><span class="line">yaourt -Sc 			   	– 从缓存中清楚旧的软件包</span><br><span class="line">yaourt -Su 				– 安装AUR中的更新软件包</span><br><span class="line">yaourt -Sy 				– 获取最新的AUR软件包数据库</span><br><span class="line">yaourt -Cd 				– 清楚AUR软件包数据库</span><br><span class="line">yaourt -R package_name 	 – 删除软件包</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -491,6 +500,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/14/UNIX环境高级编程第十一章线程/" rel="prev" title="UNIX环境高级编程第十一章线程">
+                UNIX环境高级编程第十一章线程 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -562,7 +575,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -584,7 +597,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

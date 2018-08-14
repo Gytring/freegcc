@@ -4,6 +4,54 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/08/13/Linux%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E4%B9%8BPACMAN/</loc>
+    <lastmod>2018-08-14T07:27:10.099Z</lastmod>
+    <data>
+        <display>
+        <title>Linux包管理器之PACMAN</title>
+        <pubTime>2018-08-13T08:23:41.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>PACMAN</tag>
+         
+        <tag>Arch Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/08/14/UNIX%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E7%BA%BF%E7%A8%8B/</loc>
+    <lastmod>2018-08-14T06:52:16.200Z</lastmod>
+    <data>
+        <display>
+        <title>UNIX环境高级编程第十一章线程</title>
+        <pubTime>2018-08-14T06:22:39.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>APUE</tag>
+         
+        <tag>pthread</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="https:gytring.xyz/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/08/13/Linux%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E4%B9%8BDPKG/</loc>
     <lastmod>2018-08-14T02:31:10.493Z</lastmod>
     <data>
@@ -44,30 +92,6 @@
         <tag>yum</tag>
          
         <tag>dnf</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https:gytring.xyz/2018/08/13/Linux%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E4%B9%8BPACMAN/</loc>
-    <lastmod>2018-08-13T10:04:04.125Z</lastmod>
-    <data>
-        <display>
-        <title>Linux包管理器之PACMAN</title>
-        <pubTime>2018-08-13T08:23:41.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>PACMAN</tag>
-         
-        <tag>Arch Linux</tag>
          
          
            

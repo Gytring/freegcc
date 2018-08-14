@@ -4,6 +4,106 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/08/13/Linux%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E4%B9%8BDPKG/</loc>
+    <lastmod>2018-08-14T02:31:10.493Z</lastmod>
+    <data>
+        <display>
+        <title>Linux包管理器之DPKG</title>
+        <pubTime>2018-08-13T08:23:19.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>DPKG</tag>
+         
+        <tag>apt-get</tag>
+         
+        <tag>Debian</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/08/13/Linux%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E4%B9%8BRPM/</loc>
+    <lastmod>2018-08-13T10:06:42.587Z</lastmod>
+    <data>
+        <display>
+        <title>Linux包管理器之RPM</title>
+        <pubTime>2018-08-13T08:22:40.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>RPM</tag>
+         
+        <tag>yum</tag>
+         
+        <tag>dnf</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/08/13/Linux%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E4%B9%8BPACMAN/</loc>
+    <lastmod>2018-08-13T10:04:04.125Z</lastmod>
+    <data>
+        <display>
+        <title>Linux包管理器之PACMAN</title>
+        <pubTime>2018-08-13T08:23:41.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>PACMAN</tag>
+         
+        <tag>Arch Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/08/09/Linux%E7%BB%88%E7%AB%AF%E4%BD%BF%E7%94%A8Shadowsocks%E5%92%8Cproxychains%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%90%86%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
+    <lastmod>2018-08-10T09:06:42.632Z</lastmod>
+    <data>
+        <display>
+        <title>Linux终端使用Shadowsocks和proxychains实现代理科学上网</title>
+        <pubTime>2018-08-09T02:11:20.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>SSR</tag>
+         
+        <tag>proxychains</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/08/10/head%E5%91%BD%E4%BB%A4%E5%92%8Ctail%E5%91%BD%E4%BB%A4%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
     <lastmod>2018-08-10T06:40:25.033Z</lastmod>
     <data>
@@ -41,30 +141,6 @@
            
              
               <breadCrumb title="Network" url="https:gytring.xyz/categories/Network/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https:gytring.xyz/2018/08/09/Linux%E7%BB%88%E7%AB%AF%E4%BD%BF%E7%94%A8Shadowsocks%E5%92%8Cproxychains%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%90%86%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
-    <lastmod>2018-08-09T03:00:12.335Z</lastmod>
-    <data>
-        <display>
-        <title>Linux终端使用Shadowsocks和proxychains实现代理科学上网</title>
-        <pubTime>2018-08-09T02:11:20.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>SSR</tag>
-         
-        <tag>proxychains</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
           
         </display>
     </data>

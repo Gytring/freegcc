@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="剑来">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;通常在 Windows 或者 Linux 图形界面上有很多方法实现科学上网，但很多时候在 Linux 终端的字符界面也有科学上网的需求，比如安装源在国外的软件，此篇介绍在终端字符界面上实现科学上网。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-09T03:00:12.335Z">
+<meta property="og:updated_time" content="2018-08-10T09:06:42.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux终端使用Shadowsocks和proxychains实现代理科学上网">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;通常在 Windows 或者 Linux 图形界面上有很多方法实现科学上网，但很多时候在 Linux 终端的字符界面也有科学上网的需求，比如安装源在国外的软件，此篇介绍在终端字符界面上实现科学上网。">
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  651
+                  674
                 </span>
               
 
@@ -438,7 +438,7 @@
 <p>&emsp;&emsp;CentOS 需要进行源码编译安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/rofl0r/proxychains-ng</span><br><span class="line"><span class="built_in">cd</span> proxychains-ng</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;编辑配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/proxychains.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp ./src/proxychains.conf /etc/proxychains.conf    //提取配置文件，Ubuntu是不需要这一步的</span><br><span class="line">vim /etc/proxychains.conf</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;注释最后一行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#socks4         127.0.0.1 9050</span></span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;末尾新增一行</p>
@@ -593,7 +593,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -615,7 +615,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

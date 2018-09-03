@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="shell,C/C++," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;在 Linux 中有3个常用的文件描述符，0(STDIN_FILNENO)代表标准输入，1(STDOUT_FILENO)代表标准输出，2(STDERR_FILENO)代表标准出错 ；一般每个进程最多允许同时打开1024个文件描述符">
+<meta name="keywords" content="shell,C&#x2F;C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux笔记(4)">
+<meta property="og:url" content="https:gytring.xyz/2018/09/03/Linux笔记-4/index.html">
+<meta property="og:site_name" content="剑来">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在 Linux 中有3个常用的文件描述符，0(STDIN_FILNENO)代表标准输入，1(STDOUT_FILENO)代表标准输出，2(STDERR_FILENO)代表标准出错 ；一般每个进程最多允许同时打开1024个文件描述符">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-03T05:25:08.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux笔记(4)">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在 Linux 中有3个常用的文件描述符，0(STDIN_FILNENO)代表标准输入，1(STDOUT_FILENO)代表标准输出，2(STDERR_FILENO)代表标准出错 ；一般每个进程最多允许同时打开1024个文件描述符">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:gytring.xyz/2018/09/03/Linux笔记-4/"/>
+
+
+
+
+
+  <title>Linux笔记(4) | 剑来</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Gytring"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">剑来</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">事了拂衣去，深藏身与名</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/09/03/Linux笔记-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="free">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="剑来">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux笔记(4)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:08:36+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/Linux笔记-4/" class="leancloud_visitors" data-flag-title="Linux笔记(4)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,959
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+	
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;在 Linux 中有3个常用的文件描述符，<strong>0(STDIN_FILNENO)代表标准输入，1(STDOUT_FILENO)代表标准输出，2(STDERR_FILENO)代表标准出错 </strong>；一般每个进程最多允许同时打开1024个文件描述符<a id="more"></a>，可用 <code>ulimit -a</code> 查看。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">core file size          (blocks, -c) 0</span><br><span class="line">data seg size           (kbytes, -d) unlimited</span><br><span class="line">scheduling priority             (-e) 0</span><br><span class="line">file size               (blocks, -f) unlimited</span><br><span class="line">pending signals                 (-i) 63928</span><br><span class="line">max locked memory       (kbytes, -l) 64</span><br><span class="line">max memory size         (kbytes, -m) unlimited</span><br><span class="line">open files                      (-n) 1024</span><br><span class="line">pipe size            (512 bytes, -p) 8</span><br><span class="line">POSIX message queues     (bytes, -q) 819200</span><br><span class="line">real-time priority              (-r) 0</span><br><span class="line">stack size              (kbytes, -s) 8192</span><br><span class="line">cpu time               (seconds, -t) unlimited</span><br><span class="line">max user processes              (-u) 63928</span><br><span class="line">virtual memory          (kbytes, -v) unlimited</span><br><span class="line">file locks                      (-x) unlimited</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;在 C 语言中，<strong>stdin、stdout、stderr 也分别代表标准输入、标准输出、标准出错</strong>，不过 stdin 是 FILE<em>类型，STDIN_FILENO 是 int 类型；使用stdin的函数主要有：fread、fwrite、fclose等，基本上都以f开头的 C语言库函数；使用STDIN_FILENO的函数有：read、write、close等，是 UNIX 类系统在<code>&lt;unistd.h&gt;</code>文件中定义的预编译宏。程序启动时：**FILE \</em> stdin / stdout / stderr 对应的 文件描述符(fd)分别是 STDIN_FILENO(0) /STDOUT_FILENO(1) / STDERR_FILENO(2)**。</p>
+<p>&emsp;&emsp;在 <code>Linux</code> 命令行上，经常会用到输入输出重定向：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">标准输入stdin：对应的文件描述符是0，符号是&lt;和&lt;&lt;，/dev/stdin -&gt; /proc/self/fd/0</span><br><span class="line"></span><br><span class="line">标准输出stdout：对应的文件描述符是1，符号是&gt;和&gt;&gt;，/dev/stdout -&gt; /proc/self/fd/1</span><br><span class="line"></span><br><span class="line">标准错误stderr：对应的文件描述符是2，符号是2&gt;和2&gt;&gt;，/dev/stderr -&gt; /proc/self/fd/2</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;输出重定向示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#默认情况下，stdin获取屏幕的输入(键盘)，stdout和stderr默认输出到屏幕</span></span><br><span class="line"><span class="comment">#标准输出将ls的结果重定向到stdout文件中，错误输出默认到屏幕；1&gt;与&gt;等价</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ ls &gt; stdout</span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$  cat stdout</span><br><span class="line">Desktop</span><br><span class="line">Documents</span><br><span class="line">Downloads</span><br><span class="line">examples.desktop</span><br><span class="line">free.sh</span><br><span class="line">Music</span><br><span class="line">NVIDIA-Linux-x86_64-384.111.run</span><br><span class="line">Pictures</span><br><span class="line">Public</span><br><span class="line">src</span><br><span class="line">stdout</span><br><span class="line">Templates</span><br><span class="line">update</span><br><span class="line">Videos</span><br><span class="line"><span class="comment">#标准输出将ls(gcc文件不存在，ls会出错)的结果重定向到stdout，错误输出到stderr,也可以使用追加&gt;&gt;模式。</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ ls gcc free.sh &gt;stdout 2&gt;stderr</span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ cat stdout stderr</span><br><span class="line">free.sh</span><br><span class="line">ls: cannot access gcc: No such file or directory</span><br><span class="line"><span class="comment">#将错误输出关闭，输出到null；同样也可以将stdout重定向到null或关闭</span></span><br><span class="line"><span class="comment"># &amp;1代表标准输出，&amp;2代表标准错误，&amp;-代表关闭与它绑定的描述符</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ ls gcc free.sh 2&gt;&amp;-</span><br><span class="line">free.sh</span><br><span class="line"><span class="comment">#不关心错误输出，将其送到黑洞 /dev/null中</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ ls gcc free.sh 2&gt;/dev/null </span><br><span class="line">free.sh</span><br><span class="line"><span class="comment">#&amp; 表示等同于的意思，2&gt;&amp;1，表示2的输出重定向等同于1，即和1重定向的文件系统上的位置是一样的</span></span><br><span class="line"><span class="comment">#&amp;&gt; 等同与 2&gt;&amp;1</span></span><br><span class="line"><span class="comment">#将错误输出和标注输出同时重定给/dev/null(不关心输出结果，常用在脚本中)，也可以重定向到一个文件</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ ls gcc free.sh &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ ls gcc free.sh &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;输入重定向示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#stdin获取屏幕的输入(键盘)，然后输出到file文件，按Ctrl+d结束(表示文件结束的标志)</span></span><br><span class="line"><span class="comment">#&gt; 写到文件回覆盖以前的内容，而 &gt;&gt; 会追加内容到文件</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ cat &gt; file</span><br><span class="line">this</span><br><span class="line">is </span><br><span class="line">a</span><br><span class="line">file</span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ cat file</span><br><span class="line">this</span><br><span class="line">is </span><br><span class="line">a</span><br><span class="line">file</span><br><span class="line"><span class="comment">#输入特定字符EOF，自动结束stdin，常用于向一个文件写内容</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ cat &gt; <span class="built_in">test</span> &lt;&lt;EOF</span><br><span class="line">&gt; this</span><br><span class="line">&gt; is</span><br><span class="line">&gt; a</span><br><span class="line">&gt; <span class="built_in">test</span></span><br><span class="line">&gt; EOF</span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ cat <span class="built_in">test</span></span><br><span class="line">this</span><br><span class="line">is</span><br><span class="line">a</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line"><span class="comment">#使用&gt;&gt; 追加</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ cat &gt;&gt; <span class="built_in">test</span> &lt;&lt;EOF</span><br><span class="line">&gt; append</span><br><span class="line">&gt; hello</span><br><span class="line">&gt; world</span><br><span class="line">&gt; EOF</span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ cat <span class="built_in">test</span></span><br><span class="line">this</span><br><span class="line">is</span><br><span class="line">a</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">append</span><br><span class="line">hello</span><br><span class="line">world</span><br><span class="line"><span class="comment">#tac查看的内容和cat内容是倒过来的</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ tac <span class="built_in">test</span></span><br><span class="line">world</span><br><span class="line">hello</span><br><span class="line">append</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">a</span><br><span class="line">is</span><br><span class="line">this</span><br><span class="line"><span class="comment">#rev是cat查看的内容反过来</span></span><br><span class="line">[deepcam@<span class="built_in">test</span> ~]$ rev <span class="built_in">test</span></span><br><span class="line">siht</span><br><span class="line">si</span><br><span class="line">a</span><br><span class="line">tset</span><br><span class="line">dneppa</span><br><span class="line">olleh</span><br><span class="line">dlrow</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<code>find</code>的常见用法:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">find   path   -option   [   -<span class="built_in">print</span> ]   [ -<span class="built_in">exec</span>   -ok   <span class="built_in">command</span> ]   &#123;&#125; \;</span><br><span class="line"><span class="comment">#path表示所查找的路径</span></span><br><span class="line"><span class="comment">#-option命令行选项</span></span><br><span class="line"><span class="comment">#-print将匹配的结果输出到标准输出，默认操作</span></span><br><span class="line"><span class="comment">#-exec command &#123;&#125; \;：find命令对匹配的文件执行该参数所给出的shell命令；注意&#123;&#125;和\；之间的空格。&#123;&#125;即为find查找的结果，\;表示转义;</span></span><br><span class="line"><span class="comment">#-ok：和-exec相同，只不过在操作前要询用户</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#-option选项有很多，可以多个组合取交集，常见的有</span></span><br><span class="line">	-name  		按文件名查找，支持正则表达式</span><br><span class="line">	-iname 		同name，不区分大小写，不完全支持正则表达式</span><br><span class="line">	-<span class="built_in">type</span>  		根据文件类型查找：f、d、p、l、s、c、b</span><br><span class="line">	-empty		空文件或目录</span><br><span class="line">	-perm		根据权限查找文件</span><br><span class="line">	-user		根据文件所有者查找文件</span><br><span class="line">	-group		按组查找</span><br><span class="line">	-nouser 	查找文件的用户ID不存在的文件</span><br><span class="line">	-mtime -n 	按文件更改时间来查找文件，-n指n天以内，+n指n天以前</span><br><span class="line">	-atime -n   按文件访问时间来查</span><br><span class="line">	-ctime -n   按文件创建时间来查找文件</span><br><span class="line">	-size  -n	根据大小查找文件，-n大小小于n，n大小等于n，+n大小大于n</span><br><span class="line">	-prune      忽略某个目录，多用于组合</span><br><span class="line"><span class="comment">#find . -name  "[A-Z]*" -print  		查以大写字母开头的文件</span></span><br><span class="line"><span class="comment">#find . -perm -777 -exec ls -l &#123;&#125; \;    查所有用户都可读写执行的文件</span></span><br><span class="line"><span class="comment">#find . -size +1000000c  -print         查长度大于1Mb的文件</span></span><br><span class="line"><span class="comment">#find . -name .svn | xargs rm -rf  		找到当前目录下所有名为.svn的文件并删除</span></span><br><span class="line"><span class="comment">#find ./ -empty -type f -print -delete 	查找空文件并删除</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;通常<code>Linux</code>命令可以用<code>|</code>首尾相连，上一个命令的 <code>stdout</code> 连接到下一个命令的 <code>stdin</code>，<strong>标准输出</strong>作为后面命令的<strong>标准输入</strong>。但是如果命令不支持接收标准输入，那么就不能直接使用管道，比如<code>ls</code>、<code>rm</code>等，是从命令行参数接受输入的。这时候如果想把上一个命令的输出传给它们，就不好办了。所以就有了<code>xargs</code>。</p>
+<p>&emsp;&emsp;简单而言，<code>xargs</code>可以把从 stdin 接受到的输入，按空白符或加车符分隔开，然后依次作为参数去调用<code>xargs</code>后面的命令；xargs的默认命令是echo，空格是默认定界符。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-d 		指定分隔符</span></span><br><span class="line"><span class="comment">#-n 		传递参数的个数</span></span><br><span class="line"><span class="comment">#-p 		询问是否执行，输入 y 继续执行，否则不执行</span></span><br><span class="line"><span class="comment">#-a file 	从文件中读入作为sdtin</span></span><br><span class="line"><span class="comment">#-e flag 	当xargs分析到含有flag这个标志的时候就停止</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;在使用 find 配合 -exec 选项处理匹配到的文件时， find命令将所有匹配到的文件一起传递给 exec 执行。但有些系统对能够传递给exec的命令长度有限制，这样在find命令运行几分钟之后，就会出现 溢出错误。错误信息通常是“参数列太长”或“参数列溢出”。这就是xargs命令的用处所在，特别是与find命令一起使用。find命令把匹配到的文件 传递给xargs命令，而xargs命令每次只获取一部分文件而不是全部，不像-exec选项那样。这样它可以先处理最先获取的一部分文件，然后是下一 批，并如此继续下去。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查找所有的jpg 文件，并且压缩它</span></span><br><span class="line"><span class="comment"># find / -name *.jpg -type f -print | xargs tar -cvzf images.tar.gz</span></span><br><span class="line"><span class="comment">#用rm删除过多的文件，产生错误信息：/bin/rm Argument list too long. 用xargs去避免这个问题</span></span><br><span class="line"><span class="comment">#find ~ -name ‘*.log’ -print0 | xargs -i -0 rm -f &#123;&#125;</span></span><br><span class="line"><span class="comment">#ls *.txt | xargs -t -i mv &#123;&#125; &#123;&#125;.bak</span></span><br><span class="line">	mv 1.txt 1.txt.bak </span><br><span class="line">	mv 2.txt 2.txt.bak </span><br><span class="line">	mv 3.txt 3.txt.bak</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+	
+	
+      <div>
+	    
+<div style="text-align:center;color: #ccc;font-size:14px;">
+	------ 本文结束<i class="fa fa-paw"></i> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    free
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https:gytring.xyz/2018/09/03/Linux笔记-4/" title="Linux笔记(4)">https:gytring.xyz/2018/09/03/Linux笔记-4/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
+          
+            <a href="/tags/C-C/" rel="tag"><i class="fa fa-tag"></i> C/C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/27/PowerLine/" rel="next" title="PowerLine">
+                <i class="fa fa-chevron-left"></i> PowerLine
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="free" />
+            
+              <p class="site-author-name" itemprop="name">free</p>
+              <p class="site-description motion-element" itemprop="description">天不生我李淳罡，万古剑道如长夜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Gytring" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fancanglang@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/jiang-hu-44-46" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-gratipay"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2168112375" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                站外链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.rdonly.com/" title="Rdonly" target="_blank">Rdonly</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ilxdh.com/" title="龙轩导航" target="_blank">龙轩导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ss-ssshare.7e14.starter-us-west-2.openshiftapps.com/" title="SSR" target="_blank">SSR</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://rufus.akeo.ie/?locale=zh_CN" title="RUFUS" target="_blank">RUFUS</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://emacs-china.org/" title="Emacs" target="_blank">Emacs</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/vim-china" title="VIM" target="_blank">VIM</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ppzedu.com/" title="Linux中文" target="_blank">Linux中文</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.cilimao.me/" title="磁力猫" target="_blank">磁力猫</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">free</span>
+
+  
+</div>
+
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+-->
+
+<!--
+
+  <span class="post-meta-divider">|</span>
+
+-->
+
+<!--
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PptmLLR5fHYwCytzGHe6DFxu-gzGzoHsz", "T6zkp6TjlUz03o0UqHLAwNEa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"width":100,"height":200,"hOffset":0,"vOffset":-20},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

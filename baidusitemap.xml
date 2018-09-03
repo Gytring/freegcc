@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/09/03/Linux%E7%AC%94%E8%AE%B0-4/</loc>
+    <lastmod>2018-09-03T05:25:08.225Z</lastmod>
+    <data>
+        <display>
+        <title>Linux笔记(4)</title>
+        <pubTime>2018-09-03T01:08:36.000Z</pubTime>
+        
+        <tag>shell</tag>
+         
+        <tag>C/C++</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/08/27/PowerLine/</loc>
     <lastmod>2018-08-28T04:31:05.852Z</lastmod>
     <data>
@@ -221,11 +243,11 @@
         <title>KVM虚拟机磁盘LVM扩容</title>
         <pubTime>2018-08-07T01:59:31.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>KVM</tag>
          
         <tag>LVM</tag>
+         
+        <tag>Linux</tag>
          
          
            
@@ -951,9 +973,9 @@
         <title>TCP/IP的有限状态机</title>
         <pubTime>2018-07-19T01:04:43.000Z</pubTime>
         
-        <tag>Network</tag>
-         
         <tag>TCP/IP</tag>
+         
+        <tag>Network</tag>
          
          
            

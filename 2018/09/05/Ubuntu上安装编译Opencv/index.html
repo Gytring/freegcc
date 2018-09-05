@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Ubuntu,Opencv," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="天不生我李淳罡，万古剑道如长夜">
-<meta name="keywords" content="江湖">
-<meta property="og:type" content="website">
-<meta property="og:title" content="剑来">
-<meta property="og:url" content="https:gytring.xyz/tags/KVM/index.html">
+<meta name="description" content="&amp;emsp;&amp;emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。">
+<meta name="keywords" content="Ubuntu,Opencv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu上安装编译Opencv">
+<meta property="og:url" content="https:gytring.xyz/2018/09/05/Ubuntu上安装编译Opencv/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-05T08:17:45.062Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="剑来">
-<meta name="twitter:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta name="twitter:title" content="Ubuntu上安装编译Opencv">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https:gytring.xyz/tags/KVM/"/>
+  <link rel="canonical" href="https:gytring.xyz/2018/09/05/Ubuntu上安装编译Opencv/"/>
 
 
 
 
 
-  <title>标签: KVM | 剑来</title>
+  <title>Ubuntu上安装编译Opencv | 剑来</title>
   
 
 
@@ -144,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/Gytring"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 	
@@ -286,54 +287,250 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>KVM<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/09/05/Ubuntu上安装编译Opencv/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="free">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="剑来">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/07/KVM虚拟机磁盘LVM扩容/" itemprop="url">
-              
-                <span itemprop="name">KVM虚拟机磁盘LVM扩容</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Ubuntu上安装编译Opencv</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-07T09:59:31+08:00"
-              content="2018-08-07" >
-          08-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-05T15:13:18+08:00">
+                2018-09-05
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/05/Ubuntu上安装编译Opencv/" class="leancloud_visitors" data-flag-title="Ubuntu上安装编译Opencv">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  886
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+	
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。<a id="more"></a></p>
+<p>&emsp;&emsp;但在此还是简单缀叙一下显卡驱动和 Cuda 的安装，注意是英伟达的显卡：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nvidia-375* -y</span><br><span class="line">nvidia-smi</span><br><span class="line"><span class="comment">###这种方式比较简单，也可以从官方下载对应的***.run驱动进行安装</span></span><br><span class="line"><span class="comment">###需要注意的地方就是尽量不要使用UEFI的方式安装系统，否则显卡驱动装不上，具体原因未知</span></span><br><span class="line"><span class="comment">###而且在用**.run驱动装的时候，需要禁用nouveau</span></span><br><span class="line"><span class="comment">###编辑/etc/modprobe.d/blacklist.conf，在末尾加上一行：blacklist nouveau</span></span><br><span class="line"><span class="comment">###重启，关闭图形界面：sudo service lightdm stop</span></span><br><span class="line"><span class="comment">###Ctrl + Alt + F1~F6 进入物理终端</span></span><br><span class="line"><span class="comment">###sudo bash NVIDIA-****.run --no-opengl-files 进行安装</span></span><br><span class="line"><span class="comment">###查看是否安装成功：nvidia-smi</span></span><br><span class="line"><span class="comment">###开启图形界面sudo service lightdm start，Ctrl + Alt + F7 进入图形界面</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;安装 Cuda ，先下载cuda的run驱动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh cuda_8.xx.xxx_linux.run</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;安装依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -y install vim openssh-server git wget </span><br><span class="line">sudo apt-get -y install libxml2-dev libxslt1-dev python-dev</span><br><span class="line">sudo apt-get -y install build-essential gfortran libfreetype6-dev python-dev cmake python-tk</span><br><span class="line">sudo apt-get -y install libgflags-dev libboost-dev libboost-filesystem-dev libboost-regex-dev libboost-python-dev libX11-dev</span><br><span class="line">sudo apt-get -y install libgoogle-glog-dev libprotobuf-dev libleveldb-dev </span><br><span class="line">sudo apt-get -y install libopenblas-dev libboost-system-dev libatlas3-base</span><br><span class="line">sudo apt-get -y install liblmdb-dev libavcodec-dev libavformat-dev libavutil-dev libswscale-dev</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;下载并安装 cudnn</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo tar xvf cudnn-8.0-linux-x64-v5.1.tgz</span><br><span class="line">sudo cp cuda/include/*.h /usr/<span class="built_in">local</span>/cuda-8.0/include/</span><br><span class="line">sudo cp cuda/lib64/lib* /usr/<span class="built_in">local</span>/cuda-8.0/lib64/</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;配置环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###编辑~/.bashrc并加上如下两行</span></span><br><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/cuda-8.0/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/usr/<span class="built_in">local</span>/cuda-8.0/lib64:/usr/<span class="built_in">local</span>/lib:<span class="variable">$LD_LIBRARY_PATH</span></span><br><span class="line"><span class="comment">###重读配置文件使其生效</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;安装Opencv 库依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential </span><br><span class="line">sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev </span><br><span class="line">sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;下载 opencv 源文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###opencv3.4.3和opencv_contrib3.4.3下载地址,若要编译其他版本的opencv，注意保持opencv和opencv_contrib版本一致</span></span><br><span class="line">https://github.com/opencv</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;将opencv和opencv_contrib解压到家目录下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>	opencv-3.4.3</span><br><span class="line">mkdir	build</span><br><span class="line"><span class="built_in">cd</span>	build</span><br><span class="line">cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/<span class="built_in">local</span> -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.4.3/modules/ ..</span><br><span class="line"><span class="comment">###如果不安装opencv_contrib模块，则执行：</span></span><br><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/<span class="built_in">local</span> ..  <span class="comment">##或者cmake ..</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;编译安装，make 或者 make -j8 (-j8是指你电脑可用的内核数，有的是j4）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">make -j8</span><br><span class="line"><span class="comment">#等待时间可能会很长,特别是代GPU和Cuda</span></span><br><span class="line">sudo make install</span><br><span class="line"><span class="comment">#注意一定要加sudo，否则会报出permission问题</span></span><br><span class="line">pkg-config --modversion opencv</span><br><span class="line"><span class="comment">#安装完成后查看opencv版本</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;环境配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo cat &gt;&gt; /etc/ld.so.conf &lt;&lt;EOF</span><br><span class="line">/usr/<span class="built_in">local</span>/lib</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo ldconfig</span><br><span class="line">sudo cat &gt;&gt; /etc/bash.bashrc &lt;&lt;EOF</span><br><span class="line">PKG_CONFIG_PATH=<span class="variable">$PKG_CONFIG_PATH</span>:/usr/<span class="built_in">local</span>/lib/pkgconfig </span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH </span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/bash.bashrc</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>最后，在给服务器装系统的时候，会遇到卡在黑屏的界面，本人被坑过两次；显示屏接VGA，无法进BIOS，黑屏；接HDMI可以进BIOS，但后面进不了安装界面，黑屏；此时需要在BIOS中修改显卡的相关设置，不同的BIOS设置项不一样，但基本都是带”Graphic”、”Display”之类的设置项。修改后支持VGA信号，就可成功装上系统。</strong></p>
 
       
     </div>
+    
+    
+    
+	
+	
+      <div>
+	    
+<div style="text-align:center;color: #ccc;font-size:14px;">
+	------ 本文结束<i class="fa fa-paw"></i> ------</div>
 
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    free
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https:gytring.xyz/2018/09/05/Ubuntu上安装编译Opencv/" title="Ubuntu上安装编译Opencv">https:gytring.xyz/2018/09/05/Ubuntu上安装编译Opencv/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ubuntu/" rel="tag"><i class="fa fa-tag"></i> Ubuntu</a>
+          
+            <a href="/tags/Opencv/" rel="tag"><i class="fa fa-tag"></i> Opencv</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/Linux笔记-5/" rel="next" title="Linux笔记(5)">
+                <i class="fa fa-chevron-left"></i> Linux笔记(5)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -341,6 +538,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -650,6 +851,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

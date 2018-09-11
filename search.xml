@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[gcc编译链接以及动态库静态库]]></title>
+    <url>%2F2018%2F09%2F11%2Fgcc%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E5%BA%93%E9%9D%99%E6%80%81%E5%BA%93%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;gcc 是 “GNU Compiler Collection” 的缩写，最早是由 RMS 编写的一款 C 编译器，是GUN项目的基石之一；现在GCC已经成为了能编译C、C++、Ada、Object C和Java等语言的GNU编译器家族，同时还可执行跨硬件平台的交叉编译工作。 &emsp;&emsp;gcc [-选项1-][-选项2-] …. [-选项n-] &lt;源文件名&gt; &emsp;&emsp;命令名、选项和源文件名之间使用空格分隔，一行命令中可以有多个选项，也可以只有一个选项。文件名可以包含文件的绝对路径，也可以实用相对路径。如果文件名不包含路径，那么源文件被视为在于工作目录中。如果命令中不包含输出的可执行文件名称，那么默认情况下将在工作目录中生成后缀为.out的可执行文件。 &emsp;&emsp;GCC编译选项 编译选项 说明 -c 只进行预处理、编译和汇编，生成.o文件 -S 只进行预处理和编译，生成.s文件 -E 生成预处理文件 -C 预处理时不删除注释信息，常与-E同时使用 -o 指定目标名称，常与-c、-S同时使用，默认是.out -include file 插入一个文件，功能等同源代码中的#include -Dmacro[=defval] 定义一个宏，功能等同源代码中的#define macro[defval] -Umaacro 取消一个宏，功能等同源代码中的#undefine macro -Idir 优先在选项后的目录中查找包含的头文件 -Iname 指定动态库名 -Ldir 指定编译搜索库的路径 -g 编译器编译时加入debug信息 -pg 编译器编译时加入信息给gprof -share 使用动态库 -fPIC 编译为位置独立的代码 -static 禁止使用动态库 &emsp;&emsp;GCC编译C源码有四个步骤：预处理—&gt; 编译 —&gt; 汇编 —&gt; 链接，如下图 预处理(Pre-processing) 12345678910111213141516171819202122232425262728293031323334353637[test@hurd]$ vim test.c#include &lt;stdio.h&gt;int main(void)&#123; printf("Hello world\n"); return 0;&#125;[test@hurd]$ gcc -E test.c -o test.pre.c[test@hurd]$ vim test.pre.c# 1 "test.c"# 1 "&lt;built-in&gt;"# 1 "&lt;command-line&gt;"# 1 "/usr/include/stdc-predef.h" 1 3 4# 1 "&lt;command-line&gt;" 2# 1 "test.c"# 1 "/usr/include/stdio.h" 1 3 4# 27 "/usr/include/stdio.h" 3 4# 1 "/usr/include/features.h" 1 3 4# 374 "/usr/include/features.h" 3 4# 1 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 1 3 4# 385 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 3 4# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4# 386 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 2 3 4# 375 "/usr/include/features.h" 2 3 4# 398 "/usr/include/features.h" 3 4............extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));# 943 "/usr/include/stdio.h" 3 4# 2 "test.c" 2int main(void)&#123; printf("Hello world\n"); return 0;&#125;###在此阶段，编译器将C源代码中的包含的头文件如stdio.h编译进来 编译阶段(Compiling) 1234567891011121314151617181920212223242526272829###在此阶段中，gcc首先要检查代码的规范性、是否有语法错误等，以确定代码的实际要做的工作，在检查无误后，gcc把代码翻译成汇编语言；用户可以使用”-S”选项来进行查看，该选项只进行编译而不进行汇编，生成汇编代码。[test@hurd]$ gcc -S test.pre.c -o test.s[test@hurd]$ vim test.s .file "test.pre.c" .section .rodata.LC0: .string "Hello world" .text .globl main .type main, @functionmain:.LFB0: .cfi_startproc pushq %rbp .cfi_def_cfa_offset 16 .cfi_offset 6, -16 movq %rsp, %rbp .cfi_def_cfa_register 6 movl $.LC0, %edi call puts movl $0, %eax popq %rbp .cfi_def_cfa 7, 8 ret .cfi_endproc.LFE0: .size main, .-main .ident "GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4" .section .note.GNU-stack,"",@progbits 汇编阶段(Assembling) 1234###此阶段是把编译阶段生成的".s"文件转成二进制目标代码[test@hurd]$ gcc -c test.s -o test.o[test@hurd]$ lstest.c test.pre.c test.o test.s 连接阶段(Link) 1234###此阶段，将编译输出文件"test.o"链接成最终可执行文件"test"[test@hurd]$ gcc test.o -o test[test@hurd]$ ./testHello world &emsp;&emsp;在这个小程序中并没有定义”printf”函数的实现，且在预编译中包含的头文件”stdio.h”中也只有该函数的声明，而没有定义函数的实现；那么，是在哪里实现”printf”函数的呢？最后的答案是：系统把这些函数实现都被做到名为libc.so.6的库文件中去了，在没有特别指定时，gcc会到系统默认的搜索系统路径”/usr/lib”下进行查找，也就是链接到libc.so.6库函数中去，这样就能实现函数”printf” ，而这也就是链接的作用。&emsp;&emsp;用ldd命令查看动态库加载情况： 1234[test@hurd]$ ldd test linux-vdso.so.1 =&gt; (0x00007ffcf3561000) libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007efc1c358000) /lib64/ld-linux-x86-64.so.2 (0x000055d59c8fe000) &emsp;&emsp;函数库一般分为静态库和动态库。静态库是指编译链接时，把库文件的代码全部加入到可执行文件中，因此生成的文件比较大，但在运行时也就不再需要库文件了。其后缀名一般为”.a”；动态库与之相反，在编译链接时并没有把库文件的代码加入到可执行文件中，而是在程序执行时加载，以节省系统的开销。动态库一般后缀名为”.so”，libc.so.6就是动态库。gcc在编译时默认使用动态库。 &emsp;&emsp;静态库(.a、.lib)和动态库(.so、.dll)；windows上对应的是.lib、.dll；linux上对应的是.a、.so &emsp;&emsp;Linux静态库命名规范，必须是”lib[your_library_name].a”：lib为前缀，中间是静态库名，扩展名为.a。 1234567891011121314151617181920212223242526272829303132333435363738###创建静态库###将代码文件编译成目标文件.o[test@hurd]$ gcc -c test.c -o test.o###通过ar工具将目标文件打包成.a静态库文件###ar(archive)对一个或者多个目标文件.o进行归档， 形成一个静态库.a文件###ar crs ------ 把目标文件转换为静态库###ar -vt libtest.a 查看静态库中有哪些目标文件 （实际上就相当于：objdump -a libtest.a）###ar -x libtest.a 将静态库中的目标文件取（解压）出来，放在当前目录下[test@hurd]$ vim foo1.cvoid foo1()&#123; printf("This is foo1!\n");&#125;[test@hurd]$ vim foo2.cvoid foo2()&#123; printf("This is foo2!\n");&#125;[test@hurd]$ vim main.c#include &lt;stdio.h&gt;int main(void)&#123; foo1(); foo2(); printf("This is main!\n"); return 0;&#125;[test@hurd]$ ar crs libfoo.a foo1.o foo2.o[test@hurd]$ ar -t libfoo.a foo1.ofoo2.o[test@hurd]$ gcc main.c libfoo.a -o main[test@hurd]$ ./mainThis is foo1!This is foo2!This is main!###运行结果正常 &emsp;&emsp;Linux动态库命名规则：形式为 libxxx.so，前缀是lib，后缀名为””.so”；对于实际库文件，每个共享库都有个特殊的名字”soname”。在程序启动后，程序通过这个名字来告诉动态加载器该载入哪个共享库；在文件系统中，soname仅是一个链接到实际动态库的链接。对于动态库而言，每个库实际上都有另一个名字给编译器来用；它是一个指向实际库镜像文件的链接文件(lib+soname+.so)。 123456789101112131415161718192021222324252627282930###创建动态库###-fPIC 创建与地址无关的编译程序(pic，position independent code)，为了能够在多个应用程序间共享###-share 使用动态库[test@hurd]$ gcc -shared -fPIC -o libfoo.so foo1.c foo2.c[test@hurd]$ gcc -o main2 main.c -L. -lfoo###-L 指定在当前路径搜索动态库###-l 指定动态库foo[test@hurd]$ ./main2./main2: error while loading shared libraries: libfoo.so: cannot open shared object file: No such file or directory###发现报错，很正常，因为libfoo.so在当前目录，并不在程序运行时搜索动态库的目录[test@hurd]$ vim /etc/ld.so.confinclude /etc/ld.so.conf.d/*.conf###/etc/ld.so.conf.d/*.conf文件中定义了程序运行搜索动态库的目录###两种方法解决上述问题，将libfoo.so复制到/lib或/usr/lib下###另一种方法时将libfoo.so所在的目录添加到/etc/ld.so.conf文件中，并运行ldconfig [test@hurd]$ vim vim /etc/ld.so.confinclude /etc/ld.so.conf.d/*.conf/home/deepcam/freegcc[test@hurd]$ sudo ldconfig[test@hurd]$ ./main2 This is foo1!This is foo2!This is main!###程序正常运行###ldd命令可以查看一个可执行程序依赖的共享库[test@hurd]$ ldd main2 linux-vdso.so.1 =&gt; (0x00007fffa95e5000) libfoo.so =&gt; /home/deepcam/freegcc/libfoo.so (0x00007f5826e6c000) libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f5826aa7000) /lib64/ld-linux-x86-64.so.2 (0x00005654cca81000)]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>GCC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Ubuntu上安装编译Opencv]]></title>
     <url>%2F2018%2F09%2F05%2FUbuntu%E4%B8%8A%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91Opencv%2F</url>
     <content type="text"><![CDATA[&emsp;&emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。 &emsp;&emsp;但在此还是简单缀叙一下显卡驱动和 Cuda 的安装，注意是英伟达的显卡： 123456789101112sudo apt-get updatesudo apt-get install nvidia-375* -ynvidia-smi###这种方式比较简单，也可以从官方下载对应的***.run驱动进行安装###需要注意的地方就是尽量不要使用UEFI的方式安装系统，否则显卡驱动装不上，具体原因未知###而且在用**.run驱动装的时候，需要禁用nouveau###编辑/etc/modprobe.d/blacklist.conf，在末尾加上一行：blacklist nouveau###重启，关闭图形界面：sudo service lightdm stop###Ctrl + Alt + F1~F6 进入物理终端###sudo bash NVIDIA-****.run --no-opengl-files 进行安装###查看是否安装成功：nvidia-smi###开启图形界面sudo service lightdm start，Ctrl + Alt + F7 进入图形界面 &emsp;&emsp;安装 Cuda ，先下载cuda的run驱动 1sudo sh cuda_8.xx.xxx_linux.run &emsp;&emsp;安装依赖 1234567sudo apt-get -y install vim openssh-server git wget sudo apt-get -y install libxml2-dev libxslt1-dev python-devsudo apt-get -y install build-essential gfortran libfreetype6-dev python-dev cmake python-tksudo apt-get -y install libgflags-dev libboost-dev libboost-filesystem-dev libboost-regex-dev libboost-python-dev libX11-devsudo apt-get -y install libgoogle-glog-dev libprotobuf-dev libleveldb-dev sudo apt-get -y install libopenblas-dev libboost-system-dev libatlas3-basesudo apt-get -y install liblmdb-dev libavcodec-dev libavformat-dev libavutil-dev libswscale-dev &emsp;&emsp;下载并安装 cudnn 123sudo tar xvf cudnn-8.0-linux-x64-v5.1.tgzsudo cp cuda/include/*.h /usr/local/cuda-8.0/include/sudo cp cuda/lib64/lib* /usr/local/cuda-8.0/lib64/ &emsp;&emsp;配置环境变量 12345###编辑~/.bashrc并加上如下两行export PATH=/usr/local/cuda-8.0/bin:$PATHexport LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:/usr/local/lib:$LD_LIBRARY_PATH###重读配置文件使其生效source ~/.bashrc &emsp;&emsp;安装Opencv 库依赖 123sudo apt-get install build-essential sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev &emsp;&emsp;下载 opencv 源文件 12###opencv3.4.3和opencv_contrib3.4.3下载地址,若要编译其他版本的opencv，注意保持opencv和opencv_contrib版本一致https://github.com/opencv &emsp;&emsp;将opencv和opencv_contrib解压到家目录下 123456cd opencv-3.4.3mkdir buildcd buildcmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.4.3/modules/ ..###如果不安装opencv_contrib模块，则执行：cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. ##或者cmake .. &emsp;&emsp;编译安装，make 或者 make -j8 (-j8是指你电脑可用的内核数，有的是j4） 123456make -j8#等待时间可能会很长,特别是代GPU和Cudasudo make install#注意一定要加sudo，否则会报出permission问题pkg-config --modversion opencv#安装完成后查看opencv版本 &emsp;&emsp;环境配置 1234567891011sudo cat &gt;&gt; /etc/ld.so.conf &lt;&lt;EOF/usr/local/libEOFsudo ldconfigsudo cat &gt;&gt; /etc/bash.bashrc &lt;&lt;EOFPKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig export PKG_CONFIG_PATH EOFsource /etc/bash.bashrc &emsp;&emsp;最后，在给服务器装系统的时候，会遇到卡在黑屏的界面，本人被坑过两次；显示屏接VGA，无法进BIOS，黑屏；接HDMI可以进BIOS，但后面进不了安装界面，黑屏；此时需要在BIOS中修改显卡的相关设置，不同的BIOS设置项不一样，但基本都是带”Graphic”、”Display”之类的设置项。修改后支持VGA信号，就可成功装上系统。]]></content>
@@ -44,8 +56,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>PowerLine</tag>
         <tag>VIM</tag>
+        <tag>PowerLine</tag>
       </tags>
   </entry>
   <entry>
@@ -136,9 +148,9 @@
         <category>Linux</category>
       </categories>
       <tags>
+        <tag>Linux</tag>
         <tag>KVM</tag>
         <tag>LVM</tag>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -250,8 +262,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>TCP/IP</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
@@ -629,8 +641,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>SSR</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>

@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C/C++,GCC," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;gcc 是 “GNU Compiler Collection” 的缩写，最早是由 RMS 编写的一款 C 编译器，是GUN项目的基石之一；现在GCC已经成为了能编译C、C++、Ada、Object C和Java等语言的GNU编译器家族，同时还可执行跨硬件平台的交叉编译工作。">
+<meta name="keywords" content="C&#x2F;C++,GCC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gcc编译链接以及动态库静态库">
+<meta property="og:url" content="https:gytring.xyz/2018/09/11/gcc编译链接以及动态库静态库/index.html">
+<meta property="og:site_name" content="剑来">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;gcc 是 “GNU Compiler Collection” 的缩写，最早是由 RMS 编写的一款 C 编译器，是GUN项目的基石之一；现在GCC已经成为了能编译C、C++、Ada、Object C和Java等语言的GNU编译器家族，同时还可执行跨硬件平台的交叉编译工作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1fv5jf0vxoyj20ce0adt9r.jpg">
+<meta property="og:updated_time" content="2018-09-11T07:48:44.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gcc编译链接以及动态库静态库">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;gcc 是 “GNU Compiler Collection” 的缩写，最早是由 RMS 编写的一款 C 编译器，是GUN项目的基石之一；现在GCC已经成为了能编译C、C++、Ada、Object C和Java等语言的GNU编译器家族，同时还可执行跨硬件平台的交叉编译工作。">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1fv5jf0vxoyj20ce0adt9r.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:gytring.xyz/2018/09/11/gcc编译链接以及动态库静态库/"/>
+
+
+
+
+
+  <title>gcc编译链接以及动态库静态库 | 剑来</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Gytring"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">剑来</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">事了拂衣去，深藏身与名</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/09/11/gcc编译链接以及动态库静态库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="free">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="剑来">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">gcc编译链接以及动态库静态库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T11:35:05+08:00">
+                2018-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/11/gcc编译链接以及动态库静态库/" class="leancloud_visitors" data-flag-title="gcc编译链接以及动态库静态库">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,198
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+	
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;gcc 是 “GNU Compiler Collection” 的缩写，最早是由 RMS 编写的一款 C 编译器，是GUN项目的基石之一；现在GCC已经成为了能编译C、C++、Ada、Object C和Java等语言的GNU编译器家族，同时还可执行跨硬件平台的交叉编译工作。<a id="more"></a></p>
+<p>&emsp;&emsp;<strong>gcc  [-选项1-][-选项2-] …. [-选项n-] &lt;源文件名&gt;</strong></p>
+<p>&emsp;&emsp;命令名、选项和源文件名之间使用空格分隔，一行命令中可以有多个选项，也可以只有一个选项。文件名可以包含文件的绝对路径，也可以实用相对路径。如果文件名不包含路径，那么源文件被视为在于工作目录中。如果命令中不包含输出的可执行文件名称，那么默认情况下将在工作目录中生成后缀为.out的可执行文件。</p>
+<p>&emsp;&emsp;<strong>GCC编译选项</strong></p>
+<table>
+<thead>
+<tr>
+<th>编译选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-c</td>
+<td>只进行预处理、编译和汇编，生成.o文件</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>只进行预处理和编译，生成.s文件</td>
+</tr>
+<tr>
+<td>-E</td>
+<td>生成预处理文件</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>预处理时不删除注释信息，常与-E同时使用</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>指定目标名称，常与-c、-S同时使用，默认是.out</td>
+</tr>
+<tr>
+<td>-include file</td>
+<td>插入一个文件，功能等同源代码中的#include</td>
+</tr>
+<tr>
+<td>-Dmacro[=defval]</td>
+<td>定义一个宏，功能等同源代码中的#define macro[defval]</td>
+</tr>
+<tr>
+<td>-Umaacro</td>
+<td>取消一个宏，功能等同源代码中的#undefine macro</td>
+</tr>
+<tr>
+<td>-Idir</td>
+<td>优先在选项后的目录中查找包含的头文件</td>
+</tr>
+<tr>
+<td>-Iname</td>
+<td>指定动态库名</td>
+</tr>
+<tr>
+<td>-Ldir</td>
+<td>指定编译搜索库的路径</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>编译器编译时加入debug信息</td>
+</tr>
+<tr>
+<td>-pg</td>
+<td>编译器编译时加入信息给gprof</td>
+</tr>
+<tr>
+<td>-share</td>
+<td>使用动态库</td>
+</tr>
+<tr>
+<td>-fPIC</td>
+<td>编译为位置独立的代码</td>
+</tr>
+<tr>
+<td>-static</td>
+<td>禁止使用动态库</td>
+</tr>
+</tbody>
+</table>
+<p>&emsp;&emsp;GCC编译C源码有四个步骤：<strong>预处理—&gt; 编译 —&gt; 汇编 —&gt; 链接</strong>，如下图</p>
+<p><img src="https://ws1.sinaimg.cn/large/813ac4f7gy1fv5jf0vxoyj20ce0adt9r.jpg" alt=""></p>
+<ol>
+<li><p><strong>预处理(Pre-processing)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">test</span>@hurd]$ vim test.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world\n"</span>);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc -E test.c -o test.pre.c</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ vim test.pre.c</span><br><span class="line"><span class="comment"># 1 "test.c"</span></span><br><span class="line"><span class="comment"># 1 "&lt;built-in&gt;"</span></span><br><span class="line"><span class="comment"># 1 "&lt;command-line&gt;"</span></span><br><span class="line"><span class="comment"># 1 "/usr/include/stdc-predef.h" 1 3 4</span></span><br><span class="line"><span class="comment"># 1 "&lt;command-line&gt;" 2</span></span><br><span class="line"><span class="comment"># 1 "test.c"</span></span><br><span class="line"><span class="comment"># 1 "/usr/include/stdio.h" 1 3 4</span></span><br><span class="line"><span class="comment"># 27 "/usr/include/stdio.h" 3 4</span></span><br><span class="line"><span class="comment"># 1 "/usr/include/features.h" 1 3 4</span></span><br><span class="line"><span class="comment"># 374 "/usr/include/features.h" 3 4</span></span><br><span class="line"><span class="comment"># 1 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 1 3 4</span></span><br><span class="line"><span class="comment"># 385 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 3 4</span></span><br><span class="line"><span class="comment"># 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4</span></span><br><span class="line"><span class="comment"># 386 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 2 3 4</span></span><br><span class="line"><span class="comment"># 375 "/usr/include/features.h" 2 3 4</span></span><br><span class="line"><span class="comment"># 398 "/usr/include/features.h" 3 4</span></span><br><span class="line">......</span><br><span class="line">......</span><br><span class="line">extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));</span><br><span class="line"><span class="comment"># 943 "/usr/include/stdio.h" 3 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 "test.c" 2</span></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">"Hello world\n"</span>);</span><br><span class="line"> <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">###在此阶段，编译器将C源代码中的包含的头文件如stdio.h编译进来</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>编译阶段(Compiling)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###在此阶段中，gcc首先要检查代码的规范性、是否有语法错误等，以确定代码的实际要做的工作，在检查无误后，gcc把代码翻译成汇编语言；用户可以使用”-S”选项来进行查看，该选项只进行编译而不进行汇编，生成汇编代码。</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc -S test.pre.c -o test.s</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ vim test.s</span><br><span class="line">    .file   <span class="string">"test.pre.c"</span></span><br><span class="line">    .section    .rodata</span><br><span class="line">.LC0:</span><br><span class="line">    .string <span class="string">"Hello world"</span></span><br><span class="line">    .text</span><br><span class="line">    .globl  main</span><br><span class="line">    .<span class="built_in">type</span>   main, @<span class="keyword">function</span></span><br><span class="line">main:</span><br><span class="line">.LFB0:</span><br><span class="line">    .cfi_startproc</span><br><span class="line">    pushq   %rbp</span><br><span class="line">    .cfi_def_cfa_offset 16</span><br><span class="line">    .cfi_offset 6, -16 </span><br><span class="line">    movq    %rsp, %rbp</span><br><span class="line">    .cfi_def_cfa_register 6</span><br><span class="line">    movl    $.LC0, %edi</span><br><span class="line">    call    puts</span><br><span class="line">    movl    <span class="variable">$0</span>, %eax</span><br><span class="line">    popq    %rbp</span><br><span class="line">    .cfi_def_cfa 7, 8</span><br><span class="line">    ret </span><br><span class="line">    .cfi_endproc</span><br><span class="line">.LFE0:</span><br><span class="line">    .size   main, .-main</span><br><span class="line">    .ident  <span class="string">"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4"</span></span><br><span class="line">    .section    .note.GNU-stack,<span class="string">""</span>,@progbits</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>汇编阶段(Assembling)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###此阶段是把编译阶段生成的".s"文件转成二进制目标代码</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc -c test.s -o test.o</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ls</span><br><span class="line">test.c  test.pre.c	test.o  test.s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>连接阶段(Link)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###此阶段，将编译输出文件"test.o"链接成最终可执行文件"test"</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc test.o -o <span class="built_in">test</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ./<span class="built_in">test</span></span><br><span class="line">Hello world</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;在这个小程序中并没有定义”printf”函数的实现，且在预编译中包含的头文件”stdio.h”中也只有该函数的声明，而没有定义函数的实现；那么，是在哪里实现”printf”函数的呢？最后的答案是：系统把这些函数实现都被做到名为libc.so.6的库文件中去了，在没有特别指定时，gcc会到系统默认的搜索系统路径”/usr/lib”下进行查找，也就是链接到libc.so.6库函数中去，这样就能实现函数”printf” ，而这也就是链接的作用。<br>&emsp;&emsp;用ldd命令查看动态库加载情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">test</span>@hurd]$ ldd <span class="built_in">test</span></span><br><span class="line">	linux-vdso.so.1 =&gt;  (0x00007ffcf3561000)</span><br><span class="line">	libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007efc1c358000)</span><br><span class="line">	/lib64/ld-linux-x86-64.so.2 (0x000055d59c8fe000)</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;函数库一般分为静态库和动态库。静态库是指编译链接时，把库文件的代码全部加入到可执行文件中，因此生成的文件比较大，但在运行时也就不再需要库文件了。其后缀名一般为”.a”；动态库与之相反，在编译链接时并没有把库文件的代码加入到可执行文件中，而是在程序执行时加载，以节省系统的开销。动态库一般后缀名为”.so”，libc.so.6就是动态库。gcc在编译时默认使用动态库。</p>
+</li>
+</ol>
+<p>&emsp;&emsp;<strong>静态库(.a、.lib)和动态库(.so、.dll)；windows上对应的是.lib、.dll；linux上对应的是.a、.so</strong></p>
+<p>&emsp;&emsp;Linux静态库命名规范，必须是”lib[your_library_name].a”：lib为前缀，中间是静态库名，扩展名为.a。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###创建静态库</span></span><br><span class="line"><span class="comment">###将代码文件编译成目标文件.o</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc -c test.c -o test.o</span><br><span class="line"><span class="comment">###通过ar工具将目标文件打包成.a静态库文件</span></span><br><span class="line"><span class="comment">###ar(archive)对一个或者多个目标文件.o进行归档， 形成一个静态库.a文件</span></span><br><span class="line"><span class="comment">###ar crs ------    把目标文件转换为静态库</span></span><br><span class="line"><span class="comment">###ar -vt libtest.a 查看静态库中有哪些目标文件  （实际上就相当于：objdump -a libtest.a）</span></span><br><span class="line"><span class="comment">###ar -x  libtest.a 将静态库中的目标文件取（解压）出来，放在当前目录下</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ vim foo1.c</span><br><span class="line">void foo1()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"This is foo1!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ vim foo2.c</span><br><span class="line">void foo2()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"This is foo2!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ vim main.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    foo1();</span><br><span class="line">    foo2();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"This is main!\n"</span>);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ar crs libfoo.a foo1.o foo2.o</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ar -t libfoo.a </span><br><span class="line">foo1.o</span><br><span class="line">foo2.o</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc main.c libfoo.a -o main</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ./main</span><br><span class="line">This is foo1!</span><br><span class="line">This is foo2!</span><br><span class="line">This is main!</span><br><span class="line"><span class="comment">###运行结果正常</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;Linux动态库命名规则：形式为 libxxx.so，前缀是lib，后缀名为””.so”；对于实际库文件，每个共享库都有个特殊的名字”soname”。在程序启动后，程序通过这个名字来告诉动态加载器该载入哪个共享库；在文件系统中，soname仅是一个链接到实际动态库的链接。对于动态库而言，每个库实际上都有另一个名字给编译器来用；它是一个指向实际库镜像文件的链接文件(lib+soname+.so)。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###创建动态库</span></span><br><span class="line"><span class="comment">###-fPIC 创建与地址无关的编译程序(pic，position independent code)，为了能够在多个应用程序间共享</span></span><br><span class="line"><span class="comment">###-share 使用动态库</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc -shared -fPIC -o libfoo.so foo1.c foo2.c</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ gcc -o main2 main.c -L. -lfoo</span><br><span class="line"><span class="comment">###-L 指定在当前路径搜索动态库</span></span><br><span class="line"><span class="comment">###-l 指定动态库foo</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ./main2</span><br><span class="line">./main2: error <span class="keyword">while</span> loading shared libraries: libfoo.so: cannot open shared object file: No such file or directory</span><br><span class="line"><span class="comment">###发现报错，很正常，因为libfoo.so在当前目录，并不在程序运行时搜索动态库的目录</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ vim /etc/ld.so.conf</span><br><span class="line">include /etc/ld.so.conf.d/*.conf</span><br><span class="line"><span class="comment">###/etc/ld.so.conf.d/*.conf文件中定义了程序运行搜索动态库的目录</span></span><br><span class="line"><span class="comment">###两种方法解决上述问题，将libfoo.so复制到/lib或/usr/lib下</span></span><br><span class="line"><span class="comment">###另一种方法时将libfoo.so所在的目录添加到/etc/ld.so.conf文件中，并运行ldconfig </span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ vim vim /etc/ld.so.conf</span><br><span class="line">include /etc/ld.so.conf.d/*.conf</span><br><span class="line">/home/deepcam/freegcc</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ sudo ldconfig</span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ./main2 </span><br><span class="line">This is foo1!</span><br><span class="line">This is foo2!</span><br><span class="line">This is main!</span><br><span class="line"><span class="comment">###程序正常运行</span></span><br><span class="line"><span class="comment">###ldd命令可以查看一个可执行程序依赖的共享库</span></span><br><span class="line">[<span class="built_in">test</span>@hurd]$ ldd main2</span><br><span class="line">	linux-vdso.so.1 =&gt;  (0x00007fffa95e5000)</span><br><span class="line">	libfoo.so =&gt; /home/deepcam/freegcc/libfoo.so (0x00007f5826e6c000)</span><br><span class="line">	libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f5826aa7000)</span><br><span class="line">	/lib64/ld-linux-x86-64.so.2 (0x00005654cca81000)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+	
+	
+      <div>
+	    
+<div style="text-align:center;color: #ccc;font-size:14px;">
+	------ 本文结束<i class="fa fa-paw"></i> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    free
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https:gytring.xyz/2018/09/11/gcc编译链接以及动态库静态库/" title="gcc编译链接以及动态库静态库">https:gytring.xyz/2018/09/11/gcc编译链接以及动态库静态库/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C-C/" rel="tag"><i class="fa fa-tag"></i> C/C++</a>
+          
+            <a href="/tags/GCC/" rel="tag"><i class="fa fa-tag"></i> GCC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/05/Ubuntu上安装编译Opencv/" rel="next" title="Ubuntu上安装编译Opencv">
+                <i class="fa fa-chevron-left"></i> Ubuntu上安装编译Opencv
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="free" />
+            
+              <p class="site-author-name" itemprop="name">free</p>
+              <p class="site-description motion-element" itemprop="description">天不生我李淳罡，万古剑道如长夜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Gytring" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fancanglang@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/jiang-hu-44-46" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-gratipay"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2168112375" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                站外链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.rdonly.com/" title="Rdonly" target="_blank">Rdonly</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ilxdh.com/" title="龙轩导航" target="_blank">龙轩导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ss-ssshare.7e14.starter-us-west-2.openshiftapps.com/" title="SSR" target="_blank">SSR</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://rufus.akeo.ie/?locale=zh_CN" title="RUFUS" target="_blank">RUFUS</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://emacs-china.org/" title="Emacs" target="_blank">Emacs</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/vim-china" title="VIM" target="_blank">VIM</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ppzedu.com/" title="Linux中文" target="_blank">Linux中文</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.cilimao.me/" title="磁力猫" target="_blank">磁力猫</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">free</span>
+
+  
+</div>
+
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+-->
+
+<!--
+
+  <span class="post-meta-divider">|</span>
+
+-->
+
+<!--
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PptmLLR5fHYwCytzGHe6DFxu-gzGzoHsz", "T6zkp6TjlUz03o0UqHLAwNEa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"width":100,"height":200,"hOffset":0,"vOffset":-20},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

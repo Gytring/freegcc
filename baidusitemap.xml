@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/09/11/gcc%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E5%BA%93%E9%9D%99%E6%80%81%E5%BA%93/</loc>
+    <lastmod>2018-09-11T07:48:44.969Z</lastmod>
+    <data>
+        <display>
+        <title>gcc编译链接以及动态库静态库</title>
+        <pubTime>2018-09-11T03:35:05.000Z</pubTime>
+        
+        <tag>C/C++</tag>
+         
+        <tag>GCC</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/09/05/Ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91Opencv/</loc>
     <lastmod>2018-09-05T08:17:45.062Z</lastmod>
     <data>
@@ -77,9 +99,9 @@
         <title>PowerLine</title>
         <pubTime>2018-08-27T09:12:45.000Z</pubTime>
         
-        <tag>PowerLine</tag>
-         
         <tag>VIM</tag>
+         
+        <tag>PowerLine</tag>
          
          
            
@@ -287,11 +309,11 @@
         <title>KVM虚拟机磁盘LVM扩容</title>
         <pubTime>2018-08-07T01:59:31.000Z</pubTime>
         
+        <tag>Linux</tag>
+         
         <tag>KVM</tag>
          
         <tag>LVM</tag>
-         
-        <tag>Linux</tag>
          
          
            
@@ -1017,9 +1039,9 @@
         <title>TCP/IP的有限状态机</title>
         <pubTime>2018-07-19T01:04:43.000Z</pubTime>
         
-        <tag>Network</tag>
-         
         <tag>TCP/IP</tag>
+         
+        <tag>Network</tag>
          
          
            
@@ -1039,9 +1061,9 @@
         <title>ShadowsocksR一键安装脚本（转）</title>
         <pubTime>2018-07-11T05:50:29.000Z</pubTime>
         
-        <tag>Network</tag>
-         
         <tag>SSR</tag>
+         
+        <tag>Network</tag>
          
          
            

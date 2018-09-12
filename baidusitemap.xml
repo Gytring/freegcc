@@ -5,14 +5,23 @@
     
   <url>
     <loc>https:gytring.xyz/2018/09/12/Makefile%E4%BB%A5%E5%8F%8Acmake/</loc>
-    <lastmod>2018-09-12T03:07:29.038Z</lastmod>
+    <lastmod>2018-09-12T08:53:32.383Z</lastmod>
     <data>
         <display>
         <title>Makefile以及cmake</title>
         <pubTime>2018-09-12T03:07:29.000Z</pubTime>
         
+        <tag>C/C++</tag>
+         
+        <tag>Makefile</tag>
+         
+        <tag>cmake</tag>
+         
          
            
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
         </display>
     </data>
     </url>

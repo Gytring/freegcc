@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="C/C++,Makefile,cmake," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="天不生我李淳罡，万古剑道如长夜">
-<meta name="keywords" content="江湖">
+<meta name="description" content="&amp;emsp;&amp;emsp;make通常被视为一种软件构建工具，主要经由读取一种名为makefile 或 Makefile的文件来实现软件的自动化建构。它会通过一种被称之为target概念来检查相关文件之间的依赖关系，这种依赖关系的检查系统非常简单，主要通过对比文件的修改时间来实现。在大多数情况下，我们主要用它来编译源代码，生成结果代码，然后把结果代码连接起来生成可执行文件或者库文件。">
+<meta name="keywords" content="C&#x2F;C++,Makefile,cmake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Makefile以及cmake">
 <meta property="og:url" content="https:gytring.xyz/2018/09/12/Makefile以及cmake/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;make通常被视为一种软件构建工具，主要经由读取一种名为makefile 或 Makefile的文件来实现软件的自动化建构。它会通过一种被称之为target概念来检查相关文件之间的依赖关系，这种依赖关系的检查系统非常简单，主要通过对比文件的修改时间来实现。在大多数情况下，我们主要用它来编译源代码，生成结果代码，然后把结果代码连接起来生成可执行文件或者库文件。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-12T03:07:29.038Z">
+<meta property="og:updated_time" content="2018-09-12T08:53:32.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Makefile以及cmake">
-<meta name="twitter:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;make通常被视为一种软件构建工具，主要经由读取一种名为makefile 或 Makefile的文件来实现软件的自动化建构。它会通过一种被称之为target概念来检查相关文件之间的依赖关系，这种依赖关系的检查系统非常简单，主要通过对比文件的修改时间来实现。在大多数情况下，我们主要用它来编译源代码，生成结果代码，然后把结果代码连接起来生成可执行文件或者库文件。">
 
 
 
@@ -341,6 +341,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -373,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  3,768
                 </span>
               
 
@@ -399,7 +421,196 @@
       
 
       
-        
+        <p>&emsp;&emsp;make通常被视为一种软件构建工具，主要经由读取一种名为<code>makefile 或 Makefile</code>的文件来实现软件的自动化建构。它会通过一种被称之为<code>target</code>概念来检查相关文件之间的依赖关系，这种依赖关系的检查系统非常简单，主要通过对比文件的修改时间来实现。在大多数情况下，我们主要用它来编译源代码，生成结果代码，然后把结果代码连接起来生成可执行文件或者库文件。<a id="more"></a></p>
+<p>&emsp;&emsp;特别是在类Unix系统下的软件编译，<strong>会不会写makefile，从一个侧面说明了一个人是否具备完成大型工程的能力</strong>。因为，makefile关系到了整个工程的编译规则。一个工程中的源文件不计数，其按<strong>类型、功能、模块</strong>分别放在若干个目录中，makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为makefile就像一个Shell脚本一样，其中也可以执行<strong>操作系统</strong>的命令。makefile带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全<strong>自动编译</strong>，极大的提高了软件开发的效率。make是一个命令工具，是一个解释makefile中指令的命令工具，一般来说，大多数的IDE都有这个命令，比如：<strong>Delphi的make</strong>，<strong>Visual C++的nmake</strong>，<strong>Linux下的GNU make</strong>。</p>
+<p>&emsp;&emsp;<strong>Makefile基本格式如下</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">target ... : prerequisites ...</span><br><span class="line">    <span class="built_in">command</span></span><br><span class="line">    ......</span><br><span class="line">    ......</span><br><span class="line"><span class="comment">###target        - 目标文件, 可以是 Object File, 也可以是可执行文件</span></span><br><span class="line"><span class="comment">###prerequisites - 生成 target 所需要的文件或者目标</span></span><br><span class="line"><span class="comment">###command       - make需要执行的命令 (任意的shell命令), 必须以[tab]开头</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>Makefile基本规则</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">显示规则 :: 说明如何生成一个或多个目标文件(包括 生成的文件, 文件的依赖文件, 生成的命令)</span><br><span class="line">隐晦规则 :: make的自动推导功能所执行的规则</span><br><span class="line">变量定义 :: Makefile中定义的变量</span><br><span class="line">文件指示 :: Makefile中引用其他Makefile; 指定Makefile中有效部分; 定义一个多行命令</span><br><span class="line">注释    :: Makefile只有行注释 <span class="string">"#"</span>, 如果要使用或者输出<span class="string">"#"</span>字符, 需要进行转义, <span class="string">"\#"</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>make基本的工作方式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.读入主Makefile (主Makefile中可以引用其他Makefile)</span><br><span class="line">2.读入被include的其他Makefile</span><br><span class="line">3.初始化文件中的变量</span><br><span class="line">4.推导隐晦规则, 并分析所有规则</span><br><span class="line">5.为所有的目标文件创建依赖关系链</span><br><span class="line">6.根据依赖关系, 决定哪些目标要重新生成</span><br><span class="line">7.执行生成命令</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;示例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">[free@hurd]$ vim foo1.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line">void foo1()</span><br><span class="line">&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"This is foo1!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">[free@hurd]$ vim foo2.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line">void foo2()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"This is foo2!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">[free@hurd]$ vim main.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    foo1();</span><br><span class="line">    foo2();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"This is main!\n"</span>);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">[free@hurd]$ vim Makefile</span><br><span class="line">main: foo1.c foo2.c main.c</span><br><span class="line">	gcc foo1.c foo2.c main.c -o main</span><br><span class="line"><span class="comment">###这是一个最简单的Makefile</span></span><br><span class="line"><span class="comment">###生成目标main依赖foo1.c foo2.c main.c</span></span><br><span class="line"><span class="comment">###执行命令gcc foo1.c foo2.c main.c -o main；完成目标</span></span><br><span class="line">[free@hurd]$ make</span><br><span class="line">gcc foo1.c foo2.c main.c -o main</span><br><span class="line">[free@hurd]$ ls</span><br><span class="line">foo1.c  foo2.c  main  main.c  Makefile</span><br><span class="line">[free@hurd]$ ./main</span><br><span class="line">This is foo1!</span><br><span class="line">This is foo2!</span><br><span class="line">This is main!</span><br><span class="line"><span class="comment">###成功执行，现在改进Makefile</span></span><br><span class="line">[free@hurd]$ vim Makefile</span><br><span class="line">main: main.o foo1.o foo2.o</span><br><span class="line">	gcc main.o foo1.o foo2.o -o main</span><br><span class="line">main.o: main.c</span><br><span class="line">	gcc -c main.c</span><br><span class="line">foo1.o: foo1.c</span><br><span class="line">	gcc -c foo1.c</span><br><span class="line">foo2.o: foo2.c</span><br><span class="line">	gcc -c foo2.c</span><br><span class="line"><span class="comment">###改写后各种依赖更清楚</span></span><br><span class="line"><span class="comment">###只要有一项更改，重新make只重新编译更新的部分，其他不变</span></span><br><span class="line">[free@hurd]$ make</span><br><span class="line">gcc -c main.c</span><br><span class="line">gcc -c foo1.c</span><br><span class="line">gcc -c foo2.c</span><br><span class="line">gcc main.o foo1.o foo2.o -o main</span><br><span class="line">[free@hurd]$ ./main</span><br><span class="line">This is foo1!</span><br><span class="line">This is foo2!</span><br><span class="line">This is main!</span><br><span class="line"><span class="comment">###成功执行，继续改进Makefile</span></span><br><span class="line">[free@hurd]$ vim Makefile</span><br><span class="line">target= main</span><br><span class="line">src= $(shell find . -name <span class="string">"*.c"</span>)</span><br><span class="line">obj= $(src:%.c=%.o)</span><br><span class="line"></span><br><span class="line">$(target): $(obj)</span><br><span class="line">    gcc $^ -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line">%.o: %.c </span><br><span class="line">    gcc -c $&lt; -o <span class="variable">$@</span></span><br><span class="line"><span class="comment">###这里引入了变量，其实和C语言中的宏类似</span></span><br><span class="line"><span class="comment">###$(shell ****)使用了shell命令，将搜索到的结果传给src</span></span><br><span class="line"><span class="comment">###$(src:%.c=%.o)是进行字符替换，将所有的*.c字符串替换成*.o字符串，传给obj</span></span><br><span class="line"><span class="comment">###$^：所有依赖目标的集合</span></span><br><span class="line"><span class="comment">###$@：目标集合</span></span><br><span class="line"><span class="comment">###$&lt;：第一个依赖目标. 如果依赖目标是多个, 逐个表示依赖目标</span></span><br><span class="line"><span class="comment">###改进后，更加精炼清晰，而且方便以后拓展构建</span></span><br><span class="line">[free@hurd]$ make </span><br><span class="line">gcc -c foo2.c -o foo2.o</span><br><span class="line">gcc -c main.c -o main.o</span><br><span class="line">gcc -c foo1.c -o foo1.o</span><br><span class="line">gcc foo2.o main.o foo1.o -o main</span><br><span class="line">[free@hurd]$ ./main</span><br><span class="line">This is foo1!</span><br><span class="line">This is foo2!</span><br><span class="line">This is main!</span><br><span class="line"><span class="comment">###成功执行，进一步改进Makefile</span></span><br><span class="line">[free@hurd]$ vim Makefile</span><br><span class="line">CC = gcc </span><br><span class="line">CFLAGS = -Wall</span><br><span class="line">CXXFLAGS = </span><br><span class="line">CPPFLAGS = </span><br><span class="line">LDFLAGS =</span><br><span class="line">target = main</span><br><span class="line">src = $(shell find . -name <span class="string">"*.c"</span>)</span><br><span class="line">obj = $(src:%.c=%.o)</span><br><span class="line"></span><br><span class="line">$(target): $(obj)</span><br><span class="line">    $(CC) $^  $(CFLAGS) -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line">%.o : %.c </span><br><span class="line">    $(CC) -c $&lt; $(CFLAGS) $(CPPFALGS) -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line">.PHONY:clean</span><br><span class="line">clean:</span><br><span class="line">    -rm -rf $(obj) $(target)</span><br><span class="line"></span><br><span class="line">install:</span><br><span class="line">    mkdir target</span><br><span class="line">    mv main target</span><br><span class="line"></span><br><span class="line"><span class="built_in">test</span>:</span><br><span class="line">    @<span class="built_in">echo</span> $(src)</span><br><span class="line">    @<span class="built_in">echo</span> $(obj)</span><br><span class="line"><span class="comment">###改进后基本看不到源文件的影子，慢慢走向通用化更易于拓展</span></span><br><span class="line"><span class="comment">###此处还添加了伪目标</span></span><br><span class="line"><span class="comment">###.PHONY意思表示clean是一个"伪目标";而在rm命令前面加了一个小减号的意思就是，也许某些文件出现问题，但不要管，继续做后面的事。当然，clean的规则不要放在文件的开头，不然，这就会变成make的默认目标，相信谁也不愿意这样。不成文的规矩是——"clean从来都是放在文件的最后"</span></span><br><span class="line"><span class="comment">###"伪目标"并不是一个文件，只是一个标签，由于“伪目标”不是文件，所以make无法生成它的依赖关系和决定它是否要执行。只有通过显示地指明这个“目标”才能让其生效。当然，“伪目标”的取名不能和文件名重名，不然其就失去了“伪目标”的意义了</span></span><br><span class="line"><span class="comment">###为了避免和文件重名的这种情况，可以使用一个特殊的标记".PHONY"来显示地指明一个目标是“伪目标”，向make说明，不管是否有这个文件，这个目标就是"伪目标"</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>Makefile 命令前缀</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不用前缀  :: 输出执行的命令以及命令执行的结果, 出错的话停止执行</span><br><span class="line">前缀 @   :: 只输出命令执行的结果, 出错的话停止执行</span><br><span class="line">前缀 -   :: 命令执行有错的话, 忽略错误, 继续执行</span><br><span class="line"><span class="comment">###例如上面的-rm、@echo</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>make 退出码</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 :: 表示成功执行</span><br><span class="line">1 :: 表示make命令出现了错误</span><br><span class="line">2 :: 使用了 <span class="string">"-q"</span> 选项, 并且make使得一些目标不需要更新</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>make 常用参数</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–debug[=<options>]</options></td>
+<td>输出make的调试信息, options 可以是 a, b, v</td>
+</tr>
+<tr>
+<td>-j –jobs</td>
+<td>同时运行的命令的个数, 也就是多线程执行 Makefile，比如常用的make -j8</td>
+</tr>
+<tr>
+<td>-r –no-builtin-rules</td>
+<td>禁止使用任何隐含规则</td>
+</tr>
+<tr>
+<td>-R –no-builtin-variabes</td>
+<td>禁止使用任何作用于变量上的隐含规则</td>
+</tr>
+<tr>
+<td>-B –always-make</td>
+<td>假设所有目标都有更新, 即强制重编译</td>
+</tr>
+</tbody>
+</table>
+<p>&emsp;&emsp; <strong>命令变量 和 命令参数变量</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>变量名</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RM</td>
+<td>rm -f</td>
+</tr>
+<tr>
+<td>AR</td>
+<td>ar</td>
+</tr>
+<tr>
+<td>CC</td>
+<td>cc</td>
+</tr>
+<tr>
+<td>CXX</td>
+<td>g++</td>
+</tr>
+<tr>
+<td>ARFLAGS</td>
+<td>AR命令的参数</td>
+</tr>
+<tr>
+<td>CFLAGS</td>
+<td>C语言编译器的参数</td>
+</tr>
+<tr>
+<td>CXXFLAGS</td>
+<td>C++语言编译器的参数</td>
+</tr>
+<tr>
+<td>CPPFLAGS</td>
+<td>预处理阶段的参数</td>
+</tr>
+<tr>
+<td>LDFLAGS</td>
+<td>传递给连接器的参数</td>
+</tr>
+<tr>
+<td>LIBS</td>
+<td>链接库的参数</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[free@hurd]$ vim Makefile</span><br><span class="line">all:</span><br><span class="line">    @<span class="built_in">echo</span> $(RM)</span><br><span class="line">    @<span class="built_in">echo</span> $(AR)</span><br><span class="line">    @<span class="built_in">echo</span> $(CC)</span><br><span class="line">    @<span class="built_in">echo</span> $(CXX)</span><br><span class="line">[free@hurd]$ make</span><br><span class="line">rm -f</span><br><span class="line">ar</span><br><span class="line">cc</span><br><span class="line">g++</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>自动变量</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>自动变量</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$@</td>
+<td>目标集合</td>
+</tr>
+<tr>
+<td>$%</td>
+<td>当目标是函数库文件时, 表示其中的目标文件名</td>
+</tr>
+<tr>
+<td>$&lt;</td>
+<td>第一个依赖目标. 如果依赖目标是多个, 逐个表示依赖目标</td>
+</tr>
+<tr>
+<td>$?</td>
+<td>比目标新的依赖目标的集合</td>
+</tr>
+<tr>
+<td>$^</td>
+<td>所有依赖目标的集合, 会去除重复的依赖目标</td>
+</tr>
+<tr>
+<td>$+</td>
+<td>所有依赖目标的集合, 不会去除重复的依赖目标</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>这个是GNU make特有的, 其它的make不一定支持</td>
+</tr>
+</tbody>
+</table>
+<p>&emsp;&emsp;<strong>Makefile中一些约定俗成的伪目标</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>伪目标</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all</td>
+<td>所有目标的目标，其功能一般是编译所有的目标</td>
+</tr>
+<tr>
+<td>clean</td>
+<td>删除所有被make创建的文件</td>
+</tr>
+<tr>
+<td>install</td>
+<td>安装已编译好的程序，其实就是把目标可执行文件拷贝到指定的目录中去</td>
+</tr>
+<tr>
+<td>print</td>
+<td>列出改变过的源文件</td>
+</tr>
+<tr>
+<td>tar</td>
+<td>把源程序打包备份. 也就是一个tar文件</td>
+</tr>
+<tr>
+<td>dist</td>
+<td>创建一个压缩文件, 一般是把tar文件压成Z文件. 或是gz文件</td>
+</tr>
+<tr>
+<td>TAGS</td>
+<td>更新所有的目标, 以备完整地重编译使用</td>
+</tr>
+<tr>
+<td>check 或 test</td>
+<td>一般用来测试makefile的流程</td>
+</tr>
+</tbody>
+</table>
+<p>&emsp;&emsp;以上只是简单介绍了 Makefile，足以应付一些小项目，但当遇到一些工程级的大项目手写 Makefile 变得十分困难繁琐，而且不难以跨平台，我们需要其他的工具来生成 Makefile。</p>
+<p>&emsp;&emsp;CMake是一个比make更高级的编译配置工具，它可以根据不同平台、不同的编译器，生成相应的Makefile或者vcproj项目。通过编写CMakeLists.txt，可以控制生成的Makefile，从而控制编译过程。CMake自动生成的Makefile不仅可以通过make命令构建项目生成目标文件，还支持安装（make install）、测试安装的程序是否能正确执行（make test，或者ctest）、生成当前平台的安装包（make package）、生成源码包(make package_source)、产生Dashboard显示数据并上传等高级功能，只要在CMakeLists.txt中简单配置，就可以完成很多复杂的功能，包括写测试用例。如果有嵌套目录，子目录下可以有自己的CMakeLists.txt。</p>
+<p>&emsp;&emsp;在 linux 平台下使用 CMake 生成 Makefile 并编译的流程如下：</p>
+<ol>
+<li>编写 CMake 配置文件 CMakeLists.txt</li>
+<li>执行命令 <code>cmake PATH</code> 或者 <code>ccmake PATH</code> 生成 Makefile 。其中， <code>PATH</code> 是 CMakeLists.txt 所在的目录</li>
+<li>使用 <code>make</code> 命令进行编译。</li>
+</ol>
+<p>&emsp;&emsp;<strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###这是一个简单的C快速排序程序</span></span><br><span class="line">[free@hurd]$ vim test.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;time.h&gt;</span></span><br><span class="line"></span><br><span class="line">void swap(int *x, int *y) </span><br><span class="line">&#123;</span><br><span class="line">    int tmp;</span><br><span class="line">    tmp = *x; </span><br><span class="line">    *x  = *y; </span><br><span class="line">    *y  = tmp;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void display_arr(int *arr, int len)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; len; i++)</span><br><span class="line">    &#123;   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\t"</span>, arr[i]);</span><br><span class="line">        <span class="keyword">if</span>((i + 1) % 10 == 0)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="built_in">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void genereate(int *arr, int len, int maxnum)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    srand(time(NULL));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; len; i++)</span><br><span class="line">    &#123;   </span><br><span class="line">        arr[i] = rand()%maxnum;</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void sort(int *arr, int left, int right)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        int i, j;</span><br><span class="line">        i = left + 1;</span><br><span class="line">        j = right;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(arr[i] &gt; arr[left])</span><br><span class="line">            &#123;</span><br><span class="line">                swap(&amp;arr[i], &amp;arr[j]);</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(arr[i] &gt;= arr[left])</span><br><span class="line">            i--;</span><br><span class="line">        swap(&amp;arr[left], &amp;arr[i]);</span><br><span class="line"></span><br><span class="line">        sort(arr, left, i);</span><br><span class="line">        sort(arr, j, right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(argc != 3)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"\e[1;31mUsage: ./a.out len maxnum\e[0m"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int len, maxnum;</span><br><span class="line">    len = atoi(argv[1]);</span><br><span class="line">    maxnum = atoi(argv[2]);</span><br><span class="line">    <span class="keyword">if</span>(len &lt;= 0)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"\e[1;31mThe array of length error\e[0m\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(maxnum &lt;= 0)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr, <span class="string">"\e[1;31mThe maxnum is error\e[0m\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">    int arr[len];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\e[1;32m排序前的随机数组: \e[0m\n"</span>);</span><br><span class="line">    genereate(arr, len, maxnum);</span><br><span class="line">    display_arr(arr, len);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\e[1;32m排序后的有序数组: \e[0m\n"</span>);</span><br><span class="line">    sort(arr, 0, len - 1);</span><br><span class="line">    display_arr(arr, len);</span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">###编写CMakeLists.txt</span></span><br><span class="line">[free@hurd]$ vim CMakeLists.txt</span><br><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (cmake_test)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(<span class="built_in">test</span> test.c)</span><br><span class="line"></span><br><span class="line"><span class="comment">###CMakeLists.txt 的语法比较简单，由命令、注释和空格组成，其中命令是不区分大小写的。符号 # 后面的内容被认为是注释。命令由命令名称、小括号和参数组成，参数之间使用空格进行间隔</span></span><br><span class="line"><span class="comment">###cmake_minimum_required：指定运行此配置文件所需的 CMake 的最低版本；</span></span><br><span class="line"><span class="comment">###project：参数值是 cmake_test，该命令表示项目的名称是 cmake_test</span></span><br><span class="line"><span class="comment">###add_executable： 将名为 test.c 的源文件编译成一个名称为 test 的可执行文件</span></span><br><span class="line">[free@hurd]$ cmake .</span><br><span class="line">-- The C compiler identification is GNU 4.8.4</span><br><span class="line">-- The CXX compiler identification is GNU 4.8.4</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/free/cmake</span><br><span class="line"></span><br><span class="line"><span class="comment">###得到生成的Makefile，并执行make</span></span><br><span class="line">[free@hurd]$ make</span><br><span class="line">Scanning dependencies of target <span class="built_in">test</span></span><br><span class="line">[100%] Building C object CMakeFiles/test.dir/test.c.o</span><br><span class="line">Linking C executable <span class="built_in">test</span></span><br><span class="line">[100%] Built target <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line">[free@hurd]$ ./<span class="built_in">test</span> 20 255</span><br><span class="line">排序前的随机数组: </span><br><span class="line">71	130	200	244	31	149	206	241	4	34	</span><br><span class="line">127	11	251	167	233	68	250	231	247	14	</span><br><span class="line"></span><br><span class="line">排序后的有序数组: </span><br><span class="line">4	11	14	31	34	68	71	127	130	149	</span><br><span class="line">167	200	206	231	233	241	244	247	250	251	</span><br><span class="line"><span class="comment">###下面对test.c进行拆分，将单独的函数抽取出来</span></span><br><span class="line">[free@hurd]$ ls </span><br><span class="line">CMakeCache.txt  CMakeFiles  cmake_install.cmake  CMakeLists.txt  display_arr.c  genereate.c  Makefile  sort.c  swap.c  <span class="built_in">test</span>  test.c</span><br><span class="line">[free@hurd]$ vim CMakeLists.txt</span><br><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (cmake_test)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(<span class="built_in">test</span> test.c display_arr.c  genereate.c sort.c  swap.c) </span><br><span class="line"><span class="comment">###唯一的改动只是在 add_executable 命令中增加了其他的 .c源文件</span></span><br><span class="line"><span class="comment">###如果源文件很多，把所有源文件的名字都加进去将是一件烦人的工作;更省事的方法是使用 aux_source_directory 命令，该命令会查找指定目录下的所有源文件，然后将结果存进指定变量名</span></span><br><span class="line"><span class="comment">###可以做如下修改</span></span><br><span class="line">[free@hurd]$ vim CMakeLists.txt</span><br><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (cmake_test)</span><br><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_SRCS 变量</span></span><br><span class="line">aux_source_directory(. DIR_SRCS)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(<span class="built_in">test</span> <span class="variable">$&#123;DIR_SRCS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">###CMake 会将当前目录所有源文件的文件名赋值给变量 DIR_SRCS ，再指示变量 DIR_SRCS 中的源文件需要编译成一个名称为 test 的可执行文件</span></span><br><span class="line">[free@hurd]$ cmake .</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/free/cmake</span><br><span class="line">[free@hurd]$ make</span><br><span class="line">Scanning dependencies of target <span class="built_in">test</span></span><br><span class="line">[ 20%] Building C object CMakeFiles/test.dir/display_arr.c.o</span><br><span class="line">[ 40%] Building C object CMakeFiles/test.dir/test.c.o</span><br><span class="line">[ 60%] Building C object CMakeFiles/test.dir/swap.c.o</span><br><span class="line">[ 80%] Building C object CMakeFiles/test.dir/genereate.c.o</span><br><span class="line">[100%] Building C object CMakeFiles/test.dir/sort.c.o</span><br><span class="line">Linking C executable <span class="built_in">test</span></span><br><span class="line">[100%] Built target <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -440,6 +651,16 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C-C/" rel="tag"><i class="fa fa-tag"></i> C/C++</a>
+          
+            <a href="/tags/Makefile/" rel="tag"><i class="fa fa-tag"></i> Makefile</a>
+          
+            <a href="/tags/cmake/" rel="tag"><i class="fa fa-tag"></i> cmake</a>
+          
+        </div>
       
 
       
@@ -552,7 +773,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

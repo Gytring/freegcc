@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>https:gytring.xyz/2018/09/13/%E7%BB%88%E7%AB%AF%E4%B8%8B%E7%9A%84ASCII%E8%89%BA%E6%9C%AF/</loc>
+    <lastmod>2018-09-13T07:41:06.662Z</lastmod>
+    <data>
+        <display>
+        <title>终端下的ASCII艺术</title>
+        <pubTime>2018-09-13T05:02:38.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>shell</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:gytring.xyz/2018/08/27/PowerLine/</loc>
+    <lastmod>2018-09-13T05:26:57.459Z</lastmod>
+    <data>
+        <display>
+        <title>PowerLine</title>
+        <pubTime>2018-08-27T09:12:45.000Z</pubTime>
+        
+        <tag>PowerLine</tag>
+         
+        <tag>VIM</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:gytring.xyz/2018/09/12/Makefile%E4%BB%A5%E5%8F%8Acmake/</loc>
     <lastmod>2018-09-12T08:53:32.383Z</lastmod>
     <data>
@@ -104,28 +148,6 @@
         <tag>shell</tag>
          
         <tag>C/C++</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https:gytring.xyz/2018/08/27/PowerLine/</loc>
-    <lastmod>2018-08-28T04:31:05.852Z</lastmod>
-    <data>
-        <display>
-        <title>PowerLine</title>
-        <pubTime>2018-08-27T09:12:45.000Z</pubTime>
-        
-        <tag>PowerLine</tag>
-         
-        <tag>VIM</tag>
          
          
            

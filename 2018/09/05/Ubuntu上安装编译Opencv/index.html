@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="剑来">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-05T08:17:45.062Z">
+<meta property="og:updated_time" content="2018-09-17T10:05:14.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu上安装编译Opencv">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。">
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  886
+                  927
                 </span>
               
 
@@ -424,6 +424,8 @@
         <p>&emsp;&emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。<a id="more"></a></p>
 <p>&emsp;&emsp;但在此还是简单缀叙一下显卡驱动和 Cuda 的安装，注意是英伟达的显卡：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nvidia-375* -y</span><br><span class="line">nvidia-smi</span><br><span class="line"><span class="comment">###这种方式比较简单，也可以从官方下载对应的***.run驱动进行安装</span></span><br><span class="line"><span class="comment">###需要注意的地方就是尽量不要使用UEFI的方式安装系统，否则显卡驱动装不上，具体原因未知</span></span><br><span class="line"><span class="comment">###而且在用**.run驱动装的时候，需要禁用nouveau</span></span><br><span class="line"><span class="comment">###编辑/etc/modprobe.d/blacklist.conf，在末尾加上一行：blacklist nouveau</span></span><br><span class="line"><span class="comment">###重启，关闭图形界面：sudo service lightdm stop</span></span><br><span class="line"><span class="comment">###Ctrl + Alt + F1~F6 进入物理终端</span></span><br><span class="line"><span class="comment">###sudo bash NVIDIA-****.run --no-opengl-files 进行安装</span></span><br><span class="line"><span class="comment">###查看是否安装成功：nvidia-smi</span></span><br><span class="line"><span class="comment">###开启图形界面sudo service lightdm start，Ctrl + Alt + F7 进入图形界面</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;还有一种简单安装的方式，在线安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###添加源</span></span><br><span class="line">sudo add-apt-repository ppa:xorg-edgers/ppa</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nvidia-375* -y</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;安装 Cuda ，先下载cuda的run驱动</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh cuda_8.xx.xxx_linux.run</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;安装依赖</p>

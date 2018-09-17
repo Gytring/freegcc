@@ -40,7 +40,7 @@
   <entry>
     <title><![CDATA[Ubuntu上安装编译Opencv]]></title>
     <url>%2F2018%2F09%2F05%2FUbuntu%E4%B8%8A%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91Opencv%2F</url>
-    <content type="text"><![CDATA[&emsp;&emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。 &emsp;&emsp;但在此还是简单缀叙一下显卡驱动和 Cuda 的安装，注意是英伟达的显卡： 123456789101112sudo apt-get updatesudo apt-get install nvidia-375* -ynvidia-smi###这种方式比较简单，也可以从官方下载对应的***.run驱动进行安装###需要注意的地方就是尽量不要使用UEFI的方式安装系统，否则显卡驱动装不上，具体原因未知###而且在用**.run驱动装的时候，需要禁用nouveau###编辑/etc/modprobe.d/blacklist.conf，在末尾加上一行：blacklist nouveau###重启，关闭图形界面：sudo service lightdm stop###Ctrl + Alt + F1~F6 进入物理终端###sudo bash NVIDIA-****.run --no-opengl-files 进行安装###查看是否安装成功：nvidia-smi###开启图形界面sudo service lightdm start，Ctrl + Alt + F7 进入图形界面 &emsp;&emsp;安装 Cuda ，先下载cuda的run驱动 1sudo sh cuda_8.xx.xxx_linux.run &emsp;&emsp;安装依赖 1234567sudo apt-get -y install vim openssh-server git wget sudo apt-get -y install libxml2-dev libxslt1-dev python-devsudo apt-get -y install build-essential gfortran libfreetype6-dev python-dev cmake python-tksudo apt-get -y install libgflags-dev libboost-dev libboost-filesystem-dev libboost-regex-dev libboost-python-dev libX11-devsudo apt-get -y install libgoogle-glog-dev libprotobuf-dev libleveldb-dev sudo apt-get -y install libopenblas-dev libboost-system-dev libatlas3-basesudo apt-get -y install liblmdb-dev libavcodec-dev libavformat-dev libavutil-dev libswscale-dev &emsp;&emsp;下载并安装 cudnn 123sudo tar xvf cudnn-8.0-linux-x64-v5.1.tgzsudo cp cuda/include/*.h /usr/local/cuda-8.0/include/sudo cp cuda/lib64/lib* /usr/local/cuda-8.0/lib64/ &emsp;&emsp;配置环境变量 12345###编辑~/.bashrc并加上如下两行export PATH=/usr/local/cuda-8.0/bin:$PATHexport LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:/usr/local/lib:$LD_LIBRARY_PATH###重读配置文件使其生效source ~/.bashrc &emsp;&emsp;安装Opencv 库依赖 123sudo apt-get install build-essential sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev &emsp;&emsp;下载 opencv 源文件 12###opencv3.4.3和opencv_contrib3.4.3下载地址,若要编译其他版本的opencv，注意保持opencv和opencv_contrib版本一致https://github.com/opencv &emsp;&emsp;将opencv和opencv_contrib解压到家目录下 123456cd opencv-3.4.3mkdir buildcd buildcmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.4.3/modules/ ..###如果不安装opencv_contrib模块，则执行：cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. ##或者cmake .. &emsp;&emsp;编译安装，make 或者 make -j8 (-j8是指你电脑可用的内核数，有的是j4） 123456make -j8#等待时间可能会很长,特别是代GPU和Cudasudo make install#注意一定要加sudo，否则会报出permission问题pkg-config --modversion opencv#安装完成后查看opencv版本 &emsp;&emsp;环境配置 1234567891011sudo cat &gt;&gt; /etc/ld.so.conf &lt;&lt;EOF/usr/local/libEOFsudo ldconfigsudo cat &gt;&gt; /etc/bash.bashrc &lt;&lt;EOFPKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig export PKG_CONFIG_PATH EOFsource /etc/bash.bashrc &emsp;&emsp;最后，在给服务器装系统的时候，会遇到卡在黑屏的界面，本人被坑过两次；显示屏接VGA，无法进BIOS，黑屏；接HDMI可以进BIOS，但后面进不了安装界面，黑屏；此时需要在BIOS中修改显卡的相关设置，不同的BIOS设置项不一样，但基本都是带”Graphic”、”Display”之类的设置项。修改后支持VGA信号，就可成功装上系统。]]></content>
+    <content type="text"><![CDATA[&emsp;&emsp;安装环境 Ubuntu 14.04 纯 CPU，主要是台式机没有显卡，不用关心GPU显卡驱动以及Cuda的安装；这样的好处是编译 Opencv 比较快，基本无报错。以opencv3.4.3为例。 &emsp;&emsp;但在此还是简单缀叙一下显卡驱动和 Cuda 的安装，注意是英伟达的显卡： 123456789101112sudo apt-get updatesudo apt-get install nvidia-375* -ynvidia-smi###这种方式比较简单，也可以从官方下载对应的***.run驱动进行安装###需要注意的地方就是尽量不要使用UEFI的方式安装系统，否则显卡驱动装不上，具体原因未知###而且在用**.run驱动装的时候，需要禁用nouveau###编辑/etc/modprobe.d/blacklist.conf，在末尾加上一行：blacklist nouveau###重启，关闭图形界面：sudo service lightdm stop###Ctrl + Alt + F1~F6 进入物理终端###sudo bash NVIDIA-****.run --no-opengl-files 进行安装###查看是否安装成功：nvidia-smi###开启图形界面sudo service lightdm start，Ctrl + Alt + F7 进入图形界面 &emsp;&emsp;还有一种简单安装的方式，在线安装 1234###添加源sudo add-apt-repository ppa:xorg-edgers/ppasudo apt-get updatesudo apt-get install nvidia-375* -y &emsp;&emsp;安装 Cuda ，先下载cuda的run驱动 1sudo sh cuda_8.xx.xxx_linux.run &emsp;&emsp;安装依赖 1234567sudo apt-get -y install vim openssh-server git wget sudo apt-get -y install libxml2-dev libxslt1-dev python-devsudo apt-get -y install build-essential gfortran libfreetype6-dev python-dev cmake python-tksudo apt-get -y install libgflags-dev libboost-dev libboost-filesystem-dev libboost-regex-dev libboost-python-dev libX11-devsudo apt-get -y install libgoogle-glog-dev libprotobuf-dev libleveldb-dev sudo apt-get -y install libopenblas-dev libboost-system-dev libatlas3-basesudo apt-get -y install liblmdb-dev libavcodec-dev libavformat-dev libavutil-dev libswscale-dev &emsp;&emsp;下载并安装 cudnn 123sudo tar xvf cudnn-8.0-linux-x64-v5.1.tgzsudo cp cuda/include/*.h /usr/local/cuda-8.0/include/sudo cp cuda/lib64/lib* /usr/local/cuda-8.0/lib64/ &emsp;&emsp;配置环境变量 12345###编辑~/.bashrc并加上如下两行export PATH=/usr/local/cuda-8.0/bin:$PATHexport LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:/usr/local/lib:$LD_LIBRARY_PATH###重读配置文件使其生效source ~/.bashrc &emsp;&emsp;安装Opencv 库依赖 123sudo apt-get install build-essential sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev &emsp;&emsp;下载 opencv 源文件 12###opencv3.4.3和opencv_contrib3.4.3下载地址,若要编译其他版本的opencv，注意保持opencv和opencv_contrib版本一致https://github.com/opencv &emsp;&emsp;将opencv和opencv_contrib解压到家目录下 123456cd opencv-3.4.3mkdir buildcd buildcmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.4.3/modules/ ..###如果不安装opencv_contrib模块，则执行：cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. ##或者cmake .. &emsp;&emsp;编译安装，make 或者 make -j8 (-j8是指你电脑可用的内核数，有的是j4） 123456make -j8#等待时间可能会很长,特别是代GPU和Cudasudo make install#注意一定要加sudo，否则会报出permission问题pkg-config --modversion opencv#安装完成后查看opencv版本 &emsp;&emsp;环境配置 1234567891011sudo cat &gt;&gt; /etc/ld.so.conf &lt;&lt;EOF/usr/local/libEOFsudo ldconfigsudo cat &gt;&gt; /etc/bash.bashrc &lt;&lt;EOFPKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig export PKG_CONFIG_PATH EOFsource /etc/bash.bashrc &emsp;&emsp;最后，在给服务器装系统的时候，会遇到卡在黑屏的界面，本人被坑过两次；显示屏接VGA，无法进BIOS，黑屏；接HDMI可以进BIOS，但后面进不了安装界面，黑屏；此时需要在BIOS中修改显卡的相关设置，不同的BIOS设置项不一样，但基本都是带”Graphic”、”Display”之类的设置项。修改后支持VGA信号，就可成功装上系统。]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -147,8 +147,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
         <tag>shell</tag>
       </tags>
   </entry>
@@ -219,8 +219,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -275,8 +275,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -287,8 +287,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>TCP/IP</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
@@ -310,8 +310,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>

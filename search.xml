@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux笔记(6)]]></title>
+    <url>%2F2018%2F09%2F20%2FLinux%E7%AC%94%E8%AE%B0-6%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;在某些情况下，rm 命令无法删除文件名中带有特殊字符的文件，一般情况下可以rm ‘XXXX’ 或rm \XXXX ，但文件名第一个字符是 “-“ 的时候，rm 会把文件名看成命令行参数，此时需要用另一种方法来删除。 12345[free@hurd]$ rm -ikdsfrm: invalid option -- 'k'Try 'rm ./-ikdsf' to remove the file ‘-ikdsf’.Try 'rm --help' for more information.###系统会给出提示直接在文件名前加./即可 &emsp;&emsp;在用 tar 进行打包的时候，经常会因为打包的文件太多而报错 1-bash: /bin/tar: Argument list too long &emsp;&emsp;此时可配合find命令解决此问题 12345find . -type -f -print &gt; /tmp/testfile###找出你需要的文件，并将其明称输入到/tmp/testfiletar zcvf test.gz.tar --files-from /tmp/testfile###从testfile取出文件名，并打包tar -cv -T /tmp/testfile -f test.gz.tar &emsp;&emsp;当 rm 参数过多时，也可以借助 find 和 xargs 进行处理 1234find . -name "*" -print | xargs rm -rf###用find找到你想要删除的文件，通过管道传输给xargs，然后xarg将其分割并作为参数送给rm处理###或者也可以使用find 和 execfind . -name "*" -exec rm &#123;&#125; \; &emsp;&emsp;有些时候我们希望一些文件不被删除，即使 root 也不行，此时需要用到 chattr 12345678[free@hurd]$ sudo chattr +ai test.sh[free@hurd]$ lsattr test.sh----ia-------e-- test.sh[free@hurd]$ sudo rm test.shrm: cannot remove ‘test.sh’: Operation not permitted###无法删除[free@hurd]$ sudo chattr -ai test.sh###成功删除]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[终端下的ASCII艺术]]></title>
     <url>%2F2018%2F09%2F13%2F%E7%BB%88%E7%AB%AF%E4%B8%8B%E7%9A%84ASCII%E8%89%BA%E6%9C%AF%2F</url>
     <content type="text"><![CDATA[&emsp;&emsp;本篇主要介绍几个终端界面好玩的东西，比如：sl、asciiquarium、cmatrix等；基本都可以在Ubuntu上通过 apt-get 装上去，但在CentOS上没有，或者安装麻烦一点；在此介绍两个平台上的安装方法 &emsp;&emsp;水族馆：asciiquarium 12345678910111213141516171819202122###centos安装依赖[free@hurd]$ sudo yum -y install perl-Curses perl-ExtUtils-MakeMaker[free@hurd]$ wget http://search.cpan.org/CPAN/authors/id/K/KB/KBAUCOM/Term-Animation-2.4.tar.gz[free@hurd]$ tar -zxvf Term-Animation-2.4.tar.gz[free@hurd]$ cd Term-Animation-2.4/[free@hurd]$ perl Makefile.PL &amp;&amp; makeWriting Makefile for Term::AnimationSkip blib/lib/Term/Animation.pm (unchanged)Skip blib/lib/Term/Animation/Entity.pm (unchanged)Manifying blib/man3/Term::Animation.3pmManifying blib/man3/Term::Animation::Entity.3pm[free@hurd]$ sudo make installAppending installation info to /usr/lib64/perl5/perllocal.pod[free@hurd]$ cd ..[free@hurd]$ wget http://www.robobunny.com/projects/asciiquarium/asciiquarium.tar.gz --no-check-certificate[free@hurd] tar -zxvf asciiquarium.tar.gz[free@hurd] cd asciiquarium_1.1[free@hurd] sudo cp asciiquarium /usr/local/bin[free@hurd] sudo chmod +x /usr/local/bin/asciiquarium[free@hurd] /usr/local/bin/asciiquarium###效果图如下###按q或ctrl + c退出 123456789101112131415###ubuntu上运行以下命令$ sudo apt-get installlibcurses-perl$ wget http://search.cpan.org/CPAN/authors/id/K/KB/KBAUCOM/Term-Animation-2.4.tar.gz$ tar -zxvf Term-Animation-2.4.tar.gz$ cd Term-Animation-2.4/$ perl Makefile.PL &amp;&amp; make &amp;&amp; make test$ sudo makeinstall$ cd ..$ wget http://www.robobunny.com/projects/asciiquarium/asciiquarium.tar.gz$ tar -zxvf asciiquarium.tar.gz$ cd asciiquarium_1.1/$ sudo cpasciiquarium /usr/local/bin$ sudo chmod +x /usr/local/bin/asciiquarium$ /usr/local/bin/asciiquarium &emsp;&emsp;蒸汽小火车：sl 12345###centos[free@hurd]$ sudo yum install -y sl###ubuntu$ sudo apt-get install -y sl###效果图如下 &emsp;&emsp;黑客帝国：cmatrix 123456789101112131415161718192021222324###centos[free@hurd]$ wget https://jaist.dl.sourceforge.net/project/cmatrix/cmatrix/1.2a/cmatrix-1.2a.tar.gz[free@hurd]$ tar zxvf cmatrix-1.2a.tar.gz[free@hurd]$ sudo yum install -y ncurses-devel[free@hurd]$ ./configure &amp;&amp; make [free@hurd]$ sudo make installmake[1]: Entering directory `/home/free/cmatrix-1.2a'/bin/sh ./mkinstalldirs /usr/local/bin /usr/bin/install -c cmatrix /usr/local/bin/cmatrixmake install-man1make[2]: Entering directory `/home/free/cmatrix-1.2a'/bin/sh ./mkinstalldirs /usr/local/man/man1mkdir /usr/local/manmkdir /usr/local/man/man1 /usr/bin/install -c -m 644 ./cmatrix.1 /usr/local/man/man1/cmatrix.1make[2]: Leaving directory `/home/free/cmatrix-1.2a' Installing matrix fonts in /usr/lib/kbd/consolefonts...make[1]: Leaving directory `/home/free/cmatrix-1.2a'[free@hurd]$ /usr/local/bin/cmatrix###可以将/usr/local/bin/cmatrix加到PATH中###按q或者ctrl + c退出###ubuntu安装$ sudo apt-get install -y cmatrix###效果图如下 &emsp;&emsp;Linux logo：screenfetch 123456789###centos[free@hurd]$ git clone https://github.com/KittyKatt/screenFetch.git[free@hurd]$ sudo cp screenFetch/screenfetch-dev /usr/local/bin[free@hurd]$ /usr/local/bin/screenfetch-dev###ubuntu$ git clone https://github.com/KittyKatt/screenFetch.git$ sudo cp screenFetch/screenfetch-dev /usr/local/bin$ /usr/local/bin/screenfetch-dev###效果图如下 &emsp;&emsp;Ubuntu：bb 12$ sudo apt-get install -y bb###难以用截图表现，请自行体会 &emsp;&emsp;Ubuntu：linux_logo 12$ sudo apt install -y linuxlogo###效果图 12345678910111213141516171819202122232425262728293031323334###查看内置的logo列表$ linux_logo -f -L listAvailable Built-in Logos: Num Type Ascii Name Description 1 Classic Yes aix AIX Logo 2 Classic Yes bsd FreeBSD Logo 3 Banner Yes bsd_banner FreeBSD Logo 4 Classic Yes irix Irix Logo 5 Banner Yes solaris The Default Banner Logos 6 Banner Yes banner-simp Simplified Banner Logo 7 Banner Yes banner The Default Banner Logo 8 Classic Yes classic-nodots The Classic Logo, No Periods 9 Classic Yes classic-simp Classic No Dots Or Letters 10 Classic Yes classic The Default Classic Logo 11 Classic Yes core Core Linux Logo 12 Banner Yes debian_banner_2 Debian Banner 2 13 Banner Yes debian_banner Debian Banner (white) 14 Classic Yes debian_old Debian Old Penguin Logos 15 Classic Yes debian Debian Swirl Logos 16 Classic Yes gnu_linux Classic GNU/Linux 17 Banner Yes mandrake_banner Mandrake(TM) Linux Banner 18 Banner Yes mandrake Mandrakelinux(TM) Banner 19 Banner Yes mandriva Mandriva(TM) Linux Banner 20 Banner Yes pld PLD Linux banner 21 Banner Yes redhat RedHat Banner (white) 22 Banner Yes slackware Slackware Logo 23 Banner Yes sme SME Server Banner Logo 24 Banner Yes sourcemage_ban Source Mage GNU/Linux banner 25 Banner Yes sourcemage Source Mage GNU/Linux large 26 Banner Yes suse SUSE Logo 27 Banner Yes ubuntu Ubuntu LogoDo "linux_logo -L num" where num is from above to get the appropriate logo.Remember to also use -a to get ascii version.]]></content>
@@ -147,8 +158,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>C</tag>
+        <tag>Linux</tag>
         <tag>shell</tag>
       </tags>
   </entry>
@@ -173,9 +184,9 @@
         <category>Linux</category>
       </categories>
       <tags>
+        <tag>Linux</tag>
         <tag>KVM</tag>
         <tag>LVM</tag>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -219,8 +230,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>C</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -275,8 +286,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>C</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -287,8 +298,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>TCP/IP</tag>
         <tag>Network</tag>
+        <tag>TCP/IP</tag>
       </tags>
   </entry>
   <entry>
@@ -310,8 +321,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>C</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>

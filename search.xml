@@ -87,7 +87,7 @@
   <entry>
     <title><![CDATA[PowerLine]]></title>
     <url>%2F2018%2F08%2F27%2FPowerLine%2F</url>
-    <content type="text"><![CDATA[&emsp;&emsp;&emsp;&emsp;Powerline是一个stateless status line，即一个全局状态/提示栏。要用于显示状态行和提示信息，适用于很多软件，比如 bash、zsh、vim、tmux 等等。 &emsp;&emsp;Powerline 的安装方法很简单，首先介绍安装在命令行上，适用于bash、zsh等。 &emsp;&emsp;安装Python环境 12sudo apt-get install python-pip #Debian、Ubuntu等sudo yum install python-pip #CentOS、RHEL等 &emsp;&emsp;使用 Python 安装PowerLine 1sudo pip install powerline-shell #还有一种就是powerline-status &emsp;&emsp;生成配置文件 1mkdir -p ~/.config/powerline-shell &amp;&amp; powerline-shell --generate-config &gt; ~/.config/powerline-shell/config.json &emsp;&emsp;简单的更改配置文件 123456789101112131415cat &gt; ~/.config/powerline-shell/config.json &lt;&lt;EOF&#123; "segments": [ "virtual_env", "username", "ssh", "cwd", "git", "git_stash", "jobs", "newline", "root" ]&#125;EOF &emsp;&emsp;至此已经可以使用powerline了，效果如下图： &emsp;&emsp;在 vim 里面使用 PowerLine 则需要安装 vim 的一个插件VundleVim； &emsp;&emsp;创建 bundle 目录 1mkdir -p ~/.vim/bundle &emsp;&emsp;安装Vundle 1git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim &emsp;&emsp;更改配置文件 1234567891011121314151617181920212223242526272829set nocompatible " 这是必需的 filetype off " 这是必需的 " 你在此设置运行时路径 set rtp+=~/.vim/bundle/Vundle.vim " vundle初始化 call vundle#begin() " 这应该始终是第一个 Plugin 'gmarik/Vundle.vim' " 该例子来自https://github.com/gmarik/Vundle.vim README Plugin 'tpope/vim-fugitive' " 来自http://vim-scripts.org/vim/scripts.html的插件 Plugin 'L9' "未托管在GitHub上的Git插件 Plugin 'git://git.wincent.com/command-t.git'"PowerlineBundle "Lokaltog/vim-powerline"" sparkup vim脚本在名为vim的该软件库子目录下。 " 传递路径，合理设置运行时路径。 Plugin 'rstacruz/sparkup', &#123;'rtp': 'vim/'&#125; "每个插件都应该在这一行之前 call vundle#end() " required &emsp;&emsp;默认情况下，Vundle从github.com或vim-scripts.org下载并安装Vim插件，你也可以进行更改。 &emsp;&emsp;从GitHub安装: 1Plugin 'user/plugin' &emsp;&emsp;从 http://vim-scripts.org/vim/scripts.html 进行安装： 1Plugin 'plugin_name' &emsp;&emsp;从另一个git软件库进行安装： 1Plugin 'git://git.another_repo.com/plugin' &emsp;&emsp;从本地文件进行安装: 1Plugin 'file:///home/user/path/to/plugin' &emsp;&emsp;也可以自己定制其他参数，比如插件的运行时路径，如果你在自行编写插件，或者就想从不是~/.vim的另一个目录来装入它 1Plugin 'rstacruz/sparkup', &#123;'rtp': 'another_vim_path/'&#125; &emsp;&emsp;如果你有同样名称的插件，可以更名插件，那样它就不会冲突 1Plugin 'user/plugin', &#123;'name': 'newPlugin'&#125; &emsp;&emsp;PluginInstall命令会安装在你的.vimrc文件中列出来的所有插件 1:PluginInstall #vim的末行模式 &emsp;&emsp;清理插件 1:PluginClean &emsp;&emsp;上面已经将 PowerLine写进了配置文件，在 vim 效果如下 &emsp;&emsp;本人一般用的是Xshell 远程连接服务器，Powerline 字体是无法显示的，附上PowerLine字体的GitHub链接 Powerline Font 以及powerline-shell 的链接 powerline-shel。 &emsp;&emsp;当然还有一种简单方法也可以安装 vim 的 powerline 插件： 1234567[free@hurd]$ sudo pip install powerline-status[free@hurd]$ vim ~/.vimrc" 设置powerlineset rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vimset laststatus=2###在尾部追加以上几句###rtp+=后的路径因不同的系统或版本可能会稍有差异，根据实际情况而定]]></content>
+    <content type="text"><![CDATA[&emsp;&emsp;&emsp;&emsp;Powerline是一个stateless status line，即一个全局状态/提示栏。要用于显示状态行和提示信息，适用于很多软件，比如 bash、zsh、vim、tmux 等等。 &emsp;&emsp;Powerline 的安装方法很简单，首先介绍安装在命令行上，适用于bash、zsh等。 &emsp;&emsp;安装Python环境 12sudo apt-get install python-pip #Debian、Ubuntu等sudo yum install python-pip #CentOS、RHEL等 &emsp;&emsp;使用 Python 安装PowerLine 1sudo pip install powerline-shell #还有一种就是powerline-status &emsp;&emsp;生成配置文件 1mkdir -p ~/.config/powerline-shell &amp;&amp; powerline-shell --generate-config &gt; ~/.config/powerline-shell/config.json &emsp;&emsp;简单的更改配置文件 123456789101112131415cat &gt; ~/.config/powerline-shell/config.json &lt;&lt;EOF&#123; "segments": [ "virtual_env", "username", "ssh", "cwd", "git", "git_stash", "jobs", "newline", "root" ]&#125;EOF &emsp;&emsp;至此已经可以使用powerline了，效果如下图： &emsp;&emsp;在 vim 里面使用 PowerLine 则需要安装 vim 的一个插件VundleVim； &emsp;&emsp;创建 bundle 目录 1mkdir -p ~/.vim/bundle &emsp;&emsp;安装Vundle 1git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim &emsp;&emsp;更改配置文件 1234567891011121314151617181920212223242526272829set nocompatible " 这是必需的 filetype off " 这是必需的 " 你在此设置运行时路径 set rtp+=~/.vim/bundle/Vundle.vim " vundle初始化 call vundle#begin() " 这应该始终是第一个 Plugin 'gmarik/Vundle.vim' " 该例子来自https://github.com/gmarik/Vundle.vim README Plugin 'tpope/vim-fugitive' " 来自http://vim-scripts.org/vim/scripts.html的插件 Plugin 'L9' "未托管在GitHub上的Git插件 Plugin 'git://git.wincent.com/command-t.git'"PowerlineBundle "Lokaltog/vim-powerline"" sparkup vim脚本在名为vim的该软件库子目录下。 " 传递路径，合理设置运行时路径。 Plugin 'rstacruz/sparkup', &#123;'rtp': 'vim/'&#125; "每个插件都应该在这一行之前 call vundle#end() " required &emsp;&emsp;默认情况下，Vundle从github.com或vim-scripts.org下载并安装Vim插件，你也可以进行更改。 &emsp;&emsp;从GitHub安装: 1Plugin 'user/plugin' &emsp;&emsp;从 http://vim-scripts.org/vim/scripts.html 进行安装： 1Plugin 'plugin_name' &emsp;&emsp;从另一个git软件库进行安装： 1Plugin 'git://git.another_repo.com/plugin' &emsp;&emsp;从本地文件进行安装: 1Plugin 'file:///home/user/path/to/plugin' &emsp;&emsp;也可以自己定制其他参数，比如插件的运行时路径，如果你在自行编写插件，或者就想从不是~/.vim的另一个目录来装入它 1Plugin 'rstacruz/sparkup', &#123;'rtp': 'another_vim_path/'&#125; &emsp;&emsp;如果你有同样名称的插件，可以更名插件，那样它就不会冲突 1Plugin 'user/plugin', &#123;'name': 'newPlugin'&#125; &emsp;&emsp;PluginInstall命令会安装在你的.vimrc文件中列出来的所有插件 1:PluginInstall #vim的末行模式 &emsp;&emsp;清理插件 1:PluginClean &emsp;&emsp;上面已经将 PowerLine写进了配置文件，在 vim 效果如下 &emsp;&emsp;本人一般用的是Xshell 远程连接服务器，Powerline 字体是无法显示的，附上PowerLine字体的GitHub链接 Powerline Font 以及powerline-shell 的链接 powerline-shell。 &emsp;&emsp;当然还有一种简单方法也可以安装 vim 的 powerline 插件： 1234567[free@hurd]$ sudo pip install powerline-status[free@hurd]$ vim ~/.vimrc" 设置powerlineset rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vimset laststatus=2###在尾部追加以上几句###rtp+=后的路径因不同的系统或版本可能会稍有差异，根据实际情况而定]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -158,8 +158,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
         <tag>shell</tag>
       </tags>
   </entry>
@@ -184,9 +184,9 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>KVM</tag>
         <tag>LVM</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -230,8 +230,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -286,8 +286,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -298,8 +298,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>TCP/IP</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
@@ -321,8 +321,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>

@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="rm,extundelete,文件恢复," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;在 Linux 使用 rm 删除文件后，恢复起来还是有点麻烦的，不像 windows 上还有回收站和各种文件恢复软件；而且在删除文件，后执行了大量的 IO 操作，恢复起来更是困难，甚至无法恢复。">
+<meta name="keywords" content="rm,extundelete,文件恢复">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux上简单的文件恢复操作">
+<meta property="og:url" content="https:gytring.xyz/2018/09/30/Linux上简单的文件恢复操作/index.html">
+<meta property="og:site_name" content="剑来">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在 Linux 使用 rm 删除文件后，恢复起来还是有点麻烦的，不像 windows 上还有回收站和各种文件恢复软件；而且在删除文件，后执行了大量的 IO 操作，恢复起来更是困难，甚至无法恢复。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-30T06:39:50.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux上简单的文件恢复操作">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在 Linux 使用 rm 删除文件后，恢复起来还是有点麻烦的，不像 windows 上还有回收站和各种文件恢复软件；而且在删除文件，后执行了大量的 IO 操作，恢复起来更是困难，甚至无法恢复。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:gytring.xyz/2018/09/30/Linux上简单的文件恢复操作/"/>
+
+
+
+
+
+  <title>Linux上简单的文件恢复操作 | 剑来</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Gytring"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">剑来</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">事了拂衣去，深藏身与名</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/09/30/Linux上简单的文件恢复操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="free">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="剑来">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux上简单的文件恢复操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-30T11:01:26+08:00">
+                2018-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/30/Linux上简单的文件恢复操作/" class="leancloud_visitors" data-flag-title="Linux上简单的文件恢复操作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,540
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+	
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;在 Linux 使用 rm 删除文件后，恢复起来还是有点麻烦的，不像 windows 上还有回收站和各种文件恢复软件；而且在删除文件，后执行了大量的 IO 操作，恢复起来更是困难，甚至无法恢复。<a id="more"></a></p>
+<p>&emsp;&emsp;rm 删除的本质是执行unlink() 函数，删除目录是执行 remove() 函数；而 unlink() 函数主要做的就是删除文件目录项并减少一个连接数，如果链接数为0并且没有任何进程打开该文件，文件将会被删除，但是其 inode 节点信息和data bloack仍然存在，只是解除了链接。如果是最后一个连接但是有进程打开文件，文件仍会存在，直到打开的文件被关闭。</p>
+<p>&emsp;&emsp;关于 inode表、super block、inode节点、data block不在此赘叙。</p>
+<p>&emsp;&emsp;rm 的防护措施：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> rm=<span class="string">'rm -i'</span></span><br><span class="line"><span class="comment">###强制删除确认，应写到配置文件中去</span></span><br><span class="line"><span class="built_in">alias</span> rm=<span class="string">'mv -f $@ ~/backup'</span></span><br><span class="line"><span class="comment">###将rm 换成 mv，每隔一段时间清理 backup文件夹</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;文件恢复操作：</p>
+<p>&emsp;&emsp;<strong>删除的文件正在被运行的进程使用(I/O操作)： lsof</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[free@hurd]$ cat file</span><br><span class="line">total 240</span><br><span class="line">drwxrwxr-x 2 free free   4096 Sep 13 11:20 asciiquarium_1.1</span><br><span class="line">-rw-rw-r-- 1 free free  15436 Mar  9  2013 asciiquarium.tar.gz</span><br><span class="line">drwxrwxr-x 5 free free   4096 Apr 25 16:36 bumblebee-Old-and-abbandoned</span><br><span class="line">drwxrwxr-x 2 free free   4096 Apr 23 16:01 cmatrix-1.2a</span><br><span class="line">-rw-r--r-- 1 root root  74376 Apr 23 15:35 cmatrix-1.2a.tar.gz</span><br><span class="line">drwxr-xr-x 3 free free   4096 Sep 30 10:08 extundelete-0.2.4</span><br><span class="line">-rw-rw-r-- 1 free free 108472 Jan  4  2013 extundelete-0.2.4.tar.bz2</span><br><span class="line">-rw-rw-r-- 1 free free      0 Sep 30 11:35 file</span><br><span class="line">drwxrwxr-x 3 free free   4096 Sep 30 10:21 recovertest</span><br><span class="line">-rw-rw-r-- 1 free free  18785 Dec 17  2006 Term-Animation-2.4.tar.gz</span><br><span class="line">[free@hurd]$ cat &gt;&gt; file</span><br><span class="line"><span class="built_in">test</span> rm file</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;重新开启一个终端：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">[free@hurd]$ cat file</span><br><span class="line">total 240</span><br><span class="line">drwxrwxr-x 2 free free   4096 Sep 13 11:20 asciiquarium_1.1</span><br><span class="line">-rw-rw-r-- 1 free free  15436 Mar  9  2013 asciiquarium.tar.gz</span><br><span class="line">drwxrwxr-x 5 free free   4096 Apr 25 16:36 bumblebee-Old-and-abbandoned</span><br><span class="line">drwxrwxr-x 2 free free   4096 Apr 23 16:01 cmatrix-1.2a</span><br><span class="line">-rw-r--r-- 1 root root  74376 Apr 23 15:35 cmatrix-1.2a.tar.gz</span><br><span class="line">drwxr-xr-x 3 free free   4096 Sep 30 10:08 extundelete-0.2.4</span><br><span class="line">-rw-rw-r-- 1 free free 108472 Jan  4  2013 extundelete-0.2.4.tar.bz2</span><br><span class="line">-rw-rw-r-- 1 free free      0 Sep 30 11:35 file</span><br><span class="line">drwxrwxr-x 3 free free   4096 Sep 30 10:21 recovertest</span><br><span class="line">-rw-rw-r-- 1 free free  18785 Dec 17  2006 Term-Animation-2.4.tar.gz</span><br><span class="line"><span class="built_in">test</span> rm file</span><br><span class="line"><span class="comment">###可以看到新增的内容</span></span><br><span class="line"><span class="comment">###然后删除文件</span></span><br><span class="line">[free@hurd]$ rm file</span><br><span class="line">[free@hurd]$ sudo lsof | grep cat</span><br><span class="line">cat       23877          free  cwd       DIR              253,1      4096     131380 /home/free/tmp</span><br><span class="line">cat       23877          free  rtd       DIR              253,1      4096          2 /</span><br><span class="line">cat       23877          free  txt       REG              253,1     54080     658390 /usr/bin/cat</span><br><span class="line">cat       23877          free  mem       REG              253,1 106070960     677352 /usr/lib/locale/locale-archive</span><br><span class="line">cat       23877          free  mem       REG              253,1   2173512     657095 /usr/lib64/libc-2.17.so</span><br><span class="line">cat       23877          free  mem       REG              253,1    164240     657088 /usr/lib64/ld-2.17.so</span><br><span class="line">cat       23877          free    0u      CHR              136,4       0t0          7 /dev/pts/4</span><br><span class="line">cat       23877          free    1w      REG              253,1       639     132886 /home/free/tmp/file (deleted)</span><br><span class="line">cat       23877          free    2u      CHR              136,4       0t0          7 /dev/pts/4</span><br><span class="line"><span class="comment">###看到(deleted)了，找到其pid，进入/proc/pid/fd/</span></span><br><span class="line">[free@hurd]$ <span class="built_in">cd</span> /proc/23877/fd</span><br><span class="line">[free@hurd]$ ls -l</span><br><span class="line">total 0</span><br><span class="line">lrwx------ 1 free free 64 Sep 30 11:40 0 -&gt; /dev/pts/4</span><br><span class="line">l-wx------ 1 free free 64 Sep 30 11:40 1 -&gt; /home/free/tmp/file (deleted)</span><br><span class="line">lrwx------ 1 free free 64 Sep 30 11:40 2 -&gt; /dev/pts/4</span><br><span class="line"><span class="comment">###文件描述符1就是被删除的文件</span></span><br><span class="line"><span class="comment">###将其复制即可</span></span><br><span class="line">[free@hurd]$ cp 1 /tmp/file.rec </span><br><span class="line">[free@hurd]$ cat /tmp/file.rec </span><br><span class="line">total 240</span><br><span class="line">drwxrwxr-x 2 free free   4096 Sep 13 11:20 asciiquarium_1.1</span><br><span class="line">-rw-rw-r-- 1 free free  15436 Mar  9  2013 asciiquarium.tar.gz</span><br><span class="line">drwxrwxr-x 5 free free   4096 Apr 25 16:36 bumblebee-Old-and-abbandoned</span><br><span class="line">drwxrwxr-x 2 free free   4096 Apr 23 16:01 cmatrix-1.2a</span><br><span class="line">-rw-r--r-- 1 root root  74376 Apr 23 15:35 cmatrix-1.2a.tar.gz</span><br><span class="line">drwxr-xr-x 3 free free   4096 Sep 30 10:08 extundelete-0.2.4</span><br><span class="line">-rw-rw-r-- 1 free free 108472 Jan  4  2013 extundelete-0.2.4.tar.bz2</span><br><span class="line">-rw-rw-r-- 1 free free      0 Sep 30 11:35 file</span><br><span class="line">drwxrwxr-x 3 free free   4096 Sep 30 10:21 recovertest</span><br><span class="line">-rw-rw-r-- 1 free free  18785 Dec 17  2006 Term-Animation-2.4.tar.gz</span><br><span class="line"><span class="built_in">test</span> rm file</span><br><span class="line"><span class="comment">###恢复成功</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>删除的文件正在没有被任何进程使用：extundelete</strong></p>
+<p>&emsp;&emsp;恢复数据之前停止对当前分区做任何I/O操作，防止inode被覆盖</p>
+<p>&emsp;&emsp;在此只是进行简单的操作，并没有使用dd对当前分区进行备份和使用 umount 分区</p>
+<p>&emsp;&emsp;安装<strong>extundelete</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">[free@hurd]$ wget https://nchc.dl.sourceforge.net/project/extundelete/extundelete/0.2.4/extundelete-0.2.4.tar.bz2</span><br><span class="line">[free@hurd]$ sudo yum -y install gcc-c++  bzip2</span><br><span class="line">[free@hurd]$ sudo yum -y install e2fsprogs e2fsprogs-devel</span><br><span class="line">[free@hurd]$ tar jxvf extundelete-0.2.4.tar.bz2 </span><br><span class="line">extundelete-0.2.4/</span><br><span class="line">extundelete-0.2.4/acinclude.m4</span><br><span class="line">extundelete-0.2.4/missing</span><br><span class="line">extundelete-0.2.4/autogen.sh</span><br><span class="line">extundelete-0.2.4/aclocal.m4</span><br><span class="line">extundelete-0.2.4/configure</span><br><span class="line">extundelete-0.2.4/LICENSE</span><br><span class="line">extundelete-0.2.4/README</span><br><span class="line">extundelete-0.2.4/install-sh</span><br><span class="line">extundelete-0.2.4/config.h.in</span><br><span class="line">extundelete-0.2.4/src/</span><br><span class="line">extundelete-0.2.4/src/extundelete.cc</span><br><span class="line">extundelete-0.2.4/src/block.h</span><br><span class="line">extundelete-0.2.4/src/kernel-jbd.h</span><br><span class="line">extundelete-0.2.4/src/insertionops.cc</span><br><span class="line">extundelete-0.2.4/src/block.c</span><br><span class="line">extundelete-0.2.4/src/cli.cc</span><br><span class="line">extundelete-0.2.4/src/extundelete-priv.h</span><br><span class="line">extundelete-0.2.4/src/extundelete.h</span><br><span class="line">extundelete-0.2.4/src/jfs_compat.h</span><br><span class="line">extundelete-0.2.4/src/Makefile.in</span><br><span class="line">extundelete-0.2.4/src/Makefile.am</span><br><span class="line">extundelete-0.2.4/configure.ac</span><br><span class="line">extundelete-0.2.4/depcomp</span><br><span class="line">extundelete-0.2.4/Makefile.in</span><br><span class="line">extundelete-0.2.4/Makefile.am</span><br><span class="line">[free@hurd]$ <span class="built_in">cd</span> extundelete-0.2.4/</span><br><span class="line">[free@hurd]$ ./configure </span><br><span class="line">Configuring extundelete 0.2.4</span><br><span class="line">Writing generated files to disk</span><br><span class="line">[free@hurd]$ make</span><br><span class="line">make -s all-recursive</span><br><span class="line">Making all <span class="keyword">in</span> src</span><br><span class="line">extundelete.cc: In <span class="keyword">function</span> ‘ext2_ino_t find_inode(ext2_filsys, ext2_filsys, ext2_inode*, std::string, int)’:</span><br><span class="line">extundelete.cc:1272:29: warning: narrowing conversion of ‘search_flags’ from ‘int’ to ‘ext2_ino_t &#123;aka unsigned int&#125;’ inside &#123; &#125; [-Wnarrowing]</span><br><span class="line">    buf, match_name2, priv, 0&#125;;</span><br><span class="line">                             ^</span><br><span class="line">                             </span><br><span class="line">[free@hurd]$ sudo make install</span><br><span class="line">Making install <span class="keyword">in</span> src</span><br><span class="line">  /usr/bin/install -c extundelete <span class="string">'/usr/local/bin'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###安装完成</span></span><br><span class="line"><span class="comment">###查看文件系统和挂载</span></span><br><span class="line">[free@hurd]$ df -lh</span><br><span class="line">Filesystem     Type     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/vda1      ext4      41151808 5292972  33745404  14% /</span><br><span class="line">devtmpfs       devtmpfs    497112       0    497112   0% /dev</span><br><span class="line">tmpfs          tmpfs       507704       0    507704   0% /dev/shm</span><br><span class="line">tmpfs          tmpfs       507704     428    507276   1% /run</span><br><span class="line">tmpfs          tmpfs       507704       0    507704   0% /sys/fs/cgroup</span><br><span class="line">tmpfs          tmpfs       101544       0    101544   0% /run/user/1001</span><br><span class="line"><span class="comment">###挂载在根目录下，文件系统是/dev/vda1</span></span><br><span class="line">[free@hurd]$ mkdir recovertest</span><br><span class="line">[free@hurd]$ <span class="built_in">cd</span> recovertest</span><br><span class="line"><span class="comment">###创建目录以作恢复测试使用</span></span><br><span class="line"><span class="comment">###删除文件测试</span></span><br><span class="line">[free@hurd]$ rm /home/free/file</span><br><span class="line"><span class="comment">###直接恢复所有文件</span></span><br><span class="line">[free@hurd]$ sudo /usr/<span class="built_in">local</span>/bin/extundelete /dev/vda1 --restore-all</span><br><span class="line">NOTICE: Extended attributes are not restored.</span><br><span class="line">WARNING: EXT3_FEATURE_INCOMPAT_RECOVER is <span class="built_in">set</span>.</span><br><span class="line">The partition should be unmounted to undelete any files without further data loss.</span><br><span class="line">If the partition is not currently mounted, this message indicates </span><br><span class="line">it was improperly unmounted, and you should run fsck before continuing.</span><br><span class="line">If you decide to <span class="built_in">continue</span>, extundelete may overwrite some of the deleted</span><br><span class="line">files and make recovering those files impossible.  You should unmount the</span><br><span class="line">file system and check it with fsck before using extundelete.</span><br><span class="line">Would you like to <span class="built_in">continue</span>? (y/n) </span><br><span class="line">y</span><br><span class="line">Loading filesystem metadata ... 320 groups loaded.</span><br><span class="line">Loading journal descriptors ... 29380 descriptors loaded.</span><br><span class="line">Searching <span class="keyword">for</span> recoverable inodes <span class="keyword">in</span> directory / ... </span><br><span class="line">22 recoverable inodes found.</span><br><span class="line">Looking through the directory structure <span class="keyword">for</span> deleted files ... </span><br><span class="line">Unable to restore inode 266403 (var/lib/yum/transaction-done.2018-09-30.13:02.11): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266331 (var/lib/rsyslog/imjournal.state.tmp): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266320 (var/lib/ntp/drift.TEMP): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266319 (var/cache/yum/x86_64/7/base/repomd.xml.old.tmp): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266374 (var/cache/yum/x86_64/7/base/repomdGvOHrztmp.xml): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266325 (var/cache/yum/x86_64/7/epel/repomd.xml.old.tmp): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266326 (var/cache/yum/x86_64/7/extras/repomd.xml.old.tmp): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266328 (var/cache/yum/x86_64/7/updates/repomd.xml.old.tmp): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266327 (var/cache/yum/x86_64/7/gf/repomd.xml.old.tmp): Space has been reallocated.</span><br><span class="line">8 recoverable inodes still lost.</span><br><span class="line">Unable to restore inode 266323 (file.266323): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266324 (file.266324): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266334 (file.266334): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266371 (file.266371): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266372 (file.266372): Space has been reallocated.</span><br><span class="line">Unable to restore inode 266386 (file.266386): Space has been reallocated.</span><br><span class="line">Unable to restore inode 660679 (file.660679): Space has been reallocated.</span><br><span class="line">Unable to restore inode 674046 (file.674046): Space has been reallocated.</span><br><span class="line">[free@hurd]$  <span class="built_in">cd</span> RECOVERED_FILES/</span><br><span class="line"><span class="comment">###恢复的文件都在 RECOVERED_FILES/目录下</span></span><br><span class="line">[free@hurd]$ ls</span><br><span class="line">home  lost+found  tmp  var</span><br><span class="line">[free@hurd]$ ls home/free</span><br><span class="line">tmp</span><br><span class="line"><span class="comment">###此处可以看到我们恢复失败了</span></span><br><span class="line"><span class="comment">###此方法失败也很正常，因为各种 I/O可能会操作覆盖文件的inode信息</span></span><br><span class="line"><span class="comment">###但也是有可能成功恢复文件的</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###extundelete的用法</span></span><br><span class="line">[free@hurd]$  extundelete --<span class="built_in">help</span></span><br><span class="line">Usage: extundelete [options] [--] device-file</span><br><span class="line">Options:</span><br><span class="line">  --version, -[vV]       Print version and <span class="built_in">exit</span> successfully.</span><br><span class="line">  --<span class="built_in">help</span>,                Print this <span class="built_in">help</span> and <span class="built_in">exit</span> successfully.</span><br><span class="line">  --superblock           Print contents of superblock <span class="keyword">in</span> addition to the rest.</span><br><span class="line">                         If no action is specified <span class="keyword">then</span> this option is implied.</span><br><span class="line">  --journal              Show content of journal.</span><br><span class="line">  --after dtime          Only process entries deleted on or after <span class="string">'dtime'</span>.</span><br><span class="line">  --before dtime         Only process entries deleted before <span class="string">'dtime'</span>.</span><br><span class="line">Actions:</span><br><span class="line">  --inode ino            Show info on inode <span class="string">'ino'</span>.</span><br><span class="line">  --block blk            Show info on block <span class="string">'blk'</span>.</span><br><span class="line">  --restore-inode ino[,ino,...]</span><br><span class="line">                         Restore the file(s) with known inode number <span class="string">'ino'</span>.</span><br><span class="line">                         The restored files are created <span class="keyword">in</span> ./RECOVERED_FILES</span><br><span class="line">                         with their inode number as extension (ie, file.12345).</span><br><span class="line">  --restore-file <span class="string">'path'</span>  Will restore file <span class="string">'path'</span>. <span class="string">'path'</span> is relative to root</span><br><span class="line">                         of the partition and does not start with a <span class="string">'/'</span></span><br><span class="line">                         The restored file is created <span class="keyword">in</span> the current</span><br><span class="line">                         directory as <span class="string">'RECOVERED_FILES/path'</span>.</span><br><span class="line">  --restore-files <span class="string">'path'</span> Will restore files <span class="built_in">which</span> are listed <span class="keyword">in</span> the file <span class="string">'path'</span>.</span><br><span class="line">                         Each filename should be <span class="keyword">in</span> the same format as an option</span><br><span class="line">                         to --restore-file, and there should be one per line.</span><br><span class="line">  --restore-directory <span class="string">'path'</span></span><br><span class="line">                         Will restore directory <span class="string">'path'</span>. <span class="string">'path'</span> is relative to the</span><br><span class="line">                         root directory of the file system.  The restored</span><br><span class="line">                         directory is created <span class="keyword">in</span> the output directory as <span class="string">'path'</span>.</span><br><span class="line">  --restore-all          Attempts to restore everything.</span><br><span class="line">  -j journal             Reads an external journal from the named file.</span><br><span class="line">  -b blocknumber         Uses the backup superblock at blocknumber when opening</span><br><span class="line">                         the file system.</span><br><span class="line">  -B blocksize           Uses blocksize as the block size when opening the file</span><br><span class="line">                         system.  The number should be the number of bytes.</span><br><span class="line">  --<span class="built_in">log</span> 0                Make the program silent.</span><br><span class="line">  --<span class="built_in">log</span> filename         Logs all messages to filename.</span><br><span class="line">--<span class="built_in">log</span> D1=0,D2=filename   Custom control of <span class="built_in">log</span> messages with comma-separated</span><br><span class="line">   Examples below:       list of options.  Dn must be one of info, warn, or</span><br><span class="line">   --<span class="built_in">log</span> info,error      error.  Omission of the <span class="string">'=name'</span> results <span class="keyword">in</span> messages</span><br><span class="line">   --<span class="built_in">log</span> warn=0          with the specified level to be logged to the console.</span><br><span class="line">   --<span class="built_in">log</span> error=filename  If the parameter is <span class="string">'=0'</span>, logging <span class="keyword">for</span> the specified</span><br><span class="line">                         level will be turned off.  If the parameter is</span><br><span class="line">                         <span class="string">'=filename'</span>, messages with that level will be written</span><br><span class="line">                         to filename.</span><br><span class="line">   -o directory          Save the recovered files to the named directory.</span><br><span class="line">                         The restored files are created <span class="keyword">in</span> a directory</span><br><span class="line">                         named <span class="string">'RECOVERED_FILES/'</span> by default.</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+	
+	
+      <div>
+	    
+<div style="text-align:center;color: #ccc;font-size:14px;">
+	------ 本文结束<i class="fa fa-paw"></i> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    free
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https:gytring.xyz/2018/09/30/Linux上简单的文件恢复操作/" title="Linux上简单的文件恢复操作">https:gytring.xyz/2018/09/30/Linux上简单的文件恢复操作/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rm/" rel="tag"><i class="fa fa-tag"></i> rm</a>
+          
+            <a href="/tags/extundelete/" rel="tag"><i class="fa fa-tag"></i> extundelete</a>
+          
+            <a href="/tags/文件恢复/" rel="tag"><i class="fa fa-tag"></i> 文件恢复</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/20/Linux笔记-6/" rel="next" title="Linux笔记(6)">
+                <i class="fa fa-chevron-left"></i> Linux笔记(6)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="free" />
+            
+              <p class="site-author-name" itemprop="name">free</p>
+              <p class="site-description motion-element" itemprop="description">天不生我李淳罡，万古剑道如长夜</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Gytring" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fancanglang@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/jiang-hu-44-46" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-gratipay"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2168112375" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                站外链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.rdonly.com/" title="Rdonly" target="_blank">Rdonly</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ilxdh.com/" title="龙轩导航" target="_blank">龙轩导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ss-ssshare.7e14.starter-us-west-2.openshiftapps.com/" title="SSR" target="_blank">SSR</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://rufus.akeo.ie/?locale=zh_CN" title="RUFUS" target="_blank">RUFUS</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://emacs-china.org/" title="Emacs" target="_blank">Emacs</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/vim-china" title="VIM" target="_blank">VIM</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ppzedu.com/" title="Linux中文" target="_blank">Linux中文</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.cilimao.me/" title="磁力猫" target="_blank">磁力猫</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">free</span>
+
+  
+</div>
+
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+-->
+
+<!--
+
+  <span class="post-meta-divider">|</span>
+
+-->
+
+<!--
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PptmLLR5fHYwCytzGHe6DFxu-gzGzoHsz", "T6zkp6TjlUz03o0UqHLAwNEa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"width":100,"height":200,"hOffset":0,"vOffset":-20},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

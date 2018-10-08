@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https:gytring.xyz/about/index.html</loc>
+    
+    <lastmod>2018-10-08T07:49:26.702Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https:gytring.xyz/2018/09/30/GDB%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/</loc>
     
     <lastmod>2018-09-30T09:16:15.444Z</lastmod>
@@ -432,13 +439,6 @@
     <loc>https:gytring.xyz/2018/07/26/%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%A4%B1%E6%8E%89%E8%87%AA%E4%BF%A1%E5%8A%9B%E4%BA%86%E5%90%97/</loc>
     
     <lastmod>2018-07-26T06:20:54.720Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https:gytring.xyz/about/index.html</loc>
-    
-    <lastmod>2018-07-19T09:30:07.399Z</lastmod>
     
   </url>
   

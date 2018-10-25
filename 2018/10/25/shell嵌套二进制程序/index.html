@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="古诗文," />
+  <meta name="keywords" content="shell," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp;六王毕，四海一，蜀山兀，阿房出。覆压三百余里，隔离天日。骊山北构而西折，直走咸阳。二川溶溶，流入宫墙。五步一楼，十步一阁；廊腰缦回，檐牙高啄；各抱地势，钩心斗角。盘盘焉，囷囷焉，蜂房水涡，矗不知其几千万落。长桥卧波，未云何龙？复道行空，不霁何虹？高低冥迷，不知西东。歌台暖响，春光融融；舞殿冷袖，风雨凄凄。一日之内，一宫之间，而气候不齐。">
-<meta name="keywords" content="古诗文">
+<meta name="description" content="&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;前段时间偶然看了下 Nvidia 显卡驱动安装的 NvidiaXXXXX.run 文件，令人惊奇的是shell文件里面居然可以嵌套而二进制文件执行，简单说一下其中的原理以及一个例子。">
+<meta name="keywords" content="shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿房宫赋 –杜牧">
-<meta property="og:url" content="https:gytring.xyz/2018/07/11/阿房宫赋-–杜牧/index.html">
+<meta property="og:title" content="shell嵌套二进制程序">
+<meta property="og:url" content="https:gytring.xyz/2018/10/25/shell嵌套二进制程序/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;六王毕，四海一，蜀山兀，阿房出。覆压三百余里，隔离天日。骊山北构而西折，直走咸阳。二川溶溶，流入宫墙。五步一楼，十步一阁；廊腰缦回，檐牙高啄；各抱地势，钩心斗角。盘盘焉，囷囷焉，蜂房水涡，矗不知其几千万落。长桥卧波，未云何龙？复道行空，不霁何虹？高低冥迷，不知西东。歌台暖响，春光融融；舞殿冷袖，风雨凄凄。一日之内，一宫之间，而气候不齐。">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;前段时间偶然看了下 Nvidia 显卡驱动安装的 NvidiaXXXXX.run 文件，令人惊奇的是shell文件里面居然可以嵌套而二进制文件执行，简单说一下其中的原理以及一个例子。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-26T06:23:24.010Z">
+<meta property="og:updated_time" content="2018-10-25T02:55:08.937Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿房宫赋 –杜牧">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;六王毕，四海一，蜀山兀，阿房出。覆压三百余里，隔离天日。骊山北构而西折，直走咸阳。二川溶溶，流入宫墙。五步一楼，十步一阁；廊腰缦回，檐牙高啄；各抱地势，钩心斗角。盘盘焉，囷囷焉，蜂房水涡，矗不知其几千万落。长桥卧波，未云何龙？复道行空，不霁何虹？高低冥迷，不知西东。歌台暖响，春光融融；舞殿冷袖，风雨凄凄。一日之内，一宫之间，而气候不齐。">
+<meta name="twitter:title" content="shell嵌套二进制程序">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;前段时间偶然看了下 Nvidia 显卡驱动安装的 NvidiaXXXXX.run 文件，令人惊奇的是shell文件里面居然可以嵌套而二进制文件执行，简单说一下其中的原理以及一个例子。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https:gytring.xyz/2018/07/11/阿房宫赋-–杜牧/"/>
+  <link rel="canonical" href="https:gytring.xyz/2018/10/25/shell嵌套二进制程序/"/>
 
 
 
 
 
-  <title>阿房宫赋 –杜牧 | 剑来</title>
+  <title>shell嵌套二进制程序 | 剑来</title>
   
 
 
@@ -301,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/07/11/阿房宫赋-–杜牧/">
+    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/10/25/shell嵌套二进制程序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="free">
@@ -318,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">阿房宫赋 –杜牧</h1>
+          <h1 class="post-title" itemprop="name headline">shell嵌套二进制程序</h1>
         
 
         <div class="post-meta">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T15:12:01+08:00">
-                2018-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-25T09:38:16+08:00">
+                2018-10-25
               </time>
             
 
@@ -353,8 +353,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/古诗文/" itemprop="url" rel="index">
-                    <span itemprop="name">古诗文</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -370,7 +370,7 @@
 
           
           
-             <span id="/2018/07/11/阿房宫赋-–杜牧/" class="leancloud_visitors" data-flag-title="阿房宫赋 –杜牧">
+             <span id="/2018/10/25/shell嵌套二进制程序/" class="leancloud_visitors" data-flag-title="shell嵌套二进制程序">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  524
+                  606
                 </span>
               
 
@@ -421,10 +421,16 @@
       
 
       
-        <p> &emsp;&emsp;六王毕，四海一，蜀山兀，阿房出。覆压三百余里，隔离天日。骊山北构而西折，直走咸阳。二川溶溶，流入宫墙。五步一楼，十步一阁；廊腰缦回，檐牙高啄；各抱地势，钩心斗角。盘盘焉，囷囷焉，蜂房水涡，矗不知其几千万落。长桥卧波，未云何龙？复道行空，不霁何虹？高低冥迷，不知西东。歌台暖响，春光融融；舞殿冷袖，风雨凄凄。一日之内，一宫之间，而气候不齐。<a id="more"></a> </p>
-<p>&emsp;&emsp;妃嫔媵嫱，王子皇孙，辞楼下殿，辇来于秦，朝歌夜弦，为秦宫人。明星荧荧，开妆镜也；绿云扰扰，梳晓鬟也；渭流涨腻，弃脂水也；烟斜雾横，焚椒兰也。雷霆乍惊，宫车过也；辘辘远听，杳不知其所之也。一肌一容，尽态极妍，缦立远视，而望幸焉。有不见者，三十六年。(有不见者 一作：有不得见者)燕赵之收藏，韩魏之经营，齐楚之精英，几世几年，剽掠其人，倚叠如山。一旦不能有，输来其间。鼎铛玉石，金块珠砾，弃掷逦迤，秦人视之，亦不甚惜。</p>
-<p>&emsp;&emsp;嗟乎！一人之心，千万人之心也。秦爱纷奢，人亦念其家。奈何取之尽锱铢，用之如泥沙！使负栋之柱，多于南亩之农夫；架梁之椽，多于机上之工女；钉头磷磷，多于在庾之粟粒；瓦缝参差，多于周身之帛缕；直栏横槛，多于九土之城郭；管弦呕哑，多于市人之言语。使天下之人，不敢言而敢怒。独夫之心，日益骄固。戍卒叫，函谷举，楚人一炬，可怜焦土！</p>
-<p>&emsp;&emsp;呜呼！灭六国者六国也，非秦也；族秦者秦也，非天下也。嗟乎！使六国各爱其人，则足以拒秦；使秦复爱六国之人，则递三世可至万世而为君，谁得而族灭也？秦人不暇自哀，而后人哀之；后人哀之而不鉴之，亦使后人而复哀后人也。 </p>
+        <p>&emsp;&emsp;&emsp;&emsp;前段时间偶然看了下 <code>Nvidia</code> 显卡驱动安装的 <code>NvidiaXXXXX.run</code> 文件，令人惊奇的是shell文件里面居然可以嵌套而二进制文件执行，简单说一下其中的原理以及一个例子。<a id="more"></a></p>
+<p>&emsp;&emsp;&emsp;&emsp;使用<code>uuencode</code>将二进制文件编码为文本格式，然后将其粘贴到脚本的末尾；运行<code>uudecode</code> 创建二进制文件，然后更改权限并执行它。<code>uencode</code>和<code>uudecode</code>最初是为了将二进制内容转移到互联网的前体而创建的，它并没有很好地处理二进制信息，转换为文本意味着它可以作为 shell 脚本发送。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y sharutils</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim test.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello wrold!\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Shell 嵌套二进制\n"</span>);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line">gcc test.c -o <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim foo.sh</span><br><span class="line"><span class="meta">#!/bin/bash </span></span><br><span class="line">rm -f <span class="built_in">test</span> </span><br><span class="line">uudecode <span class="variable">$0</span> </span><br><span class="line">./<span class="built_in">test</span> </span><br><span class="line">rm -f <span class="built_in">test</span> </span><br><span class="line"><span class="built_in">exit</span> </span><br><span class="line"><span class="comment">###第一rm声明显示，正在被这个重新创建的test可执行脚本，而不是留在你的汇编中。由于您所需要的有效载荷文件中为好，装上编码的可执行到它的结束</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uuencode <span class="built_in">test</span> <span class="built_in">test</span> &gt;&gt;foo.sh</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;&emsp;&emsp;当你执行脚本foo.sh时，它先提取可执行文件，然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">cat foo.sh</span><br><span class="line"><span class="meta">#!/bin/bash </span></span><br><span class="line">rm -f <span class="built_in">test</span> </span><br><span class="line">uudecode <span class="variable">$0</span> </span><br><span class="line">./<span class="built_in">test</span> </span><br><span class="line">rm -f <span class="built_in">test</span> </span><br><span class="line"><span class="built_in">exit</span> </span><br><span class="line">begin 775 <span class="built_in">test</span></span><br><span class="line">乱码</span><br><span class="line">乱码</span><br><span class="line">乱码</span><br><span class="line">M3<span class="variable">$E35</span>%]?`&amp;1E&lt;F5G:7-T97)?=&amp;U?8VQO;F5S`<span class="string">')E9VES=&amp;5R7W1M7V-L;VYE</span></span><br><span class="line"><span class="string">M&lt;P!?7V1O7V=L;V)A;%]D=&amp;]R&lt;U]A=7@`8V]M&lt;&amp;QE=&amp;5D+C8Y.#(`7U]D;U]G</span></span><br><span class="line"><span class="string">M;&amp;]B86Q?9'</span>1O&lt;G-?875X7V9I;FE?87)R87E?96YT&lt;GD`9G)A;65?9<span class="string">'5M;7D`</span></span><br><span class="line"><span class="string">M7U]F&lt;F%M95]D=6UM&gt;5]I;FET7V%R&lt;F%Y7V5N='</span>)Y`<span class="string">'1E&lt;W0N8P!?7T9204U%</span></span><br><span class="line"><span class="string">M7T5.1%]?`%]?2D-27T5.1%]?`%]?:6YI=%]A&lt;G)A&gt;5]E;F0`7T193D%-24,`</span></span><br><span class="line"><span class="string">M7U]I;FET7V%R&lt;F%Y7W-T87)T`%]'</span>3$]<span class="string">"04Q?3T9&amp;4T547U1!0DQ%7P!?7VQI</span></span><br><span class="line"><span class="string">M8F-?8W-U7V9I;FD`7TE435]D97)E9VES=&amp;5R5<span class="variable">$U</span>#;&amp;]N951A8FQE`&amp;1A=&amp;%?</span></span><br><span class="line"><span class="string">M&lt;W1A&lt;G0`&lt;'5T&lt;T!`1TQ)0D-?,BXR+C4`7V5D871A`%]F:6YI`%]?;&amp;EB8U]S</span></span><br><span class="line"><span class="string">M=&amp;%R=%]M86EN0$!'3<span class="variable">$E</span>"</span>0U\R+C(N-0!?7V1A=&amp;%?&lt;W1A&lt;G0`7U]G;6]N7W-T</span><br><span class="line">M87)T7U\`7U]D&lt;V]?:&amp;%N9&amp;QE`%])3U]S=&amp;1I;E]U&lt;V5D`%]?;&amp;EB8U]C&lt;W5?</span><br><span class="line">M:6YI=`!?96YD`%]S=&amp;%R=`!?7V)S&lt;U]S=&amp;%R=`!M86EN`%]*=E]296=I&lt;W1E</span><br><span class="line">M&lt;D-L87-S97,`7U]434-?14Y<span class="variable">$7U</span>\`7TE435]R96=I&lt;W1E&lt;E1-0VQO;F5486)L</span><br><span class="line">(90!?:6YI=</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chmod +x foo.sh</span><br><span class="line">bash foo.sh</span><br><span class="line">hello wrold!</span><br><span class="line">Shell 嵌套二进制</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;&emsp;&emsp;首先你的保证test执行不会报错，之后你的foo.sh脚本才不会报错。</p>
 
       
     </div>
@@ -454,7 +460,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https:gytring.xyz/2018/07/11/阿房宫赋-–杜牧/" title="阿房宫赋 –杜牧">https:gytring.xyz/2018/07/11/阿房宫赋-–杜牧/</a>
+    <a href="https:gytring.xyz/2018/10/25/shell嵌套二进制程序/" title="shell嵌套二进制程序">https:gytring.xyz/2018/10/25/shell嵌套二进制程序/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -469,7 +475,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/古诗文/" rel="tag"><i class="fa fa-tag"></i> 古诗文</a>
+            <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
           
         </div>
       
@@ -482,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/11/逍遥游-–庄周/" rel="next" title="逍遥游 –庄周">
-                <i class="fa fa-chevron-left"></i> 逍遥游 –庄周
+              <a href="/2018/09/30/GDB调试工具/" rel="next" title="GDB调试工具">
+                <i class="fa fa-chevron-left"></i> GDB调试工具
               </a>
             
           </div>
@@ -491,10 +497,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/11/鱼我所欲也-《孟子》/" rel="prev" title="鱼我所欲也 -《孟子》">
-                鱼我所欲也 -《孟子》 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

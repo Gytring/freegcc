@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[myNewTestBlog]]></title>
+    <url>%2F2018%2F11%2F14%2FmyNewTestBlog%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[shell嵌套二进制程序]]></title>
     <url>%2F2018%2F10%2F25%2Fshell%E5%B5%8C%E5%A5%97%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A8%8B%E5%BA%8F%2F</url>
     <content type="text"><![CDATA[&emsp;&emsp;&emsp;&emsp;前段时间偶然看了下 Nvidia 显卡驱动安装的 NvidiaXXXXX.run 文件，令人惊奇的是shell文件里面居然可以嵌套而二进制文件执行，简单说一下其中的原理以及一个例子。 &emsp;&emsp;&emsp;&emsp;使用uuencode将二进制文件编码为文本格式，然后将其粘贴到脚本的末尾；运行uudecode 创建二进制文件，然后更改权限并执行它。uencode和uudecode最初是为了将二进制内容转移到互联网的前体而创建的，它并没有很好地处理二进制信息，转换为文本意味着它可以作为 shell 脚本发送。 1sudo apt-get install -y sharutils 123456789vim test.c#include &lt;stdio.h&gt;int main()&#123; printf("hello wrold!\n"); printf("Shell 嵌套二进制\n"); return 0;&#125;gcc test.c -o test 12345678vim foo.sh#!/bin/bash rm -f test uudecode $0 ./test rm -f test exit ###第一rm声明显示，正在被这个重新创建的test可执行脚本，而不是留在你的汇编中。由于您所需要的有效载荷文件中为好，装上编码的可执行到它的结束 1uuencode test test &gt;&gt;foo.sh &emsp;&emsp;&emsp;&emsp;当你执行脚本foo.sh时，它先提取可执行文件，然后执行： 12345678910111213141516171819202122232425cat foo.sh#!/bin/bash rm -f test uudecode $0 ./test rm -f test exit begin 775 test乱码乱码乱码M3$E35%]?`&amp;1E&lt;F5G:7-T97)?=&amp;U?8VQO;F5S`')E9VES=&amp;5R7W1M7V-L;VYEM&lt;P!?7V1O7V=L;V)A;%]D=&amp;]R&lt;U]A=7@`8V]M&lt;&amp;QE=&amp;5D+C8Y.#(`7U]D;U]GM;&amp;]B86Q?9'1O&lt;G-?875X7V9I;FE?87)R87E?96YT&lt;GD`9G)A;65?9'5M;7D`M7U]F&lt;F%M95]D=6UM&gt;5]I;FET7V%R&lt;F%Y7V5N=')Y`'1E&lt;W0N8P!?7T9204U%M7T5.1%]?`%]?2D-27T5.1%]?`%]?:6YI=%]A&lt;G)A&gt;5]E;F0`7T193D%-24,`M7U]I;FET7V%R&lt;F%Y7W-T87)T`%]'3$]"04Q?3T9&amp;4T547U1!0DQ%7P!?7VQIM8F-?8W-U7V9I;FD`7TE435]D97)E9VES=&amp;5R5$U#;&amp;]N951A8FQE`&amp;1A=&amp;%?M&lt;W1A&lt;G0`&lt;'5T&lt;T!`1TQ)0D-?,BXR+C4`7V5D871A`%]F:6YI`%]?;&amp;EB8U]SM=&amp;%R=%]M86EN0$!'3$E"0U\R+C(N-0!?7V1A=&amp;%?&lt;W1A&lt;G0`7U]G;6]N7W-TM87)T7U\`7U]D&lt;V]?:&amp;%N9&amp;QE`%])3U]S=&amp;1I;E]U&lt;V5D`%]?;&amp;EB8U]C&lt;W5?M:6YI=`!?96YD`%]S=&amp;%R=`!?7V)S&lt;U]S=&amp;%R=`!M86EN`%]*=E]296=I&lt;W1EM&lt;D-L87-S97,`7U]434-?14Y$7U\`7TE435]R96=I&lt;W1E&lt;E1-0VQO;F5486)L(90!?:6YI=end 1234chmod +x foo.shbash foo.shhello wrold!Shell 嵌套二进制 &emsp;&emsp;&emsp;&emsp;首先你的保证test执行不会报错，之后你的foo.sh脚本才不会报错。]]></content>
@@ -194,8 +199,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
         <tag>shell</tag>
       </tags>
   </entry>
@@ -220,9 +225,9 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>KVM</tag>
         <tag>LVM</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -266,8 +271,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -322,8 +327,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -357,8 +362,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>

@@ -25,28 +25,6 @@
     
     
   <url>
-    <loc>https:gytring.xyz/2018/09/30/GDB%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2018-09-30T09:16:15.444Z</lastmod>
-    <data>
-        <display>
-        <title>GDB调试工具</title>
-        <pubTime>2018-09-30T06:54:21.000Z</pubTime>
-        
-        <tag>GDB</tag>
-         
-        <tag>调试</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="https:gytring.xyz/categories/Linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https:gytring.xyz/2018/09/30/Linux%E4%B8%8A%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%87%E4%BB%B6%E6%81%A2%E5%A4%8D%E6%93%8D%E4%BD%9C/</loc>
     <lastmod>2018-09-30T06:55:15.465Z</lastmod>
     <data>
@@ -398,9 +376,9 @@
         <title>head命令和tail命令的简单实现</title>
         <pubTime>2018-08-10T02:50:42.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>Linux</tag>
+         
+        <tag>C</tag>
          
         <tag>shell</tag>
          
@@ -462,11 +440,11 @@
         <title>KVM虚拟机磁盘LVM扩容</title>
         <pubTime>2018-08-07T01:59:31.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>KVM</tag>
          
         <tag>LVM</tag>
+         
+        <tag>Linux</tag>
          
          
            
@@ -486,9 +464,9 @@
         <title>cp命令的简单实现</title>
         <pubTime>2018-07-30T05:44:06.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>Linux</tag>
+         
+        <tag>C</tag>
          
          
            
@@ -568,9 +546,9 @@
         <title>ls命令的简单实现</title>
         <pubTime>2018-07-17T09:09:50.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>Linux</tag>
+         
+        <tag>C</tag>
          
          
            
@@ -1172,9 +1150,9 @@
         <title>TCP/IP的有限状态机</title>
         <pubTime>2018-07-19T01:04:43.000Z</pubTime>
         
-        <tag>Network</tag>
-         
         <tag>TCP/IP</tag>
+         
+        <tag>Network</tag>
          
          
            
@@ -1216,9 +1194,9 @@
         <title>rm命令的简单实现</title>
         <pubTime>2018-07-23T03:29:41.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>Linux</tag>
+         
+        <tag>C</tag>
          
          
            

@@ -3,7 +3,14 @@
   <entry>
     <title><![CDATA[windows上简单的UDP通信实现]]></title>
     <url>%2F2018%2F11%2F20%2Fwindows%E4%B8%8A%E7%AE%80%E5%8D%95%E7%9A%84UDP%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[&emsp;&emsp;&emsp;&emsp;UDP是即用户数据协议，是面向无连接；本篇在windows上通过套接字实现简单的UDP通信，编译器使用的是VS，需要在工程-&gt;设置-&gt;连接-&gt;对象/库模块 中加入ws2_32.lib ，或者在include语句后面加上：#pragma comment(lib, “ws2_32.lib”) ；ws2_32.dll提供了对以下网络相关API的支持：accept、bind、closesocket、connect、htonl、htons、ioctlsocket、inet_addr、inet_ntoa、listen、ntohl、ntohs、recv、recvfrom、select、send、sendto等。 &emsp;&emsp;&emsp;&emsp;源码如下: 123456789udp.h#pragma once//声明为C函数extern "C"&#123; int socket_send(const char *IP); int socket_recv();&#125; 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283udp.c#include&lt;winsock2.h&gt;#include&lt;string.h&gt;#include&lt;stdio.h&gt;int socket_send(const char *IP)&#123; DWORD ver; WSADATA wsaData; //制定socket版本 ver = MAKEWORD(1, 1); //socket初始化 WSAStartup(ver, &amp;wsaData); //AF_INET代表ipv4 SOCK_DGRAM即UDP SOCKET st = socket(AF_INET, SOCK_DGRAM, 0); struct sockaddr_in addr; //初始化 memset(&amp;addr, 0, sizeof(addr)); addr.sin_family = AF_INET; //host to net short 设置端口发送到指定IP的端口 addr.sin_port = htons(8080); //指定IP地址 addr.sin_addr.s_addr = inet_addr(IP); //unsigned long laddr = inet_addr("192.168.6.200"); //unsigned char *p = &amp;laddr; //printf("%u.%u.%u.%u\n", *p, *(p+1), *(p+2), *(p+3)); char buf[1024] = &#123;0&#125;; size_t rc = 0; while (1) &#123; memset(buf, 0, sizeof(buf)); gets(buf); //退出条件，字符串中第一个字符为0即退出循环 if (buf[0] == '0') break; //发送数据 rc = sendto(st, buf, strlen(buf), 0, (struct sockaddr *)&amp;addr, sizeof(addr)); &#125; //释放资源，windwows要求，不写的话程序结束自动释放，但建议写上，符合逻辑的完整性 closesocket(st); WSACleanup(); //返回发送的数据长度 return rc;&#125;int socket_recv()&#123; DWORD ver; WSADATA wsaData; ver = MAKEWORD(1, 1); WSAStartup(ver, &amp;wsaData); SOCKET st = socket(AF_INET, SOCK_DGRAM, 0); struct sockaddr_in addr; memset(&amp;addr, 0, sizeof(addr)); addr.sin_family = AF_INET; //设置接收端口 addr.sin_port = htons(8080); //接收方，不需要指定IP地址，INADDR_ANY任意 addr.sin_addr.s_addr = htonl(INADDR_ANY); int rc = 0; //将端口号和程序绑定，失败则退出 if (bind(st, (struct sockaddr *)&amp;addr, sizeof(addr)) &gt; -1) &#123; char buf[1024] = &#123; 0 &#125;; //接受传过来的sockaddr_结构 struct sockaddr_in sendaddr; //初始化 memset(&amp;sendaddr, 0, sizeof(sendaddr)); int len = sizeof(sendaddr); while (1) &#123; memset(buf, 0, sizeof(buf)); //recvfrom是一个阻塞函数，没收到数据会一直阻塞 rc = recvfrom(st, buf, sizeof(buf), 0, (struct sockaddr *)&amp;sendaddr, &amp;len); printf("%s: %s\n", inet_ntoa(sendaddr.sin_addr), buf); &#125; &#125; //释放资源 closesocket(st); WSACleanup(); //返回接收到的数据长度 return rc;&#125; 123456789101112131415main.cpp#include&lt;iostream&gt;#include"udp.h"int main(int argc, char *argv[])&#123; if (argc &gt; 1) //传入IP地址 socket_send(argv[1]); else //无参数则作为接收方 socket_recv(); system("pause"); return 0;&#125; &emsp;&emsp;&emsp;&emsp;整个代码段不长，逻辑也简单，一个发送数据函数，一个接受数据的函数；启用发送函数时，IP要指定正确，否则接受方会一直等待接收。 &emsp;&emsp;&emsp;&emsp;通过CMD运行实例如下：]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>UDP</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[shell嵌套二进制程序]]></title>
@@ -187,8 +194,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
         <tag>Linux</tag>
+        <tag>C/C++</tag>
         <tag>shell</tag>
       </tags>
   </entry>
@@ -259,8 +266,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
         <tag>Linux</tag>
+        <tag>C/C++</tag>
       </tags>
   </entry>
   <entry>
@@ -315,8 +322,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
         <tag>Linux</tag>
+        <tag>C/C++</tag>
       </tags>
   </entry>
   <entry>
@@ -350,8 +357,8 @@
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
         <tag>Linux</tag>
+        <tag>C/C++</tag>
       </tags>
   </entry>
   <entry>

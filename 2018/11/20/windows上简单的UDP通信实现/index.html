@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="C/C++,UDP," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="天不生我李淳罡，万古剑道如长夜">
-<meta name="keywords" content="江湖">
+<meta name="description" content="&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;UDP是即用户数据协议，是面向无连接；本篇在windows上通过套接字实现简单的UDP通信，编译器使用的是VS，需要在工程-&amp;gt;设置-&amp;gt;连接-&amp;gt;对象/库模块 中加入ws2_32.lib">
+<meta name="keywords" content="C&#x2F;C++,UDP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="windows上简单的UDP通信实现">
 <meta property="og:url" content="https:gytring.xyz/2018/11/20/windows上简单的UDP通信实现/index.html">
 <meta property="og:site_name" content="剑来">
-<meta property="og:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;UDP是即用户数据协议，是面向无连接；本篇在windows上通过套接字实现简单的UDP通信，编译器使用的是VS，需要在工程-&amp;gt;设置-&amp;gt;连接-&amp;gt;对象/库模块 中加入ws2_32.lib">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-20T01:41:43.095Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1fxech2izh6j20zr0ea412.jpg">
+<meta property="og:updated_time" content="2018-11-20T03:04:09.661Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows上简单的UDP通信实现">
-<meta name="twitter:description" content="天不生我李淳罡，万古剑道如长夜">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;UDP是即用户数据协议，是面向无连接；本篇在windows上通过套接字实现简单的UDP通信，编译器使用的是VS，需要在工程-&amp;gt;设置-&amp;gt;连接-&amp;gt;对象/库模块 中加入ws2_32.lib">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/813ac4f7gy1fxech2izh6j20zr0ea412.jpg">
 
 
 
@@ -341,6 +343,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -373,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  735
                 </span>
               
 
@@ -399,7 +423,15 @@
       
 
       
-        
+        <p>&emsp;&emsp;&emsp;&emsp;<strong>UDP</strong>是即用户数据协议，是面向无连接；本篇在windows上通过套接字实现简单的UDP通信，编译器使用的是VS，需要在工程-&gt;设置-&gt;连接-&gt;对象/库模块 中加入<strong>ws2_32.lib</strong><a id="more"></a> ，或者<strong>在include语句后面加上：#pragma comment(lib, “ws2_32.lib”)</strong> ；<strong>ws2_32.dll提供了对以下网络相关API的支持：accept、bind、closesocket、connect、htonl、htons、ioctlsocket、inet_addr、inet_ntoa、listen、ntohl、ntohs、recv、recvfrom、select、send、sendto等</strong>。 </p>
+<p>&emsp;&emsp;&emsp;&emsp;源码如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">udp.h</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//声明为C函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">socket_send</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *IP)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">socket_recv</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">udp.c</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;winsock2.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket_send</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *IP)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DWORD ver;</span><br><span class="line">	WSADATA wsaData;</span><br><span class="line">	<span class="comment">//制定socket版本</span></span><br><span class="line">	ver = MAKEWORD(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">	<span class="comment">//socket初始化</span></span><br><span class="line">	WSAStartup(ver, &amp;wsaData);</span><br><span class="line">	<span class="comment">//AF_INET代表ipv4  SOCK_DGRAM即UDP</span></span><br><span class="line">	SOCKET st = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span>  <span class="title">sockaddr_in</span> <span class="title">addr</span>;</span></span><br><span class="line">	<span class="comment">//初始化</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;addr, <span class="number">0</span>, <span class="keyword">sizeof</span>(addr));</span><br><span class="line">	addr.sin_family = AF_INET;</span><br><span class="line">	<span class="comment">//host to net short 设置端口发送到指定IP的端口</span></span><br><span class="line">	addr.sin_port = htons(<span class="number">8080</span>);</span><br><span class="line">    <span class="comment">//指定IP地址</span></span><br><span class="line">	addr.sin_addr.s_addr = inet_addr(IP);</span><br><span class="line">	<span class="comment">//unsigned long laddr = inet_addr("192.168.6.200");</span></span><br><span class="line">	<span class="comment">//unsigned char *p = &amp;laddr;</span></span><br><span class="line">	<span class="comment">//printf("%u.%u.%u.%u\n", *p, *(p+1), *(p+2), *(p+3));</span></span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">size_t</span> rc = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		gets(buf);</span><br><span class="line">		<span class="comment">//退出条件，字符串中第一个字符为0即退出循环</span></span><br><span class="line">		<span class="keyword">if</span> (buf[<span class="number">0</span>] == <span class="string">'0'</span>)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="comment">//发送数据</span></span><br><span class="line">		rc = sendto(st, buf, <span class="built_in">strlen</span>(buf), <span class="number">0</span>, (struct sockaddr *)&amp;addr, <span class="keyword">sizeof</span>(addr));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//释放资源，windwows要求，不写的话程序结束自动释放，但建议写上，符合逻辑的完整性</span></span><br><span class="line">	closesocket(st);</span><br><span class="line">	WSACleanup();</span><br><span class="line">    <span class="comment">//返回发送的数据长度</span></span><br><span class="line">	<span class="keyword">return</span> rc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket_recv</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DWORD ver;</span><br><span class="line">	WSADATA wsaData;</span><br><span class="line">	ver = MAKEWORD(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">	WSAStartup(ver, &amp;wsaData); </span><br><span class="line">	SOCKET st = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span>  <span class="title">sockaddr_in</span> <span class="title">addr</span>;</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;addr, <span class="number">0</span>, <span class="keyword">sizeof</span>(addr));</span><br><span class="line">	addr.sin_family = AF_INET;</span><br><span class="line">    <span class="comment">//设置接收端口</span></span><br><span class="line">	addr.sin_port = htons(<span class="number">8080</span>);</span><br><span class="line">    <span class="comment">//接收方，不需要指定IP地址，INADDR_ANY任意</span></span><br><span class="line">	addr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">	<span class="keyword">int</span> rc = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//将端口号和程序绑定，失败则退出</span></span><br><span class="line">	<span class="keyword">if</span> (bind(st, (struct sockaddr *)&amp;addr, <span class="keyword">sizeof</span>(addr)) &gt; <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">char</span>  buf[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">        <span class="comment">//接受传过来的sockaddr_结构</span></span><br><span class="line">		<span class="class"><span class="keyword">struct</span>	<span class="title">sockaddr_in</span> <span class="title">sendaddr</span>;</span></span><br><span class="line">        <span class="comment">//初始化</span></span><br><span class="line">		<span class="built_in">memset</span>(&amp;sendaddr, <span class="number">0</span>, <span class="keyword">sizeof</span>(sendaddr));</span><br><span class="line">		<span class="keyword">int</span> len = <span class="keyword">sizeof</span>(sendaddr);</span><br><span class="line">		<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">            <span class="comment">//recvfrom是一个阻塞函数，没收到数据会一直阻塞</span></span><br><span class="line">			rc = recvfrom(st, buf, <span class="keyword">sizeof</span>(buf), <span class="number">0</span>, (struct sockaddr *)&amp;sendaddr, &amp;len);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%s: %s\n"</span>, inet_ntoa(sendaddr.sin_addr), buf);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//释放资源</span></span><br><span class="line">	closesocket(st);</span><br><span class="line">	WSACleanup();</span><br><span class="line">    <span class="comment">//返回接收到的数据长度</span></span><br><span class="line">	<span class="keyword">return</span> rc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">main.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"udp.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (argc &gt; <span class="number">1</span>)</span><br><span class="line">        <span class="comment">//传入IP地址</span></span><br><span class="line">		socket_send(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">        <span class="comment">//无参数则作为接收方</span></span><br><span class="line">		socket_recv();</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;&emsp;&emsp;整个代码段不长，逻辑也简单，一个发送数据函数，一个接受数据的函数；启用发送函数时，IP要指定正确，否则接受方会一直等待接收。</p>
+<p>&emsp;&emsp;&emsp;&emsp;通过CMD运行实例如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/813ac4f7gy1fxech2izh6j20zr0ea412.jpg" alt=""></p>
+
       
     </div>
     
@@ -440,6 +472,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C-C/" rel="tag"><i class="fa fa-tag"></i> C/C++</a>
+          
+            <a href="/tags/UDP/" rel="tag"><i class="fa fa-tag"></i> UDP</a>
+          
+        </div>
       
 
       
@@ -552,7 +592,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -4,11 +4,11 @@
 
     
   <url>
-    <loc>https:gytring.xyz/2018/11/20/windows%E4%B8%8A%E7%AE%80%E5%8D%95%E7%9A%84UDP%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0/</loc>
-    <lastmod>2018-11-20T03:04:09.661Z</lastmod>
+    <loc>https:gytring.xyz/2018/11/20/windows%E4%B8%8A%E7%AE%80%E5%8D%95%E7%9A%84UDP%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0%E5%8F%8ALinux%E7%A7%BB%E6%A4%8D/</loc>
+    <lastmod>2018-11-21T05:51:34.351Z</lastmod>
     <data>
         <display>
-        <title>windows上简单的UDP通信实现</title>
+        <title>windows上简单的UDP通信实现及Linux移植</title>
         <pubTime>2018-11-20T01:41:43.000Z</pubTime>
         
         <tag>C/C++</tag>
@@ -33,9 +33,9 @@
         <title>rm命令的简单实现</title>
         <pubTime>2018-07-23T03:29:41.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>C/C++</tag>
+         
+        <tag>Linux</tag>
          
          
            
@@ -55,9 +55,9 @@
         <title>ls命令的简单实现</title>
         <pubTime>2018-07-17T09:09:50.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>C/C++</tag>
+         
+        <tag>Linux</tag>
          
          
            
@@ -77,9 +77,9 @@
         <title>head命令和tail命令的简单实现</title>
         <pubTime>2018-08-10T02:50:42.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>C/C++</tag>
+         
+        <tag>Linux</tag>
          
         <tag>shell</tag>
          
@@ -101,9 +101,9 @@
         <title>cp命令的简单实现</title>
         <pubTime>2018-07-30T05:44:06.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>C/C++</tag>
+         
+        <tag>Linux</tag>
          
          
            

@@ -301,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/11/20/windows上简单的UDP通信实现/">
+    <link itemprop="mainEntityOfPage" href="https:gytring.xyz/2018/11/20/windows上简单的UDP通信实现及Linux移植/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="free">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/20/windows上简单的UDP通信实现/" itemprop="url">windows上简单的UDP通信实现</a></h1>
+                <a class="post-title-link" href="/2018/11/20/windows上简单的UDP通信实现及Linux移植/" itemprop="url">windows上简单的UDP通信实现及Linux移植</a></h1>
         
 
         <div class="post-meta">
@@ -372,7 +372,7 @@
 
           
           
-             <span id="/2018/11/20/windows上简单的UDP通信实现/" class="leancloud_visitors" data-flag-title="windows上简单的UDP通信实现">
+             <span id="/2018/11/20/windows上简单的UDP通信实现及Linux移植/" class="leancloud_visitors" data-flag-title="windows上简单的UDP通信实现及Linux移植">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -397,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  735
+                  1,342
                 </span>
               
 
@@ -424,10 +424,10 @@
 
       
         
-          <p>&emsp;&emsp;&emsp;&emsp;<strong>UDP</strong>是即用户数据协议，是面向无连接；本篇在windows上通过套接字实现简单的UDP通信，编译器使用的是VS，需要在工程-&gt;设置-&gt;连接-&gt;对象/库模块 中加入<strong>ws2_32.lib</strong>
+          <p>&emsp;&emsp;&emsp;&emsp;<strong>UDP</strong>是即用户数据协议，是面向无连接；本篇在windows上通过套接字实现简单的UDP通信，编译器使用的是VS，需要在工程-&gt;设置-&gt;连接-&gt;对象/库模块 中加入<strong>ws2_32.lib</strong> ，或者<strong>在include语句后面加上：#pragma comment(lib, “ws2_32.lib”)</strong> ；<strong>ws2_32.dll提供了对以下网络相关API的支持：accept、bind、closesocket、connect、htonl、htons、ioctlsocket、inet_addr、inet_ntoa、listen、ntohl、ntohs、recv、recvfrom、select、send、sendto等</strong>。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/20/windows上简单的UDP通信实现/#more" rel="contents">
+            <a class="btn" href="/2018/11/20/windows上简单的UDP通信实现及Linux移植/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
